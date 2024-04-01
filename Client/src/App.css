@@ -1,0 +1,19 @@
+#root {
+   
+    background-color: #aeb3b6aa;
+    
+  }
+
+.gradienBg{
+    background: linear-gradient(90deg, #344955 0%, #78A083 100%);
+    
+}
+
+.navbg{
+    background:#0b1d28 0%;
+
+}
+.page-background {
+    background-color: #344955 0%; /* Replace with your desired color */
+  }
+  
