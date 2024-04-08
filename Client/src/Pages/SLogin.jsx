@@ -1,110 +1,81 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import  { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SLogin = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [inputs, setInputs] = useState({
+    username: "",
+    password: "",
+  });
+  const [err, setError] = useState(null);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const navigate = useNavigate();
+
+const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:8800/api/auth/login", inputs);
+      navigate("/PHome");
+    } catch (err) {
+      setError(err.response.data);
+    }
   };
 
   return (
-    <div
-      style={{
-        background: "linear-gradient(90deg, #344955 0%, #78A083 100%)",
-        height: "100vh",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="flex h-screen justify-center items-center">
-        <div className="w-1/2 p-8  rounded">
-          <h2 className="text-2xl font-bold mb-4">Student Login</h2>
-          <form>
-            <div className="mb-4">
-              <label
-                htmlFor="username"
-                className="block text-gray-800 font-bold mb-2"
-              >
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                className="w-full border border-gray-300 rounded py-2 px-3"
-                placeholder="Enter your username"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="password"
-                className="block text-gray-800 font-bold mb-2"
-              >
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  className="w-full border border-gray-300 rounded py-2 px-3"
-                  placeholder="Enter your password"
-                />
-                <span
-                  className="absolute right-3 top-3"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-3 8v-3m0 0c1.657-1.657 2.879-3 4-3s2.343 1.343 4 3v3M9 16V8a4 4 0 118 0v8"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-3 8v-3m0 0c1.657-1.657 2.879-3 4-3s2.343 1.343 4 3v3M9 16V8a4 4 0 118 0v8"
-                      />
-                    </svg>
-                  )}
-                </span>
-              </div>
-            </div>
-            <Link
-              to="/PHome"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    <div className="auth flex justify-center items-center h-screen">
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 className="text-2xl mb-4 text-center">Login</h1>
+        <form className="mb-4">
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+              Username
+            </label>
+            <input
+              required
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="username"
+              type="text"
+              placeholder="Username"
+              name="username"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+              Password
+            </label>
+            <input
+              required
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="password"
+              type="password"
+              placeholder="Password"
+              name="password"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="button"
+              onClick={handleSubmit}
             >
               Login
-            </Link>
-          </form>
-          <div className="mt-4">
-            <span className="text-gray-800">
-              {" "}
-              Don t have an account?
-              <Link to="/PSignup" className="text-white"> Register Here </Link>
-            </span>
+            </button>
+            {err && <p className="text-red-500 text-xs italic">{err}</p>}
           </div>
-        </div>
+        </form>
+        <span className="block text-center">
+          Dont you have an account? <Link to="/register" className="text-blue-500">Register</Link>
+        </span>
       </div>
     </div>
   );
+  
 };
 
 export default SLogin;

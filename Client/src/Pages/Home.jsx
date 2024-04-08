@@ -30,7 +30,7 @@ const Home = () => {
               </p>
 
               <div>
-              <Link to="/PSignup">
+              <Link to="/Check">
   <button
     className="py-3 px-8 bg-red-600 font-semibold text-white rounded hover:bg-red-400 transition-all duration-300"
   >
