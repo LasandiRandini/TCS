@@ -13,7 +13,7 @@ import Video from './Pages/Video';
 import MyVideo from './Pages/MyVideo';
 import Video2 from './APages/Video2';
 import Practical from './Pages/Practical';
-
+import Dashboard from './Components/Dashboard';
 
 const router = createBrowserRouter([
   
@@ -49,6 +49,11 @@ const router = createBrowserRouter([
               path: "/Practical",
               element: <Practical />,
             },
+
+            {
+              path: "/Dashboard",
+              element: <Dashboard />,
+            }
            
          ]); 
 

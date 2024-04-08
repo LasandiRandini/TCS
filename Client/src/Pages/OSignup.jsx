@@ -154,19 +154,11 @@ const OSignup = () => {
             </label>
             <input
                 type="text"
-                id="Year"
-                name="Year"
-                value={formData.contactNo}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded py-2 px-3"
-                placeholder="Enter your studing year"
-                pattern="[0-9]{10}"
-                title="Please enter a valid 10-digit phone number"
+              placeholder="AL Year"
+              name="al_year"
+              onChange={handleChange}
             />
-             
             </div>
-
-
             <div className="mb-4">
               <label
                 htmlFor="institute"
