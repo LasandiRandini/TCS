@@ -64,6 +64,14 @@ const router = createBrowserRouter([
             {
               path: "/AVideo",
               element: <AVideo />,
+            },
+            {
+              path: "/EditVideo",
+              element: <EditVideo />,
+            },
+            {
+              path: "/ViewVideo",
+              element: <ViewVideo />,
             }
            
          ]); 
