@@ -8,9 +8,9 @@ const PSignup = () => {
   const [inputs, setInputs] = useState({
     first_name: "",
     last_name: "",
-    nic_no: "",
     distric: "",
     email: "",
+    snic_no:"",
     contact_no: "",
     al_year: "",
     institite: "",
@@ -38,7 +38,11 @@ const navigate = useNavigate()
       navigate("/SLogin")
      
     } catch (err) {
-    SetError(err.response.data)
+      if (err.response && err.response.data) {
+        SetError(err.response.data.message); // Assuming your backend sends an error message in a "message" field
+      } else {
+        SetError("Something went wrong!"); // Default error message
+      }
     }
   };
 
@@ -75,20 +79,8 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nic_no">
-              NIC No
-            </label>
-            <input
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="nic_no"
-              type="text"
-              placeholder="NIC No"
-              name="nic_no"
-              onChange={handleChange}
-            />
-          </div>
+          
+       
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="district">
               District
@@ -114,6 +106,20 @@ const navigate = useNavigate()
               type="email"
               placeholder="Email"
               name="email"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="snic_no">
+           NIC Number
+            </label>
+            <input
+              required
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="snic_no"
+              type="snic_no"
+              placeholder="snic_no"
+              name="snic_no"
               onChange={handleChange}
             />
           </div>

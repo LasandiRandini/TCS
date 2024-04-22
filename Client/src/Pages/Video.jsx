@@ -18,7 +18,7 @@ const Video = () => {
                   <div className="grid  sm:grid-cols-4 grid-cols-1 item-start md:gap-12 gap-8">
                     <div
                     className="bg-[rgba(255,255,255,0.04)] rounded-[35px] h-90 shadow-3xl p-8 item-center flex
-                    justify-center item-center hover:-translate-y-4 transition-all duration-300"
+justify-center item-center hover:-translate-y-4 transition-all duration-300"
                     >
                     <div>
                       <h3 className="text-2xl font-bold text-center text-red-900">

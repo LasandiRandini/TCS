@@ -1,11 +1,11 @@
 import  { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const SLogin = () => {
+const AdLogin = () => {
   const [inputs, setInputs] = useState({
-    username: "",
-    password: "",
+    admin_username: "",
+    admin_password: "",
   });
   const [err, setError] = useState(null);
 
@@ -18,8 +18,8 @@ const handleChange = (e) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8800/api/auth/login", inputs);
-      navigate("/PHome");
+      await axios.post("http://localhost:8800/api/Aauth/alogin", inputs);
+      navigate("/AVideo");
     } catch (err) {
       setError(err.response.data);
     }
@@ -31,30 +31,30 @@ const handleChange = (e) => {
         <h1 className="text-2xl mb-4 text-center">Login</h1>
         <form className="mb-4">
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="admin_username">
               Username
             </label>
             <input
               required
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
+              id="admin_username"
               type="text"
               placeholder="Username"
-              name="username"
+              name="admin_username"
               onChange={handleChange}
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="admin_password">
               Password
             </label>
             <input
               required
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
+              id="admin_password"
               type="password"
               placeholder="Password"
-              name="password"
+              name="admin_password"
               onChange={handleChange}
             />
           </div>
@@ -69,14 +69,12 @@ const handleChange = (e) => {
             {err && <p className="text-red-500 text-xs italic">{err}</p>}
           </div>
         </form>
-        <span className="block text-center">
-          Dont you have an account? <Link to="/Check" className="text-blue-500">Register</Link>
-        </span>
+        
       </div>
     </div>
   );
   
 };
 
-export default SLogin;
+export default AdLogin;
 

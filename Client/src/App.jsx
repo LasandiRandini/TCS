@@ -10,12 +10,18 @@ import SLogin from './Pages/SLogin';
 import PSignup from './Pages/PSignup';
 import PHome from './Pages/PHome';
 import Video from './Pages/Video';
+import Video2 from './Pages/Video2';
 import MyVideo from './Pages/MyVideo';
 import Practical from './Pages/Practical';
 import Dashboard from './Components/Dashboard';
 import Check from './Pages/Check';
 import OSignup from './Pages/OSignup';
 import AVideo from './AdminPages/AVideo';
+import AdSignup from './AdminPages/AdSignup';
+import AdLogin from './AdminPages/AdLogin';
+import AQuiz from './AdminPages/AQuiz';
+import PProfile from './Pages/PProfile';
+import Quiz from './Pages/Quiz';
 
 const router = createBrowserRouter([
   
@@ -66,14 +72,29 @@ const router = createBrowserRouter([
               element: <AVideo />,
             },
             {
-              path: "/EditVideo",
-              element: <EditVideo />,
+              path: "/AdSignup",
+              element: <AdSignup />,
             },
             {
-              path: "/ViewVideo",
-              element: <ViewVideo />,
+              path: "/AdLogin",
+              element: <AdLogin />,
+            },
+            {
+              path: "/PProfile",
+              element: <PProfile />,
+            },
+            {
+              path: "/Video2",
+              element: <Video2 />,
+            },
+            {
+              path: "/Quiz",
+              element: <Quiz />,
+            },
+            {
+              path: "/AQuiz",
+              element: <AQuiz />,
             }
-           
          ]); 
 
 
