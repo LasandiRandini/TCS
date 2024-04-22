@@ -19,6 +19,7 @@ import OSignup from './Pages/OSignup';
 import AVideo from './AdminPages/AVideo';
 import AdSignup from './AdminPages/AdSignup';
 import AdLogin from './AdminPages/AdLogin';
+import APractical from './AdminPages/APractical';
 import AQuiz from './AdminPages/AQuiz';
 import PProfile from './Pages/PProfile';
 import Quiz from './Pages/Quiz';
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
             {
               path: "/AQuiz",
               element: <AQuiz />,
+            },
+            {
+              path: "/APractical",
+              element: <APractical />,
             }
          ]); 
 
