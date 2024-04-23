@@ -84,7 +84,7 @@ const Footer = () => {
       <div className="download w-full  py-16 rounded-xl">
         <div className="flex flex-col justify-center items-center space-y-5">
           <h1 className="textxl md:text-3xl font-bold">
-            Download The RealEstate App
+            Download The ETLABS App
           </h1>
           <div className="flex space-x-5">
             <div className="flex items-center space-x-2 px-5 py-2 bg-white rounded drop-shadow-xl">
@@ -106,7 +106,7 @@ const Footer = () => {
       </div>
       <footer className="w-full py-10 bg-neutral-800 text-white">
         <div className="w-11/12 md:w-1/3 m-auto flex flex-col items-center text-center space-y-5">
-          <h1 className="text-2xl font-bold">RealEstate</h1>
+          <h1 className="text-2xl font-bold">ETLABS</h1>
           <ul className="flex items-cener space-x-5 text-sm">
             <li>Features</li>
             <li>Trending</li>
@@ -119,7 +119,9 @@ const Footer = () => {
                 <FiFacebook size={"2rem"}/>
                 <AiFillGithub size={"1.5rem"}/>
           </div>
-          <p className="text-sm text-gray-400 p-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea, officiis. Aliquam suscipit atque nobis aliquid consectetur ea dignissimos similique dolorem!</p>
+          <p className="text-sm text-gray-400 ">Join Mr. Buwanekabahu Muthukumarana engineering technology tuition classes for expert guidance in electrical, mechanical, and computer science topics. Our interactive sessions foster hands-on learning and critical thinking, preparing students for success in engineering technology
+
+Register Here</p>
         </div>
       </footer>
     </div>

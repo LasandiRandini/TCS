@@ -1,130 +1,140 @@
-import  { useState } from 'react';
-import Dashboard from '../Components/Dashboard'
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Dashboard from '../Components/Dashboard';
 
 const APractical = () => {
-  const [selectedYear, setSelectedYear] = useState('');
-  const [selectedTitle, setSelectedTitle] = useState('');
-  const [selectedDate, setSelectedDate] = useState(null);
- 
-  const [selectedDuration, setSelectedDuration] = useState('');
-  const [selectedInstitute, setSelectedInstitute] = useState('');
- 
+  const [inputs, setInputs] = useState({
+    year: '',
+    title: '',
+    date: '',
+    duration: '',
+    institute: '',
+    description: ''
+  });
 
-  const handleYearChange = (date) => {
-    setSelectedYear(date);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  const handleTitleChange = (date) => {
-    setSelectedTitle(date);
-  };
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
-
-  const handleDurationChange = (event) => {
-    setSelectedDuration(event.target.value);
-  };
-
-  const handleInstituteChange = (event) => {
-    setSelectedInstitute(event.target.value);
-  };
-
-  
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic here
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:8800/api/practicals/practical', inputs);
+      navigate('/AVideo'); // Redirect to success page after successful submission
+    } catch (err) {
+      setError(err.response.data.error);
+    }
   };
 
   return (
     <>
     <div className='flex'>
-    <Dashboard />  
+      <Dashboard />  
 
-    <div className="mx-auto  w-full px-4 py-8 bg-white rounded-lg shadow-md">
-         
-    <h1 className="text-2xl font-bold mb-4">Add Practical</h1>
-{/* Practical Details */}
-<h2 className="text-xl font-semibold mb-2">Practical Details</h2>
-        <form onSubmit={handleSubmit}>
-        <div className="mb-8">
-    <div className="mb-4">
-            <label htmlFor="year" className="block text-gray-700 font-semibold mb-2">Year:</label>
+      <div className="mx-auto w-full px-4 py-8  rounded-lg shadow-md">
+   
+      <div className="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-4">
+        <h1 className="text-2xl mb-4 text-center">Add Practical</h1>
+        <form className="mb-4" onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="year" className="block text-gray-700 text-sm font-bold mb-2">Year:</label>
             <input
               type="text"
               id="year"
-              value={selectedYear}
-              onChange={handleYearChange}
-              placeholder="e.g.,2025"
-              className="w-full border rounded px-4 py-2"
+              name="year"
+              value={inputs.year}
+              onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Year"
               required
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="title" className="block text-gray-700 font-semibold mb-2">Title:</label>
+            <label htmlFor="title" className="block text-gray-700 text-sm font-bold mb-2">Title:</label>
             <input
               type="text"
               id="title"
-              value={selectedTitle}
-              onChange={handleTitleChange}
-              placeholder="Oscilloscopee"
-              className="w-full border rounded px-4 py-2"
+              name="title"
+              value={inputs.title}
+              onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Title"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="date" className="block text-gray-700 text-sm font-bold mb-2">Date:</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              value={inputs.date}
+              onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="duration" className="block text-gray-700 text-sm font-bold mb-2">Duration:</label>
+            <input
+              type="text"
+              id="duration"
+              name="duration"
+              value={inputs.duration}
+              onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Duration"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="institute" className="block text-gray-700 text-sm font-bold mb-2">Institute:</label>
+            <input
+              type="text"
+              id="institute"
+              name="institute"
+              value={inputs.institute}
+              onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Institute"
               required
             />
           </div>
 
-      <div className="mb-8">
-        {/* Calendar Component */}
-        {/* Implement your calendar component here */}
-      </div>
-    
-        
           <div className="mb-4">
-            <label htmlFor="date" className="block text-gray-700 font-semibold mb-2">Date:</label>
-            <input
-              type="date"
-              id="date"
-              value={selectedDate}
-              onChange={(e) => handleDateChange(e.target.value)}
-              className="w-full border rounded px-4 py-2"
-              required
-            />
-          </div>
-        
-         
-          <div className="mb-4">
-            <label htmlFor="duration" className="block text-gray-700 font-semibold mb-2">Duration:</label>
+            <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">Description:</label>
             <input
               type="text"
-              id="duration"
-              value={selectedDuration}
-              onChange={handleDurationChange}
-              placeholder="e.g., 2 hours"
-              className="w-full border rounded px-4 py-2"
+              id="description"
+              name="description"
+              value={inputs.description}
+              onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Description"
               required
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="institute" className="block text-gray-700 font-semibold mb-2">Institute:</label>
-            <select id="selectYear" value={selectedInstitute} onChange={handleInstituteChange} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
-          <option value="SIPARA-Galle">Sipara</option>
-          <option value="APIRO-Mathara">Apiro</option>
-          <option value="VICTORY-Ambilipitiya">Victory</option>
-          <option value="MAHARGA-Tangalle">Maharga</option>
-        </select>
-           
-          </div>
-          <div className="mb-4">
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Save Practical Details
+          
+          <div className="flex items-center justify-between">
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Add Practical
             </button>
-          </div>
+            {error && <p className="text-red-500 text-xs italic">{error}</p>}
           </div>
         </form>
       </div>
-</div>
+    </div>
+    </div>
+    
     </>
+ 
   );
 };
 

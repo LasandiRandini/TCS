@@ -1,73 +1,50 @@
-import  { useState } from 'react';
-import PNav from "../Components/PNav";
-import PropTypes from 'prop-types';
-import Footer from "../Components/Footer";
+// components/Practical.js
 
-const Practical = ({ selectedDate, selectedTime, selectedDuration, selectedInstitute }) => {
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import PNav from '../Components/PNav'; 
 
-  const [preferredTimeslot, setPreferredTimeslot] = useState('');
+const Practical = () => {
+  const [practicals, setPracticals] = useState([]);
+  const [error, setError] = useState(null);
 
-  const handleTimeslotSelection = (event) => {
-    setPreferredTimeslot(event.target.value);
-  };
+  useEffect(() => {
+    const fetchPracticals = async () => {
+      try {
+        const response = await axios.get('http://localhost:8800/api/practicals/getpractical');
+        setPracticals(response.data);
+      } catch (err) {
+        setError(err.response.data.error);
+      }
+    };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic here
-  };
+    fetchPracticals();
+  }, []);
 
   return (
-
     <>
-      <PNav />
-      <div className="my-24 md:px-20 mx-20 px-4 max-w-screen-2xl item-center mx-auto">
-   
-      <h1 className="text-2xl font-bold mb-4">Practical Details</h1>
-      <div className="mb-4">
-        <p className="text-gray-700 mb-2"><span className="font-semibold">Date:</span> {selectedDate}</p>
-        <p className="text-gray-700 mb-2"><span className="font-semibold">Time:</span> {selectedTime}</p>
-        <p className="text-gray-700 mb-2"><span className="font-semibold">Duration:</span> {selectedDuration}</p>
-        <p className="text-gray-700 mb-2"><span className="font-semibold">Institute:</span> {selectedInstitute}</p>
-      </div>
-    </div>
-
+    <PNav /> {/* Assuming PNav is your navigation component */}
     <div>
-        {/* Quiz Section for Timeslot Selection */}
-        <h2 className="text-xl font-semibold mb-2">Select Preferred Timeslot</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="timeslot" className="block text-gray-700 font-semibold mb-2">Preferred Timeslot:</label>
-            <select
-              id="timeslot"
-              value={preferredTimeslot}
-              onChange={handleTimeslotSelection}
-              className="w-full border rounded px-4 py-2"
-              required
-            >
-              <option value="">Select timeslot</option>
-              {/* Add options for timeslots */}
-            </select>
-          </div>
-          <div className="mb-4">
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Save Preferred Timeslot
-            </button>
-          </div>
-        </form>
-      </div>
-    <Footer />
+      <h1 className="text-2xl font-bold mb-4">Practical Details</h1>
+      {error ? (
+        <p className="text-red-500">Error: {error}</p>
+      ) : (
+        <div>
+          {practicals.map((practical) => (
+            <div key={practical._id} className="mb-4"> {/* Using _id as the key */}
+              <h2 className="text-lg font-semibold">{practical.title}</h2>
+              <p><strong>Year:</strong> {practical.year}</p>
+              <p><strong>Date:</strong> {practical.date}</p>
+              <p><strong>Duration:</strong> {practical.duration}</p>
+              <p><strong>Institute:</strong> {practical.institute}</p>
+              <p><strong>Description:</strong> {practical.description}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
     </>
-   
   );
- 
 };
-
-Practical.propTypes = {
-  selectedDate: PropTypes.string.isRequired,
-  selectedTime: PropTypes.string.isRequired,
-  selectedDuration: PropTypes.string.isRequired,
-  selectedInstitute: PropTypes.string.isRequired,
-};
-
 
 export default Practical;

@@ -3,6 +3,7 @@ import userRoutes from "./routes/users.js"
 import authRoutes from "./routes/auth.js"
 import AauthRoutes from "./routes/Aauth.js"
 import checkingRoutes from "./routes/checkings.js"
+import practicalRoutes from "./routes/practicals.js"
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -16,6 +17,8 @@ app.use("/api/users", userRoutes)
 app.use("/api/auth", authRoutes)
 app.use("/api/Aauth", AauthRoutes)
 app.use("/api/checkings", checkingRoutes)
+app.use("/api/practicals", practicalRoutes)
+
 
 app.listen(8800, () => {
     console.log("Connected!")

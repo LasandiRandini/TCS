@@ -41,7 +41,7 @@ const Dashboard = () => {
           <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded">Notices</a>
         </li>
         <li className="mb-2">
-          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded">Practical</a>
+          <a href="/APratical" className="hover:bg-gray-700 px-4 py-2 block rounded">Practical</a>
         </li>
         <li className="mb-2">
           <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded">Settings</a>
