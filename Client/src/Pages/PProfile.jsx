@@ -1,29 +1,33 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Footer from "../Components/Footer";
-import PNav from "../Components/PNav";
 
 const PProfile = () => {
   const [userProfile, setProfileData] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log("Fetching profile data...");
     fetchProfile();
   }, []);
 
   const fetchProfile = async () => {
     try {
       const response = await axios.get('http://localhost:8800/api/auth/profile'); 
+      console.log("Profile data response:", response.data); 
       setProfileData(response.data);
       setError(null);
     } catch (error) {
+      console.error("Error fetching profile data:", error); 
       setError('Error fetching profile data');
     }
   };
 
+  console.log("UserProfile:", userProfile); 
+  console.log("Error:", error); 
+
   return (
     <>
-   <PNav  />
+   
    <div className="my-24 md:px-20 mx-20 px-4 max-w-screen-2xl item-center mx-auto"></div>
     <div className="container mx-auto">
       <h1 className="text-2xl mb-4 text-center">User Profile</h1>
@@ -50,7 +54,7 @@ const PProfile = () => {
       )}
        
     </div>
-    <Footer />
+    
     </>
   );
 };

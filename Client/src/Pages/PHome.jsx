@@ -1,5 +1,5 @@
-import Nav from "../Components/PNav";
-import Footer from "../Components/Footer";
+
+
 import teacher from "../assets/teacher.png";
 import magazine from "../assets/Mag.jpg";
 import {Link} from 'react-router-dom';
@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom';
 const Home = () => {
   return (
     <>
-      <Nav />
+    
 
       {/* Banner content */}
       <div className="md:px-12 p-4 max-w-screen-2xl mx-auti mt-20">
@@ -129,7 +129,7 @@ text-primary mb-5 leading-normal text-white"
         </div>
       </div>
 
-      <Footer />
+     
     </>
   );
 };

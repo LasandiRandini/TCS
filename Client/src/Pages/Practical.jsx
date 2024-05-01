@@ -1,8 +1,6 @@
-// components/Practical.js
-
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import PNav from '../Components/PNav'; 
+
 
 const Practical = () => {
   const [practicals, setPracticals] = useState([]);
@@ -22,28 +20,33 @@ const Practical = () => {
   }, []);
 
   return (
-    <>
-    <PNav /> {/* Assuming PNav is your navigation component */}
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Practical Details</h1>
-      {error ? (
-        <p className="text-red-500">Error: {error}</p>
-      ) : (
-        <div>
-          {practicals.map((practical) => (
-            <div key={practical._id} className="mb-4"> {/* Using _id as the key */}
-              <h2 className="text-lg font-semibold">{practical.title}</h2>
-              <p><strong>Year:</strong> {practical.year}</p>
-              <p><strong>Date:</strong> {practical.date}</p>
-              <p><strong>Duration:</strong> {practical.duration}</p>
-              <p><strong>Institute:</strong> {practical.institute}</p>
-              <p><strong>Description:</strong> {practical.description}</p>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="flex">
+      
+      <div>
+        <div className='w-full'>
+        <h1 className="text-2xl font-bold mb-4 mt-20 px-5">Practical Details</h1>
+        {error ? (
+          <p className="text-red-500">Error: {error}</p>
+        ) : (
+          <div>
+            {practicals.map((practical) => (
+              <div key={practical.practical_id} className="mb-4">
+                <div className="bg-[rgba(255,255,255,0.04)] rounded-[35px] shadow-3xl p-8 mb-4">
+                  <p><strong>Title:</strong> {practical.title}</p>
+                  <p><strong>Year:</strong> {practical.year}</p>
+                  <p><strong>Date:</strong> {practical.date}</p>
+                  <p><strong>Duration:</strong> {practical.duration}</p>
+                  <p><strong>Institute:</strong> {practical.institute}</p>
+                  <p><strong>Description:</strong> {practical.description}</p>
+                </div>
+              </div>
+              
+            ))}
+          </div>
+        )}
+      </div>
+      </div>
     </div>
-    </>
   );
 };
 

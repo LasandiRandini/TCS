@@ -1,15 +1,15 @@
-import PNav from "../Components/PNav";
+
 import { Link } from "react-router-dom";
 import V27 from "../assets/V2027.png";
 import V26 from "../assets/V2026.png";
 import V25 from "../assets/V2025.png";
 import V24 from "../assets/V2024.png";
-import Footer from "../Components/Footer";
+
 
 const Video = () => {
     return (
         <>
-        <PNav />
+     
         <div>
             
                   <div className="my-24 md:px-14 px-4 max-w-screen-2xl mx-auto">
@@ -95,7 +95,6 @@ justify-center item-center hover:-translate-y-4 transition-all duration-300"
                   </div>
                   </div>
                 </div>
-                <Footer />
                
                 </>
     );

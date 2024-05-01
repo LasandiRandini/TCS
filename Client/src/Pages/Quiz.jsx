@@ -1,6 +1,6 @@
-import PNav from "../Components/PNav";
+
 import  { useState } from 'react';
-import Footer from "../Components/Footer";
+
 
 const Video = () => {
   const [showForm, setShowForm] = useState(false);
@@ -11,7 +11,7 @@ const Video = () => {
 
   return (
     <>
-      <PNav />
+      
       <div>
         <div className="my-24 md:px-14 px-4 max-w-screen-2xl mx-auto">
           <div className="flex flex-col lg:flex-row justify-between  items-start gap-10">
@@ -208,7 +208,7 @@ justify-center item-center hover:-translate-y-4 transition-all duration-300 rela
           </div>
         </div>
       </div>
-      <Footer />
+      
     </>
   );
 };

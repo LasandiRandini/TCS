@@ -1,11 +1,10 @@
-import Footer from "../Components/Footer";
-import PNav from "../Components/PNav";
+
 
 
 const MyVideo = () => {
     return (
         <>
-        <PNav />
+        
         <div>
             {/* Notices Cards */}
             <div className="my-24 md:px-14 px-4 max-w-screen-2xl mx-auto">
@@ -56,7 +55,7 @@ const MyVideo = () => {
         </div>
         </div>
         </div>
-        <Footer />
+       
         </>
     );
 };

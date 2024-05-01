@@ -1,5 +1,4 @@
-import Nav from "../Components/HeroNav";
-import Footer from "../Components/Footer";
+
 import teacher from "../assets/teacher.png";
 import magazine from "../assets/Mag.jpg";
 import {Link} from 'react-router-dom';
@@ -11,8 +10,7 @@ const Home = () => {
   return (
     
     <div className="page-background">
-      <Nav />
-
+     
       {/* Banner content */}
       <div className="md:px-12 p-4 max-w-screen-2xl mx-auti mt-20  ">
         <div className="gradienBg rounded-x1 rounded-br-[80px] md:p-9 px-4 py-9">
@@ -136,7 +134,7 @@ text-primary mb-5 leading-normal text-black"
         </div>
       </div>
 
-      <Footer />
+    
       </div>
     
   );

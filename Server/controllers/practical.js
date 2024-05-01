@@ -1,4 +1,5 @@
 
+
 import { db } from '../db.js';
 
 export const practical = async (req, res) => {
@@ -18,15 +19,21 @@ export const practical = async (req, res) => {
   }
 };
 
+
 export const getpractical = async (req, res) => {
   try {
-    // Fetch all practical details from the database
-    const practicals = await practical.find({}, { _id: 0, __v: 0 });
-  
-    // Send the practical details as a response
-    res.status(200).json(practicals);
-  } catch (error) {
-    console.error('Error fetching practicals:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    const query = 'SELECT year, title, date, duration, institute, description FROM practical';
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error('Error fetching practical data:', err);
+        res.status(500).json({ error: 'An error occurred while fetching practical data' });
+      } else {
+        console.log(results);
+        res.status(200).json(results);
+      }
+    });
+  } catch (err) {
+    console.error('Error in getpractical:', err);
+    res.status(500).json({ error: 'An unexpected error occurred' });
   }
 };

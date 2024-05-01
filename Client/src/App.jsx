@@ -3,6 +3,7 @@ import './App.css';
 import {
   createBrowserRouter,
   RouterProvider,
+  Outlet,
 } from "react-router-dom";
 
 import Home from './Pages/Home';
@@ -23,25 +24,33 @@ import APractical from './AdminPages/APractical';
 import AQuiz from './AdminPages/AQuiz';
 import PProfile from './Pages/PProfile';
 import Quiz from './Pages/Quiz';
+import ANotice from './AdminPages/ANotice';
+import PNav from "./Components/PNav";
+import Footer from "./Components/Footer";
+
+const Layout =()=>{
+  return(
+    <>
+      <PNav/>
+      <Outlet/>
+      <Footer/>
+    </>
+  );
+};
+
+
 
 const router = createBrowserRouter([
   
  {
         path: "/",
-                element: <Home />,
-              },
-            {
-              path: "/SLogin",
-              element: <SLogin />,
-            },
-            {
-              path: "/PSignup",
-              element: <PSignup />,
-            },
-            {
-              path: "/OSignup",
-              element: <OSignup />,
-            },
+        element:<Layout/>,
+        children:[
+          {
+            path: "/",
+            element: <Home />,
+          },
+           
             {
               path: "/PHome",
               element: <PHome />,
@@ -59,7 +68,19 @@ const router = createBrowserRouter([
               path: "/Practical",
               element: <Practical />,
             },
-
+            {
+              path: "/PProfile",
+              element: <PProfile />,
+            },
+            {
+              path: "/Video2",
+              element: <Video2 />,
+            },
+            {
+              path: "/Quiz",
+              element: <Quiz />,
+            }
+        ]},
             {
               path: "/Dashboard",
               element: <Dashboard />,
@@ -80,18 +101,8 @@ const router = createBrowserRouter([
               path: "/AdLogin",
               element: <AdLogin />,
             },
-            {
-              path: "/PProfile",
-              element: <PProfile />,
-            },
-            {
-              path: "/Video2",
-              element: <Video2 />,
-            },
-            {
-              path: "/Quiz",
-              element: <Quiz />,
-            },
+            
+           
             {
               path: "/AQuiz",
               element: <AQuiz />,
@@ -99,16 +110,32 @@ const router = createBrowserRouter([
             {
               path: "/APractical",
               element: <APractical />,
+            },
+            {
+              path: "/ANotice",
+              element: <ANotice />,
+            },
+            {
+              path: "/SLogin",
+              element: <SLogin />,
+            },
+            {
+              path: "/PSignup",
+              element: <PSignup />,
+            },
+            {
+              path: "/OSignup",
+              element: <OSignup />,
             }
          ]); 
 
 
 function App() {
   return (
-    <div>
+    
       <RouterProvider router={router}/>
-      
-    </div>
+    
+    
   );
 }
 
