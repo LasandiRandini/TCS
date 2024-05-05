@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 
 export const AuthContext = createContext();
 
@@ -8,22 +9,21 @@ export const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("user")) || null
   );
 
+  AuthContextProvider.propTypes = {
+    children: PropTypes.node,
+  };
   const login = async (inputs) => {
     const res = await axios.post("/auth/login", inputs);
     setCurrentUser(res.data);
   };
 
-  const logout = async (inputs) => {
-    await axios.post("/auth/logout");
-    setCurrentUser(null);
-  };
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
 
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, login }}>
       {children}
     </AuthContext.Provider>
   );

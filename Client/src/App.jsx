@@ -18,6 +18,7 @@ import Dashboard from './Components/Dashboard';
 import Check from './Pages/Check';
 import OSignup from './Pages/OSignup';
 import AVideo from './AdminPages/AVideo';
+import AVideo2 from './AdminPages/AVideo2';
 import AdSignup from './AdminPages/AdSignup';
 import AdLogin from './AdminPages/AdLogin';
 import APractical from './AdminPages/APractical';
@@ -41,15 +42,31 @@ const Layout =()=>{
 
 
 const router = createBrowserRouter([
-  
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/Check",
+    element: <Check />,
+  },
+  {
+    path: "/SLogin",
+    element: <SLogin />,
+  },
+  {
+    path: "/PSignup",
+    element: <PSignup />,
+  },
+  {
+    path: "/OSignup",
+    element: <OSignup />,
+  },
  {
         path: "/",
         element:<Layout/>,
         children:[
-          {
-            path: "/",
-            element: <Home />,
-          },
+          
            
             {
               path: "/PHome",
@@ -81,17 +98,19 @@ const router = createBrowserRouter([
               element: <Quiz />,
             }
         ]},
+        
             {
               path: "/Dashboard",
               element: <Dashboard />,
             },
-            {
-              path: "/Check",
-              element: <Check />,
-            },
+           
             {
               path: "/AVideo",
               element: <AVideo />,
+            },
+            {
+              path: "/AVideo2",
+              element: <AVideo2 />,
             },
             {
               path: "/AdSignup",
@@ -115,18 +134,7 @@ const router = createBrowserRouter([
               path: "/ANotice",
               element: <ANotice />,
             },
-            {
-              path: "/SLogin",
-              element: <SLogin />,
-            },
-            {
-              path: "/PSignup",
-              element: <PSignup />,
-            },
-            {
-              path: "/OSignup",
-              element: <OSignup />,
-            }
+           
          ]); 
 
 

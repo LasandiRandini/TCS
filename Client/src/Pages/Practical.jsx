@@ -20,6 +20,7 @@ const Practical = () => {
   }, []);
 
   return (
+    
     <div className="flex">
       
       <div>

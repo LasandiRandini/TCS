@@ -26,10 +26,13 @@ const Dashboard = () => {
           {videoMenuOpen && (
             <ul className="ml-4">
               <li className="mb-2">
-                <a href="/AVideo" className="hover:bg-gray-700 px-4 py-2 block rounded">Add Video</a>
+                <a href="/AVideo" className="hover:bg-gray-700 px-4 py-2 block rounded">Add a Unit</a>
               </li>
               <li className="mb-2">
-                <a href="/EditVideo" className="hover:bg-gray-700 px-4 py-2 block rounded">Delete Video</a>
+                <a href="/AVideo2" className="hover:bg-gray-700 px-4 py-2 block rounded">Add a Video</a>
+              </li>
+              <li className="mb-2">
+                <a href="/EditVideo" className="hover:bg-gray-700 px-4 py-2 block rounded">Update Video</a>
               </li>
               <li className="mb-2">
                 <a href="/ViewVideo" className="hover:bg-gray-700 px-4 py-2 block rounded">View Videos</a>
@@ -38,10 +41,25 @@ const Dashboard = () => {
           )}
         </li>
         <li className="mb-2">
+          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded" onClick={toggleVideoMenu}>
+            Payable Video
+          </a>
+          {videoMenuOpen && (
+            <ul className="ml-4">
+              <li className="mb-2">
+                <a href="/Reciepts" className="hover:bg-gray-700 px-4 py-2 block rounded">Check Reciepts</a>
+              </li>
+              <li className="mb-2">
+                <a href="/Premission" className="hover:bg-gray-700 px-4 py-2 block rounded">Give Premissions</a>
+              </li>
+            </ul>
+          )}
+        </li>
+        <li className="mb-2">
           <a href="/ANotice" className="hover:bg-gray-700 px-4 py-2 block rounded">Notices</a>
         </li>
         <li className="mb-2">
-          <a href="/APratical" className="hover:bg-gray-700 px-4 py-2 block rounded">Practical</a>
+          <a href="/APractical" className="hover:bg-gray-700 px-4 py-2 block rounded">Practical</a>
         </li>
         <li className="mb-2">
           <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded">Settings</a>

@@ -24,7 +24,7 @@ const APractical = () => {
     e.preventDefault();
     try {
       await axios.post('http://localhost:8800/api/practicals/practical', inputs);
-      navigate('/AVideo'); // Redirect to success page after successful submission
+      navigate('/AVideo'); 
     } catch (err) {
       setError(err.response.data.error);
     }

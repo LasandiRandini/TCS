@@ -5,10 +5,13 @@ import {Link} from 'react-router-dom';
 import HN1 from '../assets/Home_Notices1.jpg';
 import HN2 from '../assets/Home_Notices2.jpg';
 import HN3 from '../assets/Home_Notices3.jpg';
+import HeroNav from "../Components/HeroNav";
+import Footer from "../Components/Footer";
 
 const Home = () => {
   return (
-    
+    <>
+    <HeroNav/>
     <div className="page-background">
      
       {/* Banner content */}
@@ -136,7 +139,8 @@ text-primary mb-5 leading-normal text-black"
 
     
       </div>
-    
+      <Footer/>
+    </>
   );
 };
 

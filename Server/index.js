@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth.js"
 import AauthRoutes from "./routes/Aauth.js"
 import checkingRoutes from "./routes/checkings.js"
 import practicalRoutes from "./routes/practicals.js"
+import videoRoutes from "./routes/videos.js"
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -18,7 +19,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/Aauth", AauthRoutes)
 app.use("/api/checkings", checkingRoutes)
 app.use("/api/practicals", practicalRoutes)
-
+app.use("/api/videos", videoRoutes)
 
 app.listen(8800, () => {
     console.log("Connected!")
