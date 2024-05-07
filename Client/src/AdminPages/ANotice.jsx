@@ -1,41 +1,37 @@
 import { useState } from "react";
 import Dashboard from "../Components/Dashboard";
+import axios from "axios";
 
-function AVideo() {
-  const [Name, setName] = useState("");
+function ANotice() {
+  const [inputs, setInputs] = useState({
+    name: '',
+    year: '',
+    n_description: ''
+  });
 
-  const [Year, setYear] = useState("");
-  const [description, setDescription] = useState("");
+  const [error, setError] = useState(null);
 
-  const [uploadedImage, setUploadedImage] = useState(null);
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
+  const handleChange = (e) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  const handleYearChange = (event) => {
-    setYear(event.target.value);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:8800/api/notices/addNotice', inputs);
+    } catch (err) {
+      setError(err.response.data.error);
+    }
   };
 
   const handleImageUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
-      setUploadedImage(event.target.files[0]);
+      const uploadedImage = event.target.files[0];
+     
+      setInputs({ ...inputs, image: uploadedImage });
     }
   };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    console.log("Form submitted:", {
-      Name,
-      Year,
-      uploadedImage,
-    });
-  };
+  
 
   return (
     <>
@@ -45,56 +41,58 @@ function AVideo() {
           <h1 className="text-2xl font-bold mb-4  px-5">Notice Details</h1>
           <div className="container mx-auto bg-gray-100 p-6 rounded-lg shadow-md">
             <div className="flex flex-col mb-4">
-              <label htmlFor="Name" className="text-sm font-medium mb-1">
-                Practical Name:
+              <label htmlFor="name" className="text-sm font-medium mb-1">
+                Notice Display Title:
               </label>
               <input
                 type="text"
-                id="Name"
-                value={Name}
-                onChange={handleNameChange}
+                id="name"
+                value={inputs.name}
+                onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                required
               />
             </div>
 
             <div className="flex flex-col mb-4">
-              <label htmlFor="Year" className="text-sm font-medium mb-1">
-                Year:
+              <label htmlFor="year" className="text-sm font-medium mb-1">
+                Student Year:
               </label>
               <textarea
-                id="Year"
-                value={Name}
-                onChange={handleYearChange}
+                id="year"
+                value={inputs.year}
+                onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                 rows={1}
+                required
               />
             </div>
 
             <div className="flex flex-col mb-4">
-              <label htmlFor="description" className="text-sm font-medium mb-1">
-                Description:
+              <label htmlFor="n_description" className="text-sm font-medium mb-1">
+               Notice Description:
               </label>
               <textarea
-                id="description"
-                value={description}
-                onChange={handleDescriptionChange}
+                id="n_description"
+                value={inputs.n_description}
+                onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                 rows={2}
+                required
               />
             </div>
 
             <div className="flex flex-col mt-6 mb-4">
-              <label className="text-sm font-medium mb-1">Image upload :</label>
-
-              <div className="mt-2">
-                <input
-                  type="file"
-                  id="imageUpload"
-                  onChange={handleImageUpload}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-                />
-              </div>
-            </div>
+  <label className="text-sm font-medium mb-1">Image upload:</label>
+  <div className="mt-2">
+    <input
+      type="file"
+      id="imageUpload"
+      onChange={handleImageUpload}
+      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+    />
+  </div>
+</div>
 
             <button
               type="submit"
@@ -104,10 +102,11 @@ function AVideo() {
               Create Notice
             </button>
           </div>
+          {error && <p className="text-red-500 text-xs italic">{error}</p>}
         </div>
       </div>
     </>
   );
 }
 
-export default AVideo;
+export default ANotice;

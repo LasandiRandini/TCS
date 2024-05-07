@@ -1,19 +1,22 @@
-// Navbar.js
-import  { useState } from 'react';
-
+import { useState } from 'react';
 
 const Dashboard = () => {
   const [videoMenuOpen, setVideoMenuOpen] = useState(false);
+  const [payableVideoMenuOpen, setPayableVideoMenuOpen] = useState(false);
 
   const toggleVideoMenu = () => {
     setVideoMenuOpen(!videoMenuOpen);
+  };
+
+  const togglePayableVideoMenu = () => {
+    setPayableVideoMenuOpen(!payableVideoMenuOpen);
   };
 
   return (
     <div className="bg-gray-800 text-white w-64 min-h-screen p-4">
       <div className="text-xl font-bold mb-4">Admin Panel</div>
       <ul>
-      <li className="mb-2">
+        <li className="mb-2">
           <a href="#" className="hover:bg-gray-700 px-4 py-2 font-bold block rounded">Admin</a>
         </li>
         <li className="mb-2">
@@ -21,7 +24,7 @@ const Dashboard = () => {
         </li>
         <li className="mb-2">
           <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded" onClick={toggleVideoMenu}>
-            Video
+            Video {videoMenuOpen ? '▼' : '▶'}
           </a>
           {videoMenuOpen && (
             <ul className="ml-4">
@@ -41,10 +44,10 @@ const Dashboard = () => {
           )}
         </li>
         <li className="mb-2">
-          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded" onClick={toggleVideoMenu}>
-            Payable Video
+          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded" onClick={togglePayableVideoMenu}>
+            Payable Video {payableVideoMenuOpen ? '▼' : '▶'}
           </a>
-          {videoMenuOpen && (
+          {payableVideoMenuOpen && (
             <ul className="ml-4">
               <li className="mb-2">
                 <a href="/Reciepts" className="hover:bg-gray-700 px-4 py-2 block rounded">Check Reciepts</a>
