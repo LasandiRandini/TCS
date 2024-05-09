@@ -7,25 +7,29 @@ const SLogin = () => {
     username: "",
     password: "",
   });
-  const [err, setError] = useState(null);
-
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  
-const handleChange = (e) => {
+  const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8800/api/auth/login", inputs);
-      navigate("/PHome");
+      const response = await axios.post("http://localhost:8800/api/auth/login", inputs);
+      const { status } = response.data;
+  
+      if (status === "physical") {
+        navigate("/PHome");
+      } else if (status === "online") {
+        navigate("/OHome");
+      } 
     } catch (err) {
-      setError(err.response.data);
+      setError(err.response.data); 
     }
   };
-
+  
   return (
     <div className="auth flex justify-center items-center h-screen">
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -67,7 +71,7 @@ const handleChange = (e) => {
             >
               Login
             </button>
-            {err && <p className="text-red-500 text-xs italic">{err}</p>}
+            {error && <p className="text-red-500 text-xs italic">{error}</p>}
           </div>
         </form>
         <span className="block text-center">

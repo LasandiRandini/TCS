@@ -39,9 +39,9 @@ export const getUnit = async (req, res) => {
 
 export const addVideo = async (req, res) => {
   const { video_name, video_link,  vunit_id,start_date, end_date } = req.body;
-
+  
   try {
-    // Assuming your video table name is 'videos'
+   
     const query = 'INSERT INTO video ( video_name, video_link,vunit_id, start_date, end_date) VALUES (?, ?, ?, ?, ?)';
     const [result] = await db.query(query, [ video_name, video_link,vunit_id, start_date, end_date]);
 
@@ -53,5 +53,23 @@ export const addVideo = async (req, res) => {
   } catch (error) {
     console.error('Error adding video:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const displayUnits = async (req, res) => {
+  try {
+    const query = 'SELECT unit_name, unit_description, price FROM videounit';
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error('Error fetching practical data:', err);
+        res.status(500).json({ error: 'An error occurred while fetching practical data' });
+      } else {
+        console.log(results);
+        res.status(200).json(results);
+      }
+    });
+  } catch (err) {
+    console.error('Error in getpractical:', err);
+    res.status(500).json({ error: 'An unexpected error occurred' });
   }
 };

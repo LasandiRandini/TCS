@@ -4,9 +4,10 @@ import axios from "axios";
 
 function ANotice() {
   const [inputs, setInputs] = useState({
-    name: '',
-    year: '',
-    n_description: ''
+    name: "",
+    year: "",
+    n_description: "",
+    file: null,
   });
 
   const [error, setError] = useState(null);
@@ -15,23 +16,44 @@ function ANotice() {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
+  const handleFile = (e) => {
+    setInputs({ ...inputs, file: e.target.files[0] });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8800/api/notices/addNotice', inputs);
-    } catch (err) {
-      setError(err.response.data.error);
-    }
-  };
+      const formData = new FormData();
+      formData.append("name", inputs.name);
+      formData.append("year", inputs.year);
+      formData.append("n_description", inputs.n_description);
+      formData.append("file", inputs.file);
 
-  const handleImageUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      const uploadedImage = event.target.files[0];
-     
-      setInputs({ ...inputs, image: uploadedImage });
+      await axios.post(
+        "http://localhost:8800/api/Notices/addNotice",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      
+      setInputs({
+        name: "",
+        year: "",
+        n_description: "",
+        file: null,
+      });
+      setError(null);
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        setError(err.response.data.error);
+      } else {
+        setError("Something went wrong. Please try again later.");
+      }
     }
   };
-  
 
   return (
     <>
@@ -50,6 +72,8 @@ function ANotice() {
                 value={inputs.name}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                name="name"
+                placeholder="Notice Topic"
                 required
               />
             </div>
@@ -62,6 +86,14 @@ function ANotice() {
                 id="year"
                 value={inputs.year}
                 onChange={handleChange}
+                type="text"
+             
+              name="year"
+              
+              
+              placeholder="Year"
+              
+          
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                 rows={1}
                 required
@@ -69,30 +101,34 @@ function ANotice() {
             </div>
 
             <div className="flex flex-col mb-4">
-              <label htmlFor="n_description" className="text-sm font-medium mb-1">
-               Notice Description:
+              <label
+                htmlFor="n_description"
+                className="text-sm font-medium mb-1"
+              >
+                Notice Description:
               </label>
               <textarea
                 id="n_description"
                 value={inputs.n_description}
+                name="n_description"
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Notice Description"
                 rows={2}
-                required
               />
             </div>
 
             <div className="flex flex-col mt-6 mb-4">
-  <label className="text-sm font-medium mb-1">Image upload:</label>
-  <div className="mt-2">
-    <input
-      type="file"
-      id="imageUpload"
-      onChange={handleImageUpload}
-      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-    />
-  </div>
-</div>
+              <label className="text-sm font-medium mb-1">Image upload:</label>
+              <div className="mt-2">
+                <input
+                  type="file"
+                  id="imageUpload"
+                  onChange={handleFile}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+            </div>
 
             <button
               type="submit"

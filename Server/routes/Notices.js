@@ -1,9 +1,21 @@
-import express from "express"
-import { addNotice} from "../controllers/notice.js"
+import express from "express";
+import { addNotice } from "../controllers/notice.js";
+import multer from "multer";
+import path from "path";
 
-const router = express.Router()
+const router = express.Router();
 
-router.post("/addNotice", addNotice)
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/image");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
+  },
+});
 
+const upload = multer({ storage: storage });
 
-export default router
+router.post("/addNotice", upload.single("file"), addNotice);
+
+export default router;

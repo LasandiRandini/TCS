@@ -10,6 +10,7 @@ import Home from './Pages/Home';
 import SLogin from './Pages/SLogin';
 import PSignup from './Pages/PSignup';
 import PHome from './Pages/PHome';
+import OHome from './Pages/OHome';
 import Video from './Pages/Video';
 import Video2 from './Pages/Video2';
 import MyVideo from './Pages/MyVideo';
@@ -98,8 +99,11 @@ const router = createBrowserRouter([
               element: <Quiz />,
             }
         ]},
-        
-            {
+           {
+              path: "/OHome",
+              element: <OHome />,
+           },
+           {
               path: "/Dashboard",
               element: <Dashboard />,
             },

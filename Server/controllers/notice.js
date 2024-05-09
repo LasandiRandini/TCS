@@ -1,10 +1,11 @@
 import { db } from '../db.js';
 
 export const addNotice = async (req, res) => {
-  const { year, name, n_description } = req.body;
+  const { name, year, n_description } = req.body;
+  const image = req.file ? req.file.filename : null;
 
   try {
-    const [result] = await db.promise().query('INSERT INTO notice (year, name, n_description) VALUES (?, ?, ?)', [year, name, n_description]);
+    const [result] = await db.promise().query('INSERT INTO notice (name, year, n_description, image) VALUES (?, ?, ?, ?)', [name, year, n_description, image]);
 
     if (result.affectedRows === 1) {
       res.status(201).json({ message: 'Notice created successfully' });

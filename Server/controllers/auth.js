@@ -70,6 +70,19 @@ export const login = (req, res) => {
     if (!isPasswordCorrect)
       return res.status(400).json("Wrong username or password!");
 
+  // Check user status
+  const statusQuery = `
+  SELECT status 
+  FROM status 
+  WHERE nic_no = (
+    SELECT snic_no 
+    FROM users 
+    WHERE snic_no = ?
+  )`;
+  db.query(statusQuery, [data[0].snic_no], (statusErr, statusData) => {
+    if (statusErr) return res.json(statusErr);
+    if (statusData.length == 0) return res.status(404).json("Status not found!");
+
     const token = Jwt.sign({ id: data[0].id }, "jwtkey");
     const { password, ...other } = data[0];
 
@@ -79,6 +92,7 @@ export const login = (req, res) => {
       })
       .status(200)
       .json(other);
+    });
   });
 };
 
