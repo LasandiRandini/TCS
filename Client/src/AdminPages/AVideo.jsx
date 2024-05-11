@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Dashboard from "../Components/Dashboard";
+
 import axios from "axios";
 
 function AVideo() {
@@ -32,7 +32,7 @@ function AVideo() {
   return (
     <>
       <div className="flex">
-        <Dashboard />
+     
 
         <div className="container mx-auto bg-gray-100 p-6 rounded-lg shadow-md">
         <h1 className="text-xl font-medium text-center pb-6">

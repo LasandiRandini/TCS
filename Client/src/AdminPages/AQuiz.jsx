@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Dashboard from "../Components/Dashboard";
+
 
 function AVideo() {
   const [unitName, setUnitName] = useState("");
@@ -61,7 +61,7 @@ function AVideo() {
   return (
     <>
       <div className="flex">
-        <Dashboard />
+        
         <div className="flex flex-col w-full px-4 py-8 bg-white rounded-lg shadow-md">
           <div className="flex flex-col mb-4">
             <label htmlFor="selectYear" className="text-sm font-medium mb-1">

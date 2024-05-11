@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Dashboard from '../Components/Dashboard';
+
 
 const APractical = () => {
   const [inputs, setInputs] = useState({
@@ -33,7 +33,7 @@ const APractical = () => {
   return (
     <>
     <div className='flex'>
-      <Dashboard />  
+     
 
       <div className="mx-auto w-full px-4 py-8  rounded-lg shadow-md">
    

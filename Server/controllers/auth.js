@@ -57,7 +57,7 @@ export const register = (req, res) => {
 };
 
 export const login = (req, res) => {
-  const q = "SELECT * FROM users WHERE username=?";
+  const q = "SELECT * FROM users WHERE username=?,";
 
   db.query(q, [req.body.username], (err, data) => {
     if (err) return res.json(err);
@@ -70,6 +70,17 @@ export const login = (req, res) => {
     if (!isPasswordCorrect)
       return res.status(400).json("Wrong username or password!");
 
+    
+    const token = Jwt.sign({ id: data[0].id }, "jwtkey");
+    const { password, ...other } = data[0];
+
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json(other);
+      
   // Check user status
   const statusQuery = `
   SELECT status 
@@ -83,15 +94,6 @@ export const login = (req, res) => {
     if (statusErr) return res.json(statusErr);
     if (statusData.length == 0) return res.status(404).json("Status not found!");
 
-    const token = Jwt.sign({ id: data[0].id }, "jwtkey");
-    const { password, ...other } = data[0];
-
-    res
-      .cookie("access_token", token, {
-        httpOnly: true,
-      })
-      .status(200)
-      .json(other);
     });
   });
 };

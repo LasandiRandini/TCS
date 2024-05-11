@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Dashboard from "../Components/Dashboard";
+
 import axios from "axios";
 
 function ANotice() {
@@ -58,7 +58,7 @@ function ANotice() {
   return (
     <>
       <div className="flex">
-        <Dashboard />
+       
         <div className="flex flex-col w-full px-4 py-8 bg-white rounded-lg shadow-md">
           <h1 className="text-2xl font-bold mb-4  px-5">Notice Details</h1>
           <div className="container mx-auto bg-gray-100 p-6 rounded-lg shadow-md">

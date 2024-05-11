@@ -17,3 +17,18 @@ export const addNotice = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getNotice = async (req, res) => {
+  try {
+    const notice = await db.promise().query('SELECT name, n_description, image FROM notice ');
+
+    if (notice[0].length === 0) {
+      return res.status(404).json({ error: 'Notice not found' });
+    }
+
+    res.status(200).json(notice[0][0]);
+  } catch (error) {
+    console.error('Error while fetching notice:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

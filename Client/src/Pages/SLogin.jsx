@@ -19,12 +19,11 @@ const SLogin = () => {
     try {
       const response = await axios.post("http://localhost:8800/api/auth/login", inputs);
       const { status } = response.data;
-  
-      if (status === "physical") {
+      if (status === 'physical') {
         navigate("/PHome");
-      } else if (status === "online") {
+      } else if(status === 'online'){
         navigate("/OHome");
-      } 
+      }
     } catch (err) {
       setError(err.response.data); 
     }
