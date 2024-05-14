@@ -1,10 +1,17 @@
+// router.js
+
 import express from "express";
-const app = express(); 
-import {  showReciept,addReciept } from "../controllers/o_video.js";
+import { fileURLToPath } from 'url';
 import multer from "multer";
+const app = express(); 
 import path from "path";
+import { showReceipt, addReceipt } from "../controllers/o_video.js";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router = express.Router();
+
+router.use(express.static('public'));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -17,12 +24,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post("/addReciept", upload.single("file"), addReciept);
+router.post("/addReceipt", upload.single("file"), addReceipt); 
+router.get("/showReceipt", showReceipt); 
 
-router.get("/showReciept", showReciept);
-
+app.use(express.static(path.join(__dirname, 'public')));
 export default router;
-
-
-
-

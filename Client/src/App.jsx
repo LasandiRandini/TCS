@@ -24,6 +24,7 @@ import Quiz from "./Pages/Quiz";
 import ANotice from "./AdminPages/ANotice";
 import PNav from "./Components/PNav";
 import Footer from "./Components/Footer";
+import  AReciepts  from "./AdminPages/AReciepts";
 
 const Layout = () => {
   return (
@@ -38,8 +39,8 @@ const Layout = () => {
 const DashLayout = () => {
   return (
     <div>
-      <div className="flex">
-        <div className="w-[256px]">
+      <div className="flex ">
+        <div className="w-[280px] ">
           <Dashboard />
         </div>
 
@@ -120,6 +121,10 @@ const router = createBrowserRouter([
       {
         path: "/AVideo2",
         element: <AVideo2 />,
+      },
+      {
+        path: "/AReciepts",
+        element: <AReciepts />,
       },
       {
         path: "/AdSignup",

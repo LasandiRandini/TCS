@@ -28,7 +28,7 @@ app.use("/api/checkings", checkingRoutes)
 app.use("/api/practicals", practicalRoutes)
 app.use("/api/videos", videoRoutes)
 app.use("/api/Notices", noticeRouter);
-app.use("/api/o_video",o_videoRouter)
+app.use("/api/o_videos",o_videoRouter)
 
 
 

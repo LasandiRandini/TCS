@@ -13,7 +13,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-gray-800 text-white w-64 min-h-screen p-4">
+    <div className="bg-gray-800 text-white w-60 min-h-screen p-4 fixed">
       <div className="text-xl font-bold mb-4">Admin Panel</div>
       <ul>
         <li className="mb-2">
@@ -50,7 +50,7 @@ const Dashboard = () => {
           {payableVideoMenuOpen && (
             <ul className="ml-4">
               <li className="mb-2">
-                <a href="/Reciepts" className="hover:bg-gray-700 px-4 py-2 block rounded">Check Reciepts</a>
+                <a href="/AReciepts" className="hover:bg-gray-700 px-4 py-2 block rounded">Check Reciepts</a>
               </li>
               <li className="mb-2">
                 <a href="/Premission" className="hover:bg-gray-700 px-4 py-2 block rounded">Give Premissions</a>

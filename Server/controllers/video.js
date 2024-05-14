@@ -58,7 +58,7 @@ export const addVideo = async (req, res) => {
 
 export const displayUnits = async (req, res) => {
   try {
-    const query = 'SELECT unit_name, unit_description, price FROM videounit';
+    const query = 'SELECT unit_id,unit_name, unit_description, price FROM videounit';
     db.query(query, (err, results) => {
       if (err) {
         console.error('Error fetching practical data:', err);
