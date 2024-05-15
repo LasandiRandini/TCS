@@ -13,7 +13,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-gray-800 text-white w-60 min-h-screen p-4 fixed">
+    <div className="bg-gray-800 text-white w-60 min-h-screen p-4 ">
       <div className="text-xl font-bold mb-4">Admin Panel</div>
       <ul>
         <li className="mb-2">

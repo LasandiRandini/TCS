@@ -15,6 +15,7 @@ import Check from "./Pages/Check";
 import OSignup from "./Pages/OSignup";
 import AVideo from "./AdminPages/AVideo";
 import AVideo2 from "./AdminPages/AVideo2";
+import EditVideo from "./AdminPages/EditVideo";
 import AdSignup from "./AdminPages/AdSignup";
 import AdLogin from "./AdminPages/AdLogin";
 import APractical from "./AdminPages/APractical";
@@ -24,7 +25,8 @@ import Quiz from "./Pages/Quiz";
 import ANotice from "./AdminPages/ANotice";
 import PNav from "./Components/PNav";
 import Footer from "./Components/Footer";
-import  AReciepts  from "./AdminPages/AReciepts";
+import AReciepts from "./AdminPages/AReciepts";
+import UpdateUnit from "./AdminPages/UpdateUnit";
 
 const Layout = () => {
   return (
@@ -40,7 +42,7 @@ const DashLayout = () => {
   return (
     <div>
       <div className="flex ">
-        <div className="w-[280px] ">
+        <div className="w-[300px] ">
           <Dashboard />
         </div>
 
@@ -73,6 +75,7 @@ const router = createBrowserRouter([
     path: "/OSignup",
     element: <OSignup />,
   },
+
   {
     path: "/",
     element: <Layout />,
@@ -80,6 +83,11 @@ const router = createBrowserRouter([
       {
         path: "/PHome",
         element: <PHome />,
+      },
+
+      {
+        path: "/OHome",
+        element: <OHome />,
       },
       {
         path: "/Video",
@@ -108,12 +116,11 @@ const router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/",
     element: <DashLayout />,
     children: [
-      
-
       {
         path: "/AVideo",
         element: <AVideo />,
@@ -147,11 +154,15 @@ const router = createBrowserRouter([
         path: "/ANotice",
         element: <ANotice />,
       },
+       {
+         path: "/EditVideo",
+         element: <EditVideo />,
+       },
+       {
+        path: "/UpdateUnit/:unit_id",
+        element: <UpdateUnit />,
+      },
     ],
-  },
-  {
-    path: "/OHome",
-    element: <OHome />,
   },
 ]);
 

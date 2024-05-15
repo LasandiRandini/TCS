@@ -37,6 +37,23 @@ export const getUnit = async (req, res) => {
   }
 };
 
+export const updateUnit = async (req, res) => {
+  const { v_year, unit_name, unit_description, price } = req.body;
+  const unit_id = req.params.unit_id;
+
+  try {
+    const sql = 'UPDATE videounit SET v_year=?, unit_name=?, unit_description=?, price=? WHERE unit_id=?';
+    const values = [v_year, unit_name, unit_description, price, unit_id];
+    await db.promise().query(sql, values);
+
+    res.json({ message: 'Unit updated successfully' });
+  } catch (error) {
+    console.error('Error updating unit:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 export const addVideo = async (req, res) => {
   const { video_name, video_link,  vunit_id,start_date, end_date } = req.body;
   
@@ -58,7 +75,7 @@ export const addVideo = async (req, res) => {
 
 export const displayUnits = async (req, res) => {
   try {
-    const query = 'SELECT unit_id,unit_name, unit_description, price FROM videounit';
+    const query = 'SELECT unit_id,unit_name,v_year, unit_description, price FROM videounit';
     db.query(query, (err, results) => {
       if (err) {
         console.error('Error fetching practical data:', err);
@@ -71,5 +88,77 @@ export const displayUnits = async (req, res) => {
   } catch (err) {
     console.error('Error in getpractical:', err);
     res.status(500).json({ error: 'An unexpected error occurred' });
+  }
+};
+
+
+export const autoCompletePartId = async (req, res) => {
+  const { input } = req.query;
+
+  try {
+    const q = "SELECT unit_id, unit_name,  FROM videounit WHERE unit_id LIKE ?";
+    const searchQuery = `%${input}%`;
+
+    const results = await new Promise((resolve, reject) => {
+      db.query(q, [searchQuery], (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          const suggestions = result.map(row => ({ unit_id: row.unit_id, name: row.unit_name }));
+          resolve(suggestions);
+        }
+      });
+    });
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error('Error fetching suggestions:', error);
+    res.status(500).json({ error: 'An error occurred while fetching suggestions' });
+  }
+};
+
+// Function to get details of a specific video based on unit_id
+export const getaStock = async (req, res) => {
+  const { unit_id } = req.params;
+  try {
+    const q = "SELECT * FROM videounit WHERE unit_id = ?";
+
+    db.query(q, [unit_id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'An error occurred while fetching the stock' });
+      } else {
+        if (result.length === 0) {
+          res.status(404).json({ error: 'Stock not found' });
+        } else {
+          res.status(200).json(result[0]);
+        }
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An unexpected error occurred' });
+  }
+};
+
+// Function to update details of a video
+export const updateStock = async (req, res) => {
+  const { unit_id, price, v_year, unit_description } = req.body;
+
+  try {
+    const sql = "UPDATE videounit SET price = ?, unit_description = ?, v_year = ? WHERE unit_id = ?";
+    const values = [price, unit_description, v_year, unit_id];
+
+    db.query(sql, values, (error, results) => {
+      if (error) {
+        console.error('Error updating video:', error);
+        res.status(500).json({ error: 'Failed to update video' });
+      } else {
+        res.status(200).json({ message: 'Video updated successfully' });
+      }
+    });
+  } catch (error) {
+    console.error('Error updating video:', error);
+    res.status(500).json({ error: 'Failed to update video' });
   }
 };
