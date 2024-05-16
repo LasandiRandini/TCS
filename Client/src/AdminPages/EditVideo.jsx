@@ -17,7 +17,7 @@ const EditVideo = () => {
       console.error('Error fetching videos:', error);
     }
   };
-//delete
+
   const handleDelete = async (unit_id) => {
     try {
       if (window.confirm("Are you sure you want to delete this video?")) {
