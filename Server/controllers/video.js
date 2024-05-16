@@ -53,6 +53,31 @@ export const updateUnit = async (req, res) => {
   }
 };
 
+export const deleteUnit = async (req, res) => {
+  try {
+    const sql = 'DELETE FROM videounit WHERE unit_id=?';
+    const unit_id = req.params.unit_id;
+
+    db.query(sql, [unit_id], (err, data) => {
+      if (err) {
+        console.error('Error deleting video unit:', err);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+
+      if (data.affectedRows === 0) {
+        return res.status(404).json({ error: 'Video unit not found' });
+      }
+
+      return res.status(200).json({ message: 'Video unit deleted successfully' });
+    });
+  } catch (error) {
+    console.error('Error deleting video unit:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+   
+
 
 export const addVideo = async (req, res) => {
   const { video_name, video_link,  vunit_id,start_date, end_date } = req.body;

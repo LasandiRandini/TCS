@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -18,17 +18,21 @@ const EditVideo = () => {
     }
   };
 
-  function handleDelete = async(unit_id) {
- try {
-      await axios.delete(`http://localhost:8800/api/videos/deleteUnit/${unit_id}`);
-      fetchVideos();
+  const handleDelete = async (unit_id) => {
+    try {
+      if (window.confirm("Are you sure you want to delete this video?")) {
+        await axios.delete(`http://localhost:8800/api/videos/deleteUnit/${unit_id}`);
+        setVideos(videos.filter(video => video.unit_id !== unit_id));
+      }
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   return (
     <div className="flex h-screen bg-primary justify-center items-center">
       <div className="w-1/2 bg-white rounded shadow-lg p-6">
-      <Link to="/AVideo" className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Add Video</Link>
+        <Link to="/AVideo" className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Add Video</Link>
         
         <table className="w-full">
           <thead>
@@ -48,9 +52,8 @@ const EditVideo = () => {
                 <td className="py-2 px-4">{video.unit_description}</td>
                 <td className="py-2 px-4">{video.price}</td>
                 <td className="py-2 px-4">
-                <Link to={`/UpdateUnit/${video.unit_id}`} className="bg-yellow-500 text-white font-bold py-1 px-2 rounded">Edit</Link>
-<button className="btn btn-danger ms-2 " onClick={e => handleDelete(data.unit_id)}>Delete</button>
-                  
+                  <Link to={`/UpdateUnit/${video.unit_id}`} className="bg-yellow-500 text-white font-bold py-1 px-2 rounded">Edit</Link>
+                  <button className="bg-yellow-500 text-white btn btn-danger mt-2 font-bold py-1 px-2 rounded" onClick={() => handleDelete(video.unit_id)}>Delete</button>
                 </td>
               </tr>
             ))}
