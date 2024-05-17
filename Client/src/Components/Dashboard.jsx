@@ -76,7 +76,7 @@ const Dashboard = () => {
                 <a href="/AddNIcs" className="hover:bg-gray-700 px-4 py-2 block rounded">Add NICs</a>
               </li>
               <li className="mb-2">
-                <a href="/ChangeSS" className="hover:bg-gray-700 px-4 py-2 block rounded">Change Status</a>
+                <a href="/DeleteStudent" className="hover:bg-gray-700 px-4 py-2 block rounded">Delete a Student</a>
               </li>
             </ul>
           )}

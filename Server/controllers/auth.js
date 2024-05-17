@@ -128,4 +128,89 @@ export const profile = (req, res) => {
     res.json(userProfile);
   });
 };
+
+
+// export const deleteStudent = async (req, res) => {
+//   try {
+//     const sql = 'DELETE FROM users WHERE id=?';
+//     const id = req.params.id;
+
+//     db.query(sql, [id], (err, data) => {
+//       if (err) {
+//         console.error('Error deleting user:', err);
+//         return res.status(500).json({ error: 'Internal server error' });
+//       }
+
+//       if (data.affectedRows === 0) {
+//         return res.status(404).json({ error: 'User not found' });
+//       }
+
+//       return res.status(200).json({ message: 'User deleted successfully' });
+//     });
+//   } catch (error) {
+//     console.error('Error deleting User:', error);
+//     return res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
+
+export const deleteStudent = async (req, res) => {
+  try {
+    const sqlDeleteUser = 'DELETE FROM users WHERE id=?';
+    const sqlDeleteStatus = 'DELETE FROM status WHERE nic_no=?';
+    const id = req.params.id;
+
+    
+    const user = await db.promise().query('SELECT snic_no FROM users WHERE id=?', [id]);
+    
+    if (user[0].length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const nic_no = user[0][0].snic_no;
+
+   
+    await db.promise().beginTransaction();
+
+   
+    const deleteUserResult = await db.promise().query(sqlDeleteUser, [id]);
+
+    if (deleteUserResult[0].affectedRows === 0) {
+      await db.promise().rollback();
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+  
+    await db.promise().query(sqlDeleteStatus, [nic_no]);
+
+   
+    await db.promise().commit();
+
+    return res.status(200).json({ message: 'User and corresponding status deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user and status:', error);
+    await db.promise().rollback();
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+export const displayUsers = async (req, res) => {
+  try {
+    const query = 'SELECT id,first_name,last_name,distric, snic_no,email,contact_no,al_year,institute,parent_contact_no,parent_email FROM users';
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error('Error fetching practical data:', err);
+        res.status(500).json({ error: 'An error occurred while fetching practical data' });
+      } else {
+        console.log(results);
+        res.status(200).json(results);
+      }
+    });
+  } catch (err) {
+    console.error('Error in getpractical:', err);
+    res.status(500).json({ error: 'An unexpected error occurred' });
+  }
+};
 export const logout = (req, res) => {};
+
+

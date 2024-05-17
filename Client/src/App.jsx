@@ -31,6 +31,7 @@ import OProfile from "./Pages/OProfile";
 import ONav from "./Components/ONav";
 import AddStudent from "./AdminPages/AddStudent";
 import AddNIcs from "./AdminPages/AddNics";
+import DeleteStudent from "./AdminPages/DeleteStudent";
 
 const PLayout = () => {
   return (
@@ -181,6 +182,10 @@ const router = createBrowserRouter([
       {
         path: "/AddStudent",
         element: <AddStudent />,
+      },
+      {
+        path: "/DeleteStudent",
+        element: <DeleteStudent />,
       },
       {
         path: "/AddNIcs",
