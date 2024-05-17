@@ -2,7 +2,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 const APractical = () => {
   const [inputs, setInputs] = useState({
     year: '',
@@ -31,15 +30,10 @@ const APractical = () => {
   };
 
   return (
-    <>
-    <div className='flex'>
-     
-
-      <div className="mx-auto w-full px-4 py-8  rounded-lg shadow-md">
-   
-      <div className="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-4">
-        <h1 className="text-2xl mb-4 text-center">Add Practical</h1>
-        <form className="mb-4" onSubmit={handleSubmit}>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-3">
+      <div className="w-full max-w-lg px-6 py-8 bg-white rounded-lg shadow-md">
+        <h1 className="text-2xl font-bold mb-6 text-center">Add Practical</h1>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="year" className="block text-gray-700 text-sm font-bold mb-2">Year:</label>
             <input
@@ -48,7 +42,7 @@ const APractical = () => {
               name="year"
               value={inputs.year}
               onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Year"
               required
             />
@@ -61,7 +55,7 @@ const APractical = () => {
               name="title"
               value={inputs.title}
               onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Title"
               required
             />
@@ -74,7 +68,7 @@ const APractical = () => {
               name="date"
               value={inputs.date}
               onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -86,7 +80,7 @@ const APractical = () => {
               name="duration"
               value={inputs.duration}
               onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Duration"
               required
             />
@@ -99,42 +93,36 @@ const APractical = () => {
               name="institute"
               value={inputs.institute}
               onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Institute"
               required
             />
           </div>
-
           <div className="mb-4">
             <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">Description:</label>
-            <input
-              type="text"
+            <textarea
               id="description"
               name="description"
               value={inputs.description}
               onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full px-3 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Description"
+              rows={4}
               required
             />
           </div>
-          
           <div className="flex items-center justify-between">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
             >
               Add Practical
             </button>
-            {error && <p className="text-red-500 text-xs italic">{error}</p>}
           </div>
         </form>
+        {error && <p className="text-red-500 text-xs italic mt-4 text-center">{error}</p>}
       </div>
     </div>
-    </div>
-    
-    </>
- 
   );
 };
 

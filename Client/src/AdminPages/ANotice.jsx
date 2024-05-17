@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import axios from "axios";
 
 function ANotice() {
@@ -38,7 +37,7 @@ function ANotice() {
           },
         }
       );
-      
+
       setInputs({
         name: "",
         year: "",
@@ -56,92 +55,77 @@ function ANotice() {
   };
 
   return (
-    <>
-      <div className="flex">
-       
-        <div className="flex flex-col w-full px-4 py-8 bg-white rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold mb-4  px-5">Notice Details</h1>
-          <div className="container mx-auto bg-gray-100 p-6 rounded-lg shadow-md">
-            <div className="flex flex-col mb-4">
-              <label htmlFor="name" className="text-sm font-medium mb-1">
-                Notice Display Title:
-              </label>
-              <input
-                type="text"
-                id="name"
-                value={inputs.name}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-                name="name"
-                placeholder="Notice Topic"
-                required
-              />
-            </div>
-
-            <div className="flex flex-col mb-4">
-              <label htmlFor="year" className="text-sm font-medium mb-1">
-                Student Year:
-              </label>
-              <textarea
-                id="year"
-                value={inputs.year}
-                onChange={handleChange}
-                type="text"
-             
-              name="year"
-              
-              
-              placeholder="Year"
-              
-          
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-                rows={1}
-                required
-              />
-            </div>
-
-            <div className="flex flex-col mb-4">
-              <label
-                htmlFor="n_description"
-                className="text-sm font-medium mb-1"
-              >
-                Notice Description:
-              </label>
-              <textarea
-                id="n_description"
-                value={inputs.n_description}
-                name="n_description"
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Notice Description"
-                rows={2}
-              />
-            </div>
-
-            <div className="flex flex-col mt-6 mb-4">
-              <label className="text-sm font-medium mb-1">Image upload:</label>
-              <div className="mt-2">
-                <input
-                  type="file"
-                  id="imageUpload"
-                  onChange={handleFile}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className="w-full px-4 mt-6 py-2 text-center text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
-            >
-              Create Notice
-            </button>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+      <div className="flex flex-col w-full max-w-lg px-6 py-8 bg-white rounded-lg shadow-md">
+        <h1 className="text-2xl font-bold mb-6 text-center">Create Notice</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex flex-col">
+            <label htmlFor="name" className="text-sm font-medium mb-1">
+              Notice Display Title:
+            </label>
+            <input
+              type="text"
+              id="name"
+              value={inputs.name}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              name="name"
+              placeholder="Notice Topic"
+              required
+            />
           </div>
-          {error && <p className="text-red-500 text-xs italic">{error}</p>}
-        </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="year" className="text-sm font-medium mb-1">
+              Student Year:
+            </label>
+            <input
+              type="text"
+              id="year"
+              value={inputs.year}
+              onChange={handleChange}
+              name="year"
+              placeholder="Year"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="n_description" className="text-sm font-medium mb-1">
+              Notice Description:
+            </label>
+            <textarea
+              id="n_description"
+              value={inputs.n_description}
+              name="n_description"
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Notice Description"
+              rows={4}
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-sm font-medium mb-1">Image upload:</label>
+            <input
+              type="file"
+              id="imageUpload"
+              onChange={handleFile}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full px-4 py-2 text-center text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
+          >
+            Create Notice
+          </button>
+        </form>
+        {error && <p className="text-red-500 text-sm mt-4 text-center">{error}</p>}
       </div>
-    </>
+    </div>
   );
 }
 

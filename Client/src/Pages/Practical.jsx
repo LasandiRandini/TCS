@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
 const Practical = () => {
   const [practicals, setPracticals] = useState([]);
   const [error, setError] = useState(null);
@@ -20,32 +19,26 @@ const Practical = () => {
   }, []);
 
   return (
-    
-    <div className="flex">
-      
-      <div>
-        <div className='w-full'>
-        <h1 className="text-2xl font-bold mb-4 mt-20 px-5">Practical Details</h1>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="container mx-auto p-6">
+        <h1 className="text-3xl font-bold mb-8 text-center">Practical Details</h1>
         {error ? (
-          <p className="text-red-500">Error: {error}</p>
+          <p className="text-red-500 text-center">Error: {error}</p>
         ) : (
-          <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {practicals.map((practical) => (
-              <div key={practical.practical_id} className="mb-4">
-                <div className="bg-[rgba(255,255,255,0.04)] rounded-[35px] shadow-3xl p-8 mb-4">
-                  <p><strong>Title:</strong> {practical.title}</p>
-                  <p><strong>Year:</strong> {practical.year}</p>
-                  <p><strong>Date:</strong> {practical.date}</p>
-                  <p><strong>Duration:</strong> {practical.duration}</p>
-                  <p><strong>Institute:</strong> {practical.institute}</p>
-                  <p><strong>Description:</strong> {practical.description}</p>
-                </div>
+              <div key={practical.practical_id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                <h2 className="text-2xl font-bold mb-2">{practical.title}</h2>
+                <p className="text-gray-700"><strong>Year:</strong> {practical.year}</p>
+                <p className="text-gray-700"><strong>Date:</strong> {practical.date}</p>
+                <p className="text-gray-700"><strong>Duration:</strong> {practical.duration}</p>
+                <p className="text-gray-700"><strong>Institute:</strong> {practical.institute}</p>
+                <p className="text-gray-700 mb-4"><strong>Description:</strong> {practical.description}</p>
+               
               </div>
-              
             ))}
           </div>
         )}
-      </div>
       </div>
     </div>
   );

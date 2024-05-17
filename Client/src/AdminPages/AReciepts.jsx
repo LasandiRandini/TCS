@@ -19,23 +19,24 @@ const App = () => {
   }, []);
 
   return (
-    <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1   md:gap-12 gap-8">
-      {receipts.map((receipt, index) => (
-        <div
-          key={index}
-          
-        >
-          {error ? (
-            <p className="text-red-500">Error: {error}</p>
-          ) : (
-            <div>              
-              <p>{receipt.v_year}</p>
-              <p>{receipt.unit_name}</p>
-              <img src={`http://localhost:8800/public/${receipt.reciepts}`} className="w-full h-auto pt-6 lg:h-[400px]" />
-            </div>
-          )}
-        </div>
-      ))}
+    <div className="container mx-auto px-4 py-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {receipts.map((receipt, index) => (
+          <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+            {error ? (
+              <p className="text-red-500 text-center py-4">Error: {error}</p>
+            ) : (
+              <div>
+                <img src={`http://localhost:8800/public/${receipt.reciepts}`} alt={`Receipt ${index}`} className="w-full h-auto" />
+                <div className="p-4">
+                  <p className="text-xl font-semibold">{receipt.unit_name}</p>
+                  <p className="text-gray-500 mt-2">Year: {receipt.v_year}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

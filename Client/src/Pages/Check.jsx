@@ -1,6 +1,5 @@
-// Check.js
 import { useState } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Check = () => {
@@ -28,13 +27,12 @@ const Check = () => {
   };
 
   return (
-    <div className="auth flex justify-center items-center h-screen">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h2 className="text-2xl mb-4 ">Are you a Physical class student? ,then</h2>
-        <h2 className="text-2xl mb-4 ">Enter your NIC number</h2>
-
-        <form className="mb-4" onSubmit={handleSubmit}>
-          <div className="mb-4">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+        <h2 className="text-3xl font-bold mb-6 text-center">Student Status Check</h2>
+        <p className="text-lg mb-6 text-center">Are you a Physical class student? Enter your NIC number to check.</p>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nic_number">
               NIC Number
             </label>
@@ -43,20 +41,19 @@ const Check = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="nic_number"
               type="text"
-              placeholder="NIC Number"
+              placeholder="Enter NIC Number"
               value={nicNumber}
               onChange={handleChange}
             />
           </div>
-
-          <div className="flex items-center justify-between">
+          {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
+          <div className="flex justify-center">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Submit
             </button>
-            {error && <p className="text-red-500 text-xs italic">{error}</p>}
           </div>
         </form>
       </div>
