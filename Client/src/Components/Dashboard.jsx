@@ -5,14 +5,14 @@ const Dashboard = () => {
 
   const toggleMenu = (menu) => {
     if (activeMenu === menu) {
-      setActiveMenu(null); // Close the menu if it's already open
+      setActiveMenu(null); 
     } else {
-      setActiveMenu(menu); // Open the selected menu
+      setActiveMenu(menu); 
     }
   };
 
   return (
-    <div className="bg-gray-800 text-white w-60 min-h-screen p-4  ">
+    <div className="bg-gray-800 text-white  w-60 min-h-screen p-4  ">
       <div className="text-xl font-bold mb-4">Admin Panel</div>
       <ul>
         <li className="mb-2">
@@ -70,7 +70,10 @@ const Dashboard = () => {
           {activeMenu === 'studentHandle' && (
             <ul className="ml-4">
               <li className="mb-2">
-                <a href="/AddStudent" className="hover:bg-gray-700 px-4 py-2 block rounded">Add a Student</a>
+                <a href="/AddStudent" className="hover:bg-gray-700 px-4 py-2 block rounded">Register Student</a>
+              </li>
+              <li className="mb-2">
+                <a href="/AddNIcs" className="hover:bg-gray-700 px-4 py-2 block rounded">Add NICs</a>
               </li>
               <li className="mb-2">
                 <a href="/ChangeSS" className="hover:bg-gray-700 px-4 py-2 block rounded">Change Status</a>

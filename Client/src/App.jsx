@@ -29,6 +29,8 @@ import AReciepts from "./AdminPages/AReciepts";
 import UpdateUnit from "./AdminPages/UpdateUnit";
 import OProfile from "./Pages/OProfile";
 import ONav from "./Components/ONav";
+import AddStudent from "./AdminPages/AddStudent";
+import AddNIcs from "./AdminPages/AddNics";
 
 const PLayout = () => {
   return (
@@ -175,6 +177,14 @@ const router = createBrowserRouter([
       {
         path: "/ANotice",
         element: <ANotice />,
+      },
+      {
+        path: "/AddStudent",
+        element: <AddStudent />,
+      },
+      {
+        path: "/AddNIcs",
+        element: <AddNIcs />,
       },
        {
          path: "/EditVideo",

@@ -14,7 +14,7 @@ const Home = () => {
     <HeroNav/>
     <div className="page-background">
      
-      {/* Banner content */}
+     
       <div className="md:px-12 p-4 max-w-screen-2xl mx-auti mt-20  ">
         <div className="gradienBg rounded-x1 rounded-br-[80px] md:p-9 px-4 py-9">
           <div className="flex flex-col md:flex-row-reverse justify-between items-center gap-10">

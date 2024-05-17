@@ -142,7 +142,7 @@ export const autoCompletePartId = async (req, res) => {
   }
 };
 
-// Function to get details of a specific video based on unit_id
+
 export const getaStock = async (req, res) => {
   const { unit_id } = req.params;
   try {
@@ -166,7 +166,7 @@ export const getaStock = async (req, res) => {
   }
 };
 
-// Function to update details of a video
+
 export const updateStock = async (req, res) => {
   const { unit_id, price, v_year, unit_description } = req.body;
 

@@ -17,11 +17,11 @@ const HeroNav = () => {
                     <span className='font-bold text-3xl text-lightblue ml-2'>ET LABS</span>
                    
                 </div>
-                {/* Menu icon */}
+              
                 <div onClick={() => setOpen(!open)} className='absolute right-8 top-6 cursor-pointer md:hidden w-7 h-7'>
                     {open ? <XMarkIcon /> : <Bars3BottomRightIcon />}
                 </div>
-                {/* link items */}
+               
                 <ul className={`md:flex md:items-center  md:pb-0 pb-10 absolute md:static  md:z-auto left-0 w-full md:w-auto md:pl-0 pl-12  transition-all duration-500 ease-in ${open ? 'top-12' : 'top-[-490px]'}`}>
                 <Link to="/SLogin">
   <button className='btn bg-red-600 text-white md:ml-10 font-semibold px-8 py-2 rounded duration-500 md:static'>

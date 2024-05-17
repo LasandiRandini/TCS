@@ -1,36 +1,35 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const AddStudent = () => {
+const AddNics = () => {
   const [nic_no, setNic] = useState("");
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [success, setSuccess] = useState(null);
 
   const handleChange = (e) => {
     const { value } = e.target;
     setNic(value);
   };
 
-  const addStudent = async () => {
+  const addNics = async () => {
     try {
-      await axios.post("http://localhost:8800/api/checkings/addStudent", {
-        nic_no,
-      });
+      await axios.post("http://localhost:8800/api/checkings/addNics", { nic_no });
+      setSuccess(`Added ${nic_no} as a physical class student`);
+      setError(null); 
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred");
+      setSuccess(null); 
     }
   };
 
-  const handleRegister = async () => {
-    await addStudent();
-    navigate("/PSignup");
+  const handleNIC = async () => {
+    await addNics();
   };
 
   return (
     <div className="max-w-md mx-auto mt-40 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-center">
-        Register a Physical Student
+        Adding Physical Class Student NICs
       </h2>
       <form>
         <div className="mb-4">
@@ -48,18 +47,21 @@ const AddStudent = () => {
         {error && (
           <p className="text-red-500 text-xs italic">{error}</p>
         )}
+        {success && (
+          <p className="text-green-500 text-xs italic">{success}</p>
+        )}
         <div className="text-center">
           <button
             type="button"
-            onClick={handleRegister}
+            onClick={handleNIC}
             className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
           >
-            Register
+           Add NIC
           </button>
         </div>
       </form>
     </div>
-  )
+  );
 };
 
-export default AddStudent;
+export default AddNics;

@@ -1,4 +1,4 @@
-// controllers/checking.js
+
 import { db } from '../db.js';
 
 export const checking = async (req, res) => {
@@ -25,3 +25,49 @@ export const checking = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+
+export const addStudent = async (req, res) => {
+  const { nic_no } = req.body;
+
+  try {
+    if (!nic_no) {
+      return res.status(400).json({ message: 'NIC number is required' });
+    }
+
+    const status = "physical";
+
+   
+   
+
+    
+    await db.promise().query('INSERT INTO status (nic_no, status) VALUES (?, ?)', [nic_no, status]);
+
+    res.status(200).json({ message: 'Registration successful', status });
+  } catch (error) {
+    console.error('Error while registering student:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+
+
+export const addNics = async (req, res) => {
+  const { nic_no } = req.body;
+
+  try {
+    if (!nic_no) {
+      return res.status(400).json({ message: 'NIC number is required' });
+    }
+
+ 
+    await db.promise().query('INSERT INTO checking (nic_no) VALUES (?)', [nic_no]);
+
+    res.status(200).json({ message: 'NIC added successfully' });
+  } catch (error) {
+    console.error('Error while adding NIC:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+

@@ -39,9 +39,9 @@ const navigate = useNavigate()
      
     } catch (err) {
       if (err.response && err.response.data) {
-        SetError(err.response.data.message); // Assuming your backend sends an error message in a "message" field
+        SetError(err.response.data.message); 
       } else {
-        SetError("Something went wrong!"); // Default error message
+        SetError("Something went wrong!"); 
       }
     }
   };
