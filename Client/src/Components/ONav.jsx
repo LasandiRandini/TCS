@@ -3,15 +3,13 @@ import { Bars3BottomRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import Logo from "../assets/logo.png";
 //import { AuthContext } from "../context/authContext";
 
-const PNav = () => {
+const ONav = () => {
   //  const { currentUser } = useContext(AuthContext);
     let Links =[
         {name:"Video Lessons",link:"/Video"},
         {name:"My Lessons",link:"/MyVideo"},
-        {name:"Practical",link:"/Practical"},
-        {name:"Quiz",link:"/Quiz"},
-        {name:"Instruction",link:"/Instruction"},
-        {name:"Profile",link:"/PProfile"}
+        {name:"Instruction",link:"/OInstruction"},
+        {name:"Profile",link:"/OProfile"}
        ];
       let [open, setOpen] =useState(false);
 
@@ -49,4 +47,4 @@ const PNav = () => {
     );
 };
 
-export default PNav;
+export default ONav;

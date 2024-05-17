@@ -1,19 +1,18 @@
 import { useState } from 'react';
 
 const Dashboard = () => {
-  const [videoMenuOpen, setVideoMenuOpen] = useState(false);
-  const [payableVideoMenuOpen, setPayableVideoMenuOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(null);
 
-  const toggleVideoMenu = () => {
-    setVideoMenuOpen(!videoMenuOpen);
-  };
-
-  const togglePayableVideoMenu = () => {
-    setPayableVideoMenuOpen(!payableVideoMenuOpen);
+  const toggleMenu = (menu) => {
+    if (activeMenu === menu) {
+      setActiveMenu(null); // Close the menu if it's already open
+    } else {
+      setActiveMenu(menu); // Open the selected menu
+    }
   };
 
   return (
-    <div className="bg-gray-800 text-white w-60 min-h-screen p-4 ">
+    <div className="bg-gray-800 text-white w-60 min-h-screen p-4  ">
       <div className="text-xl font-bold mb-4">Admin Panel</div>
       <ul>
         <li className="mb-2">
@@ -23,10 +22,10 @@ const Dashboard = () => {
           <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded">Home</a>
         </li>
         <li className="mb-2">
-          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded" onClick={toggleVideoMenu}>
-            Video {videoMenuOpen ? '▼' : '▶'}
+          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded" onClick={() => toggleMenu('video')}>
+            Video {activeMenu === 'video' ? '▾' : '▸'}
           </a>
-          {videoMenuOpen && (
+          {activeMenu === 'video' && (
             <ul className="ml-4">
               <li className="mb-2">
                 <a href="/AVideo" className="hover:bg-gray-700 px-4 py-2 block rounded">Add a Unit</a>
@@ -44,16 +43,16 @@ const Dashboard = () => {
           )}
         </li>
         <li className="mb-2">
-          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded" onClick={togglePayableVideoMenu}>
-            Payable Video {payableVideoMenuOpen ? '▼' : '▶'}
+          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded" onClick={() => toggleMenu('payableVideo')}>
+            Payable Video {activeMenu === 'payableVideo' ? '▾' : '▸'}
           </a>
-          {payableVideoMenuOpen && (
+          {activeMenu === 'payableVideo' && (
             <ul className="ml-4">
               <li className="mb-2">
-                <a href="/AReciepts" className="hover:bg-gray-700 px-4 py-2 block rounded">Check Reciepts</a>
+                <a href="/AReciepts" className="hover:bg-gray-700 px-4 py-2 block rounded">Check Receipts</a>
               </li>
               <li className="mb-2">
-                <a href="/Premission" className="hover:bg-gray-700 px-4 py-2 block rounded">Give Premissions</a>
+                <a href="/Premission" className="hover:bg-gray-700 px-4 py-2 block rounded">Give Permissions</a>
               </li>
             </ul>
           )}
@@ -65,10 +64,22 @@ const Dashboard = () => {
           <a href="/APractical" className="hover:bg-gray-700 px-4 py-2 block rounded">Practical</a>
         </li>
         <li className="mb-2">
-          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded">Settings</a>
+          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded" onClick={() => toggleMenu('studentHandle')}>
+            Student Handle {activeMenu === 'studentHandle' ? '▾' : '▸'}
+          </a>
+          {activeMenu === 'studentHandle' && (
+            <ul className="ml-4">
+              <li className="mb-2">
+                <a href="/AddStudent" className="hover:bg-gray-700 px-4 py-2 block rounded">Add a Student</a>
+              </li>
+              <li className="mb-2">
+                <a href="/ChangeSS" className="hover:bg-gray-700 px-4 py-2 block rounded">Change Status</a>
+              </li>
+            </ul>
+          )}
         </li>
         <li className="mb-2">
-          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded">Student Handle</a>
+          <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded">Settings</a>
         </li>
         <li className="mb-2">
           <a href="#" className="hover:bg-gray-700 px-4 py-2 block rounded">Quizzes</a>

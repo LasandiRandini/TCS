@@ -27,8 +27,10 @@ import PNav from "./Components/PNav";
 import Footer from "./Components/Footer";
 import AReciepts from "./AdminPages/AReciepts";
 import UpdateUnit from "./AdminPages/UpdateUnit";
+import OProfile from "./Pages/OProfile";
+import ONav from "./Components/ONav";
 
-const Layout = () => {
+const PLayout = () => {
   return (
     <>
       <PNav />
@@ -38,6 +40,15 @@ const Layout = () => {
   );
 };
 
+const OLayout = () => {
+  return (
+    <>
+      <ONav />
+      <Outlet />
+      <Footer />
+    </>
+  );
+};
 const DashLayout = () => {
   return (
     <div>
@@ -78,17 +89,14 @@ const router = createBrowserRouter([
 
   {
     path: "/",
-    element: <Layout />,
+    element: <PLayout />,
     children: [
       {
         path: "/PHome",
         element: <PHome />,
       },
 
-      {
-        path: "/OHome",
-        element: <OHome />,
-      },
+     
       {
         path: "/Video",
         element: <Video />,
@@ -116,6 +124,20 @@ const router = createBrowserRouter([
       },
     ],
   },
+
+  {
+    path: "/",
+    element: <OLayout />,
+    children: [
+      {
+        path: "/OProfile",
+        element: <OProfile />,
+      },
+      {
+        path: "/OHome",
+        element: <OHome />,
+      }
+    ]},
 
   {
     path: "/",

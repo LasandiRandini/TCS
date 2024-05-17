@@ -1,23 +1,25 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SLogin = () => {
-  const [inputs, setInputs] = useState({
-    username: "",
-    password: "",
-  });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    if (name === "username") setUsername(value);
+    if (name === "password") setPassword(value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      const response = await axios.post("http://localhost:8800/api/auth/login", inputs);
+      const response = await axios.post("http://localhost:8800/api/auth/login", { username, password });
       const { status } = response.data;
       if (status === 'physical') {
         navigate("/PHome");
@@ -27,60 +29,57 @@ const SLogin = () => {
     } catch (err) {
       setError(err.response.data); 
     }
+    setLoading(false);
   };
   
   return (
     <div className="auth flex justify-center items-center h-screen">
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <h1 className="text-2xl mb-4 text-center">Login</h1>
-        <form className="mb-4">
+        <form className="mb-4" onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Username
-            </label>
+            <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">Username</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
               type="text"
-              placeholder="Username"
+              id="username"
               name="username"
+              placeholder="Username"
+              value={username}
               onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            </label>
+            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">Password</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
               type="password"
-              placeholder="Password"
+              id="password"
               name="password"
+              placeholder="Password"
+              value={password}
               onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="flex items-center justify-between">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-              onClick={handleSubmit}
+              type="submit"
+              disabled={loading}
+              className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              Login
+              {loading ? 'Logging in...' : 'Login'}
             </button>
             {error && <p className="text-red-500 text-xs italic">{error}</p>}
           </div>
         </form>
         <span className="block text-center">
-          Dont you have an account? <Link to="/Check" className="text-blue-500">Register</Link>
+          Dont have an account? <Link to="/Check" className="text-blue-500">Register</Link>
         </span>
       </div>
     </div>
   );
-  
 };
 
 export default SLogin;
-
