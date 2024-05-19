@@ -85,6 +85,9 @@ const Dashboard = () => {
                 <Link to="/APractical" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/APractical') ? 'bg-gray-700' : ''}`}>Add Practical</Link>
               </li>
               <li>
+                <Link to="/DeletePractical" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/DeletePractical') ? 'bg-gray-700' : ''}`}>Delete Practical</Link>
+              </li>
+              <li>
                 <Link to="/AddTimeslots" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/AddTimeslots') ? 'bg-gray-700' : ''}`}>Add Timeslots</Link>
               </li>
             </ul>

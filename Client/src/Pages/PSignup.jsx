@@ -1,63 +1,54 @@
 import { useState } from "react";
-
 import axios from "axios";
-import { Link,useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 const PSignup = () => {
   const [inputs, setInputs] = useState({
     first_name: "",
     last_name: "",
-    distric: "",
+    district: "",
     email: "",
-    snic_no:"",
+    snic_no: "",
     contact_no: "",
     al_year: "",
-    institite: "",
+    institute: "",
     parent_contact_no: "",
     parent_email: "",
     username: "",
     password: ""
   });
 
-const [err,SetError]= useState(null);
-
-const navigate = useNavigate()
+  const [err, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
-  console.log(inputs);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await axios.post("http://localhost:8800/api/auth/register", inputs);
-      navigate("/SLogin")
-     
+      navigate("/SLogin");
     } catch (err) {
       if (err.response && err.response.data) {
-        SetError(err.response.data.message); 
+        setError(err.response.data.message);
       } else {
-        SetError("Something went wrong!"); 
+        setError("Something went wrong!");
       }
     }
   };
 
   return (
-    <div className="auth flex justify-center items-center pt-5">
-      <div className="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-4">
-        <h1 className="text-2xl mb-4 text-center">Register</h1>
-        <form className="mb-4">
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="first_name">
-              First Name
-            </label>
+    <div className="flex justify-center items-center min-h-screen gradienBg p-6">
+      <div className="w-full max-w-lg bg-black bg-opacity-40 shadow-md rounded-lg shadow-lg p-8">
+        <h1 className="text-3xl font-semibold text-center mb-6 text-black-700">Register</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex flex-col">
+            <label htmlFor="first_name" className="text-sm text-white font-medium mb-1">First Name</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="first_name"
               type="text"
               placeholder="First Name"
@@ -65,13 +56,11 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="last_name">
-              Last Name
-            </label>
+          <div className="flex flex-col">
+            <label htmlFor="last_name" className="text-sm text-white font-medium mb-1">Last Name</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="last_name"
               type="text"
               placeholder="Last Name"
@@ -79,15 +68,11 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          
-       
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="district">
-              District
-            </label>
+          <div className="flex flex-col">
+            <label htmlFor="district" className="text-sm text-white font-medium mb-1">District</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="district"
               type="text"
               placeholder="District"
@@ -95,13 +80,11 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
-            </label>
+          <div className="flex flex-col">
+            <label htmlFor="email" className="text-sm text-white font-medium mb-1">Email</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="email"
               type="email"
               placeholder="Email"
@@ -109,27 +92,23 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="snic_no">
-           NIC Number
-            </label>
+          <div className="flex flex-col">
+            <label htmlFor="snic_no" className="text-sm text-white font-medium mb-1">NIC Number</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="snic_no"
-              type="snic_no"
-              placeholder="snic_no"
+              type="text"
+              placeholder="NIC Number"
               name="snic_no"
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="contact_no">
-              Contact No
-            </label>
+          <div className="flex flex-col">
+            <label htmlFor="contact_no" className="text-sm text-white font-medium mb-1">Contact No</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="contact_no"
               type="text"
               placeholder="Contact No"
@@ -137,13 +116,11 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="al_year">
-              AL Year
-            </label>
+          <div className="flex flex-col">
+            <label htmlFor="al_year" className="text-sm text-white font-medium mb-1">AL Year</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="al_year"
               type="text"
               placeholder="AL Year"
@@ -151,13 +128,11 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="institute">
-              Institute
-            </label>
+          <div className="flex flex-col">
+            <label htmlFor="institute" className="text-sm text-white font-medium mb-1">Institute</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="institute"
               type="text"
               placeholder="Institute"
@@ -165,13 +140,11 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="parent_contact_no">
-              Parent Contact No
-            </label>
+          <div className="flex flex-col">
+            <label htmlFor="parent_contact_no" className="text-sm text-white font-medium mb-1">Parent Contact No</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="parent_contact_no"
               type="text"
               placeholder="Parent Contact No"
@@ -179,13 +152,11 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="parent_email">
-              Parent Email
-            </label>
+          <div className="flex flex-col">
+            <label htmlFor="parent_email" className="text-sm text-white font-medium mb-1">Parent Email</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="parent_email"
               type="email"
               placeholder="Parent Email"
@@ -193,13 +164,11 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Username
-            </label>
+          <div className="flex flex-col">
+            <label htmlFor="username" className="text-sm text-white font-medium mb-1">Username</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="username"
               type="text"
               placeholder="Username"
@@ -207,13 +176,11 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            </label>
+          <div className="flex flex-col mb-6">
+            <label htmlFor="password" className="text-sm text-white font-medium mb-1">Password</label>
             <input
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="password"
               type="password"
               placeholder="Password"
@@ -221,23 +188,20 @@ const navigate = useNavigate()
               onChange={handleChange}
             />
           </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-              onClick={handleSubmit}
-            >
-              Register
-            </button>
-            {err && <p className="text-red-500 text-xs italic">{err}</p>}
-          </div>
+          {err && <p className="text-red-500 text-xs italic text-center mb-4">{err}</p>}
+          <button
+            type="submit"
+            className="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+          >
+            Register
+          </button>
         </form>
-        <span className="block text-center">
-          Do you have an account? <Link to="/SLogin" className="text-blue-500">Login</Link>
-        </span>
+        <p className="text-center mt-4">
+          Do you have an account? <Link to="/SLogin" className="text-green-500 hover:text-green-700">Login</Link>
+        </p>
       </div>
     </div>
   );
-  
-}
+};
+
 export default PSignup;

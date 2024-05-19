@@ -32,6 +32,8 @@ import ONav from "./Components/ONav";
 import AddStudent from "./AdminPages/AddStudent";
 import AddNIcs from "./AdminPages/AddNics";
 import DeleteStudent from "./AdminPages/DeleteStudent";
+import DeletePractical from "./AdminPages/DeletePractical";
+import AddTimeslots from "./AdminPages/AddTimeslots";
 
 const PLayout = () => {
   return (
@@ -174,6 +176,14 @@ const router = createBrowserRouter([
       {
         path: "/APractical",
         element: <APractical />,
+      },
+      {
+        path: "/DeletePractical",
+        element: <DeletePractical />,
+      },
+      {
+        path: "/AddTimeslots",
+        element: <AddTimeslots />,
       },
       {
         path: "/ANotice",

@@ -31,14 +31,14 @@ const SLogin = () => {
     }
     setLoading(false);
   };
-  
+
   return (
-    <div className="auth flex justify-center items-center h-screen">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h1 className="text-2xl mb-4 text-center">Login</h1>
+    <div className="flex justify-center items-center h-screen gradienBg ">
+      <div className="bg-black bg-opacity-40 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
+        <h1 className="text-2xl mb-4 text-center text-white">Login</h1>
         <form className="mb-4" onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">Username</label>
+            <label htmlFor="username" className="block text-gray-300 text-sm font-bold mb-2">Username</label>
             <input
               required
               type="text"
@@ -51,7 +51,7 @@ const SLogin = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+            <label htmlFor="password" className="block text-gray-300 text-sm font-bold mb-2">Password</label>
             <input
               required
               type="password"
@@ -74,8 +74,8 @@ const SLogin = () => {
             {error && <p className="text-red-500 text-xs italic">{error}</p>}
           </div>
         </form>
-        <span className="block text-center">
-          Dont have an account? <Link to="/Check" className="text-blue-500">Register</Link>
+        <span className="block text-center text-white">
+          Don’t have an account? <Link to="/Check" className="text-blue-400">Register</Link>
         </span>
       </div>
     </div>

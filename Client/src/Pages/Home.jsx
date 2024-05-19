@@ -13,7 +13,7 @@ const Home = () => {
       <HeroNav />
       <div className="bg-gray-100 min-h-screen">
         <div className="container mx-auto mt-20 px-4 md:px-12">
-          <div className="bg-gradient-to-r from-purple-500 to-indigo-500 rounded-xl rounded-br-[80px] p-8 md:p-12 shadow-lg">
+          <div className="gradienBg from-purple-500 to-indigo-500 rounded-xl rounded-br-[80px] p-8 md:p-12 shadow-lg">
             <div className="flex flex-col md:flex-row-reverse items-center gap-10">
               <div className="md:w-3/5">
                 <h2 className="text-4xl md:text-7xl font-bold text-white mb-6 leading-relaxed hover:-translate-y-1 transition-all duration-300 cursor-pointer">

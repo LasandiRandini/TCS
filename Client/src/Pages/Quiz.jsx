@@ -2,7 +2,7 @@
 import  { useState } from 'react';
 
 
-const Video = () => {
+const Quiz = () => {
   const [showForm, setShowForm] = useState(false);
 
   const handleFormButtonClick = () => {
@@ -213,4 +213,4 @@ justify-center item-center hover:-translate-y-4 transition-all duration-300 rela
   );
 };
 
-export default Video;
+export default Quiz;

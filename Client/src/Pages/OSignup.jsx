@@ -38,12 +38,12 @@ const navigate = useNavigate()
   };
 
   return (
-    <div className="auth flex justify-center items-center pt-5">
-      <div className="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-4">
-        <h1 className="text-2xl mb-4 text-center">Register</h1>
+    <div className="flex justify-center items-center min-h-screen gradienBg p-6">
+      <div className="w-full max-w-lg bg-black bg-opacity-40 shadow-md rounded-lg shadow-lg p-8 ">
+        <h1 className="text-3xl font-semibold text-center mb-6 text-black-700">Register</h1>
         <form className="mb-4">
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="first_name">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="first_name">
               First Name
             </label>
             <input
@@ -57,7 +57,7 @@ const navigate = useNavigate()
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="last_name">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="last_name">
               Last Name
             </label>
             <input
@@ -72,7 +72,7 @@ const navigate = useNavigate()
           </div>
           
          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="email">
               Email
             </label>
             <input
@@ -86,7 +86,7 @@ const navigate = useNavigate()
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="snic_no">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="snic_no">
            NIC Number
             </label>
             <input
@@ -100,7 +100,7 @@ const navigate = useNavigate()
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="al_year">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="al_year">
               AL Year
             </label>
             <input
@@ -114,7 +114,7 @@ const navigate = useNavigate()
             />
           </div>
          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="username">
               Username
             </label>
             <input
@@ -128,7 +128,7 @@ const navigate = useNavigate()
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="password">
               Password
             </label>
             <input
@@ -153,7 +153,7 @@ const navigate = useNavigate()
           </div>
         </form>
         <span className="block text-center">
-          Do you have an account? <Link to="/SLogin" className="text-blue-500">Login</Link>
+          Do you have an account? <Link to="/SLogin" className="text-green-500 hover:text-green-700">Login</Link>
         </span>
       </div>
     </div>
