@@ -34,6 +34,8 @@ import AddNIcs from "./AdminPages/AddNics";
 import DeleteStudent from "./AdminPages/DeleteStudent";
 import DeletePractical from "./AdminPages/DeletePractical";
 import AddTimeslots from "./AdminPages/AddTimeslots";
+import EditNotice from "./AdminPages/EditNotice";
+import GetCount from "./AdminPages/GetCount";
 
 const PLayout = () => {
   return (
@@ -186,8 +188,16 @@ const router = createBrowserRouter([
         element: <AddTimeslots />,
       },
       {
+        path: "/GetCount",
+        element: <GetCount />,
+      },
+      {
         path: "/ANotice",
         element: <ANotice />,
+      },
+      {
+        path: "/EditNotice",
+        element: <EditNotice />,
       },
       {
         path: "/AddStudent",

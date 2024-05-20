@@ -7,7 +7,7 @@ const Practical = () => {
   const [selectedSlot, setSelectedSlot] = useState({});
   const [error, setError] = useState(null);
 
-  const student_id = 5; 
+  const student_id = 9;
 
   useEffect(() => {
     const fetchPracticals = async () => {
@@ -31,7 +31,13 @@ const Practical = () => {
 
     try {
       const response = await axios.get(`http://localhost:8800/api/practicals/getTimeSlots/${practical_id}`);
-      setTimeSlots((prev) => ({ ...prev, [practical_id]: response.data }));
+      console.log('Fetched time slots:', response.data); 
+      if (Array.isArray(response.data)) {
+        setTimeSlots((prev) => ({ ...prev, [practical_id]: response.data }));
+      } else {
+        setError('Invalid response format');
+        console.error('Expected an array but got:', response.data);
+      }
     } catch (err) {
       setError(err.response ? err.response.data.error : 'Network Error');
       console.error('Error fetching time slots:', err.message);
@@ -42,7 +48,7 @@ const Practical = () => {
     try {
       await axios.post('http://localhost:8800/api/practicals/vote', { student_id, slot_id });
       setError(null);
-      fetchTimeSlots(practical_id); 
+      fetchTimeSlots(practical_id);
     } catch (err) {
       setError(err.response ? err.response.data.error : 'Network Error');
       console.error('Error voting for time slot:', err.message);
@@ -56,8 +62,8 @@ const Practical = () => {
         {error ? (
           <p className="text-red-500 text-center">Error: {error}</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {practicals.map((practical,index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            {practicals.map((practical, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
                 <h2 className="text-2xl font-bold mb-2">{practical.title}</h2>
                 <p className="text-gray-700"><strong>Year:</strong> {practical.year}</p>
@@ -65,7 +71,7 @@ const Practical = () => {
                 <p className="text-gray-700"><strong>Duration:</strong> {practical.duration}</p>
                 <p className="text-gray-700"><strong>Institute:</strong> {practical.institute}</p>
                 <p className="text-gray-700 mb-4"><strong>Description:</strong> {practical.description}</p>
-                <p className="text-bla-700 mb-4"><strong>ID</strong> {practical.practical_id}</p>
+               
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded mt-2"
                   onClick={() => {
@@ -76,7 +82,7 @@ const Practical = () => {
                   View Time Slots
                 </button>
 
-                {timeSlots[practical.practical_id] && (
+                {timeSlots[practical.practical_id] && Array.isArray(timeSlots[practical.practical_id]) && (
                   <div className="mt-4">
                     <h3 className="text-lg font-semibold mb-2">Available Time Slots</h3>
                     <ul>

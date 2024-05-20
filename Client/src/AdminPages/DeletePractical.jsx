@@ -21,7 +21,7 @@ const DeletePractical = () => {
 
   const handleDelete = async (practical_id) => {
     try {
-      if (window.confirm("Are you sure you want to delete this practical session?")) {
+      if (window.confirm("Are you sure you want to delete this practical session then timeslot selection also detete?")) {
         await axios.delete(`http://localhost:8800/api/practicals/deletePractical/${practical_id}`);
         setPracticals(practicals.filter(practical => practical.practical_id !== practical_id));
       }

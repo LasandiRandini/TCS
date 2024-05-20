@@ -9,7 +9,8 @@ import noticeRouter from "./routes/Notices.js";
 import o_videoRouter from "./routes/o_videos.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+import { __dirname } from "./dirname.js"
+import path from "path";
 
 
 const app = express();
@@ -30,7 +31,8 @@ app.use("/api/videos", videoRoutes)
 app.use("/api/Notices", noticeRouter);
 app.use("/api/o_videos",o_videoRouter)
 
-
+app.use('/public/reciepts', express.static(path.join(__dirname, 'public/reciepts')));
+app.use('/public/image', express.static(path.join(__dirname, 'public/image')));
 
 app.listen(8800, () => {
     console.log("Connected!")

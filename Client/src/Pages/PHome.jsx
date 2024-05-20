@@ -15,7 +15,7 @@ const Home = () => {
         const response = await axios.get('http://localhost:8800/api/Notices/getNotice');
         setnotices(response.data);
       } catch (err) {
-        setError(err.response.data.error);
+        setError(err.response ? err.response.data.error : 'Network Error');
       }
     };
 
@@ -59,35 +59,29 @@ const Home = () => {
         </div>
       </div>
 
-
+  {/* Notices */}
     
-      <div className="my-24 md:px-14 px-4 max-w-screen-2xl mx-auto ">
-        <div className="flex flex-col lg:flex-row justify-between items-start gap-10 
-        ">
-          
-  
-          <div className="w-full ">
-            <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 item-start md:gap-12 gap-8">
-              <div
-                className="bg-[rgba(255,255,255,0.04)] rounded-[35px] h-96 shadow-3xl p-8 item-center flex
-                justify-center item-center hover:-translate-y-4 transition-all duration-300"
-              >
+  <div className="my-24 md:px-14 px-4 max-w-screen-2xl mx-auto">
+       
+       
+          <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-12">
+            {notices.map((notice, index) => (
+              <div key={index} className="bg-[rgba(255,255,255,0.04)] rounded-[35px] shadow-3xl p-8 hover:-translate-y-4 transition-all duration-300">
                  {error ? (
           <p className="text-red-500">Error: {error}</p>
-        ) : (
-              <div>              
-            <p> {notices.name}</p>
-            <p>{notices.n_description}</p>
-            <img src={`http://localhost:8800/public/image/${notices.image}`} alt={notices.image}className="w-full h-auto pt-6 lg:h-[400px]" />
-          </div>
-            )};
-              </div>
-              
-      
+                 ):(
+                <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                  <p className="md:text-2xl text-1xl text-center font-bold mb-6 leading-relaxed">{notice.name}</p>
+                  <p className="md:text-1xl text-1xl mb-6 leading-relaxed">{notice.n_description}</p>
+                  <img src={`http://localhost:8800/public/image/${notice.image}`} alt={notice.image} className="w-full h-auto pt-6 lg:h-[400px]" />
+                </div>
+             
+            )}
             </div>
-          </div>
-        </div>
+          ))}
+      </div>   
       </div>
+           
 
       {/* Magazine */}
 
@@ -107,7 +101,7 @@ text-primary mb-5 leading-normal text-white"
             >
               We have been improving our product <span>for many years.</span>
             </h2>
-            <p className=" text-white text-lg mb-7">
+            <p className=" text-black text-lg mb-7">
               {" "}
               A good example of a paragraph contains a topic conclusion. There
               are many different kinds of animals that live in China.
@@ -121,8 +115,7 @@ text-primary mb-5 leading-normal text-white"
           </div>
         </div>
       </div>
-
-     
+  
     </>
   );
 };

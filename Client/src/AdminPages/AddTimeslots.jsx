@@ -1,127 +1,82 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const AddTimeslots = () => {
-  const [inputs, setInputs] = useState({
-    year: '',
-    title: '',
-    date: '',
-    duration: '',
-    institute: '',
-    description: ''
-  });
+  const [practicalId, setPracticalId] = useState('');
+  const [timeSlots, setTimeSlots] = useState(['']);
+  const [maxLimit, setMaxLimit] = useState('');
 
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  const handleTimeSlotChange = (index, event) => {
+    const newTimeSlots = [...timeSlots];
+    newTimeSlots[index] = event.target.value;
+    setTimeSlots(newTimeSlots);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const addTimeSlot = () => {
+    setTimeSlots([...timeSlots, '']);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      await axios.post('http://localhost:8800/api/practicals/practical', inputs);
-      navigate('/AVideo'); 
-    } catch (err) {
-      setError(err.response.data.error);
+      await axios.post('http://localhost:8800/api/practicals/addTimeSlots', {
+        practical_id: practicalId,
+        time_slots: timeSlots,
+        max_limit: maxLimit
+      });
+      alert('Time slots added successfully!');
+      setPracticalId('');
+      setTimeSlots(['']);
+      setMaxLimit('');
+    } catch (error) {
+      console.error('Error adding time slots:', error);
+      alert('Error adding time slots');
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-3">
-      <div className="w-full max-w-lg px-6 py-8 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">Add Practical</h1>
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="year" className="block text-gray-700 text-sm font-bold mb-2">Year:</label>
+    <div className="container mx-auto px-4 py-8">
+      <h2 className="text-2xl font-bold mb-6">Add Time Slots</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700">Practical ID</label>
+          <input
+            type="text"
+            value={practicalId}
+            onChange={(e) => setPracticalId(e.target.value)}
+            className="w-full px-3 py-2 border rounded"
+            required
+          />
+        </div>
+        {timeSlots.map((timeSlot, index) => (
+          <div key={index} className="mb-4">
+            <label className="block text-gray-700">Time Slot {index + 1}</label>
             <input
               type="text"
-              id="year"
-              name="year"
-              value={inputs.year}
-              onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Year"
+              value={timeSlot}
+              onChange={(e) => handleTimeSlotChange(index, e)}
+              className="w-full px-3 py-2 border rounded"
               required
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="title" className="block text-gray-700 text-sm font-bold mb-2">Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={inputs.title}
-              onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Title"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="date" className="block text-gray-700 text-sm font-bold mb-2">Date:</label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              value={inputs.date}
-              onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="duration" className="block text-gray-700 text-sm font-bold mb-2">Duration:</label>
-            <input
-              type="text"
-              id="duration"
-              name="duration"
-              value={inputs.duration}
-              onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Duration"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="institute" className="block text-gray-700 text-sm font-bold mb-2">Institute:</label>
-            <input
-              type="text"
-              id="institute"
-              name="institute"
-              value={inputs.institute}
-              onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Institute"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">Description:</label>
-            <textarea
-              id="description"
-              name="description"
-              value={inputs.description}
-              onChange={handleChange}
-              className="shadow appearance-none border rounded w-full px-3 py-2 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Description"
-              rows={4}
-              required
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
-            >
-              Add Practical
-            </button>
-          </div>
-        </form>
-        {error && <p className="text-red-500 text-xs italic mt-4 text-center">{error}</p>}
-      </div>
+        ))}
+        <button type="button" onClick={addTimeSlot} className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
+          Add Another Time Slot
+        </button>
+        <div className="mb-4">
+          <label className="block text-gray-700">Max Limit</label>
+          <input
+            type="number"
+            value={maxLimit}
+            onChange={(e) => setMaxLimit(e.target.value)}
+            className="w-full px-3 py-2 border rounded"
+            required
+          />
+        </div>
+        <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded">
+          Submit
+        </button>
+      </form>
     </div>
   );
 };

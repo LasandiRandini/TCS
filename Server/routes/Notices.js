@@ -1,12 +1,11 @@
 import express from "express";
-import { fileURLToPath } from 'url';
-const app = express(); 
-import { addNotice, getNotice } from "../controllers/notice.js";
+import { addNotice, getNotice,showNotices,deleteNotice } from "../controllers/notice.js";
 import multer from "multer";
 import path from "path";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { __dirname } from '../dirname.js';
 
+
+const app = express(); 
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -23,6 +22,8 @@ const upload = multer({ storage: storage });
 router.post("/addNotice", upload.single("file"), addNotice);
 
 router.get("/getNotice", getNotice);
+router.get("/showNotices", showNotices);
+router.delete("/deleteNotice/:n_id", deleteNotice);
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 export default router;

@@ -70,8 +70,24 @@ const Dashboard = () => {
           )}
         </li>
         <li>
-          <Link to="/ANotice" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/ANotice') ? 'bg-gray-700' : ''}`}>Notices</Link>
+          <button
+            className="hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 flex justify-between items-center w-full text-left"
+            onClick={() => toggleMenu('notice')}
+          >
+            Notices Handle {activeMenu === 'notice' ? '▾' : '▸'}
+          </button>
+          {activeMenu === 'notice' && (
+            <ul className="ml-4 space-y-2 mt-2">
+              <li>
+                <Link to="/ANotice" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/ANotice') ? 'bg-gray-700' : ''}`}>Add Notice</Link>
+              </li>
+              <li>
+                <Link to="/EditNotice" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/EditNotice') ? 'bg-gray-700' : ''}`}>Edit Notice</Link>
+              </li>
+            </ul>
+          )}
         </li>
+        
         <li>
           <button
             className="hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 flex justify-between items-center w-full text-left"
@@ -89,6 +105,9 @@ const Dashboard = () => {
               </li>
               <li>
                 <Link to="/AddTimeslots" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/AddTimeslots') ? 'bg-gray-700' : ''}`}>Add Timeslots</Link>
+              </li>
+              <li>
+                <Link to="/GetCount" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/GetCount') ? 'bg-gray-700' : ''}`}>Count of Students</Link>
               </li>
             </ul>
           )}

@@ -11,7 +11,7 @@ const App = () => {
         const response = await axios.get('http://localhost:8800/api/o_videos/showReceipt');
         setReceipts(response.data);
       } catch (err) {
-        setError(err.response.data.error);
+        setError(err.response ? err.response.data.error : 'Network Error');
       }
     };
 
@@ -27,7 +27,7 @@ const App = () => {
               <p className="text-red-500 text-center py-4">Error: {error}</p>
             ) : (
               <div>
-                <img src={`http://localhost:8800/public/${receipt.reciepts}`} alt={`Receipt ${index}`} className="w-full h-auto" />
+                <img src={`http://localhost:8800/public/reciepts/${receipt.reciepts}`} alt={`Receipt ${index}`} className="w-full h-auto" />
                 <div className="p-4">
                   <p className="text-xl font-semibold">{receipt.unit_name}</p>
                   <p className="text-gray-500 mt-2">Year: {receipt.v_year}</p>
