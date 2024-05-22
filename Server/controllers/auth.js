@@ -106,9 +106,9 @@ export const login = (req, res) => {
 export const profile = (req, res) => {
   const user = req.user;
 
-  const q = "SELECT * FROM users WHERE username = ?";
-  db.query(q, [user.username], (err, data) => {
-    if (err) return res.json(err);
+  const q = "SELECT * FROM users WHERE id = ?";
+  db.query(q, [user.id], (err, data) => {
+    if (err) return res.status(500).json({ error: "Database error" });
     if (data.length === 0)
       return res.status(404).json({ error: "User profile not found" });
 
@@ -128,6 +128,7 @@ export const profile = (req, res) => {
     res.json(userProfile);
   });
 };
+
 
 
 // export const deleteStudent = async (req, res) => {
