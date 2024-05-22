@@ -43,3 +43,40 @@ export const showReceipt = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const approveReceipt = async (req, res) => {
+  const { nic_no, unit_id } = req.body;
+
+  try {
+  
+    const userIdQuery = `SELECT user_id FROM users WHERE nic_no = ?`;
+    db.query(userIdQuery, [nic_no], (err, userIdResult) => {
+      if (err) {
+        console.error('Error while fetching user ID:', err);
+        return res.status(500).send('Internal server error');
+      }
+      const userId = userIdResult[0]?.user_id;
+
+      if (!userId) {
+        return res.status(404).send('User not found');
+      }
+
+   
+      const approveReceiptQuery = `
+        UPDATE receipts 
+        SET is_approved = 1 
+        WHERE user_id = ? AND unit_id = ?
+      `;
+      db.query(approveReceiptQuery, [userId, unit_id], (err, result) => {
+        if (err) {
+          console.error('Error while approving receipt:', err);
+          return res.status(500).send('Internal server error');
+        }
+        res.send('Receipt approved successfully');
+      });
+    });
+  } catch (err) {
+    console.error('Error while approving receipt:', err);
+    res.status(500).send('Internal server error');
+  }
+};

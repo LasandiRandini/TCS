@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const Admin = () => {
+const VideoPermission = () => {
   const [receipts, setReceipts] = useState([]);
   const [error, setError] = useState(null);
   const [nicNo, setNicNo] = useState('');
@@ -83,4 +83,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default VideoPermission;

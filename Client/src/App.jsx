@@ -36,6 +36,7 @@ import DeletePractical from "./AdminPages/DeletePractical";
 import AddTimeslots from "./AdminPages/AddTimeslots";
 import EditNotice from "./AdminPages/EditNotice";
 import GetCount from "./AdminPages/GetCount";
+import VideoPermission from "./AdminPages/VideoPermission";
 
 const PLayout = () => {
   return (
@@ -161,6 +162,10 @@ const router = createBrowserRouter([
       {
         path: "/AReciepts",
         element: <AReciepts />,
+      },
+      {
+        path: "/VideoPermission",
+        element: <VideoPermission />,
       },
       {
         path: "/AdSignup",
