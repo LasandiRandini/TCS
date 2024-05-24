@@ -1,10 +1,10 @@
-import  { useState } from 'react';
+import  { useState,useContext } from 'react';
 import { Bars3BottomRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import Logo from "../assets/logo.png";
-//import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context/authContext";
 
 const PNav = () => {
-  //  const { currentUser } = useContext(AuthContext);
+    const { currentUser } = useContext(AuthContext);
     let Links =[
         {name:"Video Lessons",link:"/Video"},
         {name:"My Lessons",link:"/MyVideo"},
@@ -24,7 +24,8 @@ const PNav = () => {
                     <img src={Logo} alt="Logo" className="h-12 w-auto" />
                     <span className='font-bold text-3xl text-lightblue ml-3 pt-1' >ET LABS</span>
       </div>
-            
+
+        
             <div onClick={()=>setOpen(!open)} className='absolute right-8 top-6 cursor-pointer md:hidden w-7 h-7'>
                 {
                     open ? <XMarkIcon/> : <Bars3BottomRightIcon />
@@ -38,9 +39,9 @@ const PNav = () => {
                         <a href={link.link} className='text-gray-800 hover:text-red-400 duration-500'>{link.name}</a>
                     </li>))
                 }
-                {/* <div>
+                { <div>
                 <span>{currentUser?.username}</span>
-                </div> */}
+                </div> }
         
             </ul>
             

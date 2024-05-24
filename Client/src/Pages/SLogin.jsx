@@ -20,7 +20,9 @@ const SLogin = () => {
     setLoading(true);
     try {
       const response = await axios.post("http://localhost:8800/api/auth/login", { username, password });
-      const { status } = response.data;
+      const { status, token } = response.data;
+      localStorage.setItem('jwtkey', token);
+
       if (status === 'physical') {
         navigate("/PHome");
       } else if(status === 'online'){
@@ -33,7 +35,7 @@ const SLogin = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen gradienBg ">
+    <div className="flex justify-center items-center h-screen gradient-bg">
       <div className="bg-black bg-opacity-40 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
         <h1 className="text-2xl mb-4 text-center text-white">Login</h1>
         <form className="mb-4" onSubmit={handleSubmit}>
@@ -71,7 +73,7 @@ const SLogin = () => {
             >
               {loading ? 'Logging in...' : 'Login'}
             </button>
-            {error && <p className="text-red-500 text-xs italic">{error}</p>}
+            {error && <p key="error-message" className="text-red-500 text-xs italic">{error}</p>}
           </div>
         </form>
         <span className="block text-center text-white">

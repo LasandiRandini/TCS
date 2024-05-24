@@ -18,7 +18,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-gray-800 text-white w-full md:w-60 min-h-screen p-4">
+    <div className="bg-gray-800 text-white w-full md:w-60 min-h-screen fixed p-4">
       <div className="text-xl font-bold mb-4">Admin Panel</div>
       <ul className="space-y-2">
         <li>
@@ -137,7 +137,7 @@ const Dashboard = () => {
           <Link to="/Settings" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/Settings') ? 'bg-gray-700' : ''}`}>Settings</Link>
         </li>
         <li>
-          <Link to="/Quizzes" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/Quizzes') ? 'bg-gray-700' : ''}`}>Quizzes</Link>
+          <Link to="/QuizCalander" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/QuizCalander') ? 'bg-gray-700' : ''}`}>Quizzes</Link>
         </li>
       </ul>
     </div>

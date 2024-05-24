@@ -37,6 +37,9 @@ import AddTimeslots from "./AdminPages/AddTimeslots";
 import EditNotice from "./AdminPages/EditNotice";
 import GetCount from "./AdminPages/GetCount";
 import VideoPermission from "./AdminPages/VideoPermission";
+import CreateQuiz from "./AdminPages/CreateQuiz";
+import QuizCalender from "./AdminPages/QuizCalander";
+
 
 const PLayout = () => {
   return (
@@ -94,7 +97,10 @@ const router = createBrowserRouter([
     path: "/OSignup",
     element: <OSignup />,
   },
-
+  {
+    path: "/AdLogin",
+    element: <AdLogin />,
+  },
   {
     path: "/",
     element: <PLayout />,
@@ -171,14 +177,19 @@ const router = createBrowserRouter([
         path: "/AdSignup",
         element: <AdSignup />,
       },
-      {
-        path: "/AdLogin",
-        element: <AdLogin />,
-      },
+      
 
       {
         path: "/AQuiz",
         element: <AQuiz />,
+      },
+      {
+        path: "/CreateQuiz",
+        element: <CreateQuiz />,
+      },
+      {
+        path: "/QuizCalander",
+        element: <QuizCalender />,
       },
       {
         path: "/APractical",

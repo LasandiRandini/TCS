@@ -98,34 +98,40 @@ export const login = (req, res) => {
         
         res.status(200).json({ ...other, status: statusData[0].status });
       });
-    });
-  });
+    });
+  });
 };
 
-
 export const profile = (req, res) => {
-  const user = req.user;
+  const token = req.cookies.access_token || req.headers.authorization.split(' ')[1];
 
-  const q = "SELECT * FROM users WHERE id = ?";
-  db.query(q, [user.id], (err, data) => {
-    if (err) return res.status(500).json({ error: "Database error" });
-    if (data.length === 0)
-      return res.status(404).json({ error: "User profile not found" });
+  if (!token) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
 
-    const userProfile = {
-      first_name: data[0].first_name,
-      last_name: data[0].last_name,
-      nic_no: data[0].nic_no,
-      district: data[0].district,
-      email: data[0].email,
-      contact_no: data[0].contact_no,
-      al_year: data[0].al_year,
-      institute: data[0].institute,
-      parent_contact_no: data[0].parent_contact_no,
-      parent_email: data[0].parent_email,
-    };
+  jwt.verify(token, 'jwtkey', (err, decoded) => {
+    if (err) return res.status(401).json({ error: "Unauthorized" });
 
-    res.json(userProfile);
+    const q = "SELECT * FROM users WHERE id = ?";
+    db.query(q, [decoded.id], (err, data) => {
+      if (err) return res.status(500).json({ error: "Database error" });
+      if (data.length === 0) return res.status(404).json({ error: "User profile not found" });
+
+      const userProfile = {
+        first_name: data[0].first_name,
+        last_name: data[0].last_name,
+        snic_no: data[0].snic_no,
+        district: data[0].district,
+        email: data[0].email,
+        contact_no: data[0].contact_no,
+        al_year: data[0].al_year,
+        institute: data[0].institute,
+        parent_contact_no: data[0].parent_contact_no,
+        parent_email: data[0].parent_email,
+      };
+
+      res.json(userProfile);
+    });
   });
 };
 

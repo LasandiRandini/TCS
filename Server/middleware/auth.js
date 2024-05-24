@@ -7,7 +7,7 @@ export const verifyToken = (req, res, next) => {
   jwt.verify(token, "jwtkey", (err, user) => {
     if (err) return res.status(401).json("Invalid token!");
 
-    req.user = user; // Assuming the token contains user id and username
+    req.user = user; 
     next();
   });
 };
