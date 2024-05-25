@@ -39,6 +39,7 @@ import GetCount from "./AdminPages/GetCount";
 import VideoPermission from "./AdminPages/VideoPermission";
 import CreateQuiz from "./AdminPages/CreateQuiz";
 import QuizCalender from "./AdminPages/QuizCalander";
+import Quiz2 from "./Pages/Quiz2";
 
 
 const PLayout = () => {
@@ -136,6 +137,10 @@ const router = createBrowserRouter([
         path: "/Quiz",
         element: <Quiz />,
       },
+      {
+        path: "/Quiz2",
+        element: <Quiz2 />,
+      },
     ],
   },
 
@@ -184,7 +189,7 @@ const router = createBrowserRouter([
         element: <AQuiz />,
       },
       {
-        path: "/CreateQuiz",
+        path: "//CreateQuiz/:quizId",
         element: <CreateQuiz />,
       },
       {

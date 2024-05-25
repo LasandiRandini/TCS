@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const CreateQuiz = () => {
+    const { quizId } = useParams();
     const [questions, setQuestions] = useState([{ question: '', answers: ['', '', '', '', ''], correctAnswer: '' }]);
     const navigate = useNavigate();
 
@@ -27,23 +29,18 @@ const CreateQuiz = () => {
         setQuestions([...questions, { question: '', answers: ['', '', '', '', ''], correctAnswer: '' }]);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(questions); // This is where you would handle the quiz submission, e.g., sending it to an API.
-        navigate('/te_calender');
+        try {
+            await axios.post('http://localhost:8800/api/quizes/addQuestion', { q_id: quizId, questions });
+            navigate('/AVideo');
+        } catch (error) {
+            console.error('Error submitting questions:', error);
+        }
     };
 
     return (
         <div className="rounded-lg bg-white md:px-10 py-8 w-full">
-            <div className="mb-4">
-                <h2 className="text-2xl font-bold mb-3 text-indigo-800">Sample Quiz Title</h2>
-                <span className="font-medium">Selected unit ID :</span>
-                <span className="text-indigo-600"> 1101 </span>
-                <div></div>
-                <span className="font-medium">Due date and time :</span>
-                <span className="text-indigo-600"> 2024-04-24 14:00 </span>
-            </div>
-
             <form onSubmit={handleSubmit}>
                 {questions.map((question, qIndex) => (
                     <div key={qIndex} className="mb-4 bg-gray-100 px-4 py-3.5 rounded-lg shadow-md">
