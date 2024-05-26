@@ -12,7 +12,7 @@ function QuizCalander() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            // Convert datetime values to MySQL format
+            
             const formattedData = {
                 ...quizData,
                 start_date: quizData.start_date ? quizData.start_date.toISOString().slice(0, 19).replace('T', ' ') : null,
@@ -29,7 +29,7 @@ function QuizCalander() {
 
     return (
         <div className='rounded-lg bg-white md:px-10 py-10 w-full'>
-            <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="inset-0 flex items-center justify-center z-50">
                 <div className="bg-white rounded-lg shadow-lg w-1/2">
                     <div className="p-4">
                         <form>

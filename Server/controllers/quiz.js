@@ -39,52 +39,69 @@ export const addQuestion = async (req, res) => {
     }
 };
 
-
-export const  getQuiz= async (req, res) => {
-    const { quizId } = req.params;
-
+export const getAllQuizzes = (req, res) => {
     try {
-       
-        const [quizRows] = await db.promise().query('SELECT * FROM quiz WHERE q_id = ?', [quizId]);
-        if (quizRows.length === 0) {
-            return res.status(404).json({ message: 'Quiz not found' });
-        }
-
-        const quiz = quizRows[0];
-
-      
-        const [questionRows] = await db.promise().query('SELECT * FROM question WHERE q_id = ?', [quizId]);
-
-        const questions = questionRows.map(q => ({
-            id: q.que_id,
-            question: q.q_text,
-            answers: [q.a1, q.a2, q.a3, q.a4, q.a5],
-            correctAnswer: q.correct_answer
-        }));
-
-        const quizDetails = {
-            title: quiz.q_title,
-            unitName: quiz.q_unit,
-            dueDate: quiz.end_date,
-            questions: questions
-        };
-
-        res.json(quizDetails);
+        const query = 'SELECT q_id,q_unit, q_title, start_date, end_date, duration FROM quiz';
+        db.query(query, (err, results) => {
+            if (err) {
+                console.error('Error fetching quizzes:', err);
+                res.status(500).json({ message: 'Internal server error' });
+            } else {
+                res.status(200).json(results);
+            }
+        });
     } catch (error) {
-        console.error('Error fetching quiz details:', error);
+        console.error('Error in getAllQuizzes:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
 
+
+
+export const getQuiz = async (req, res) => {
+    const { q_id } = req.params;
+
+    try {
+        const query = 'SELECT que_id, q_id, q_text, answers, correct_answer FROM question WHERE q_id = ?';
+        db.query(query, [q_id], (err, results) => {
+            if (err) {
+                console.error('Error fetching quiz questions:', err);
+                res.status(500).json({ error: 'An error occurred while fetching quiz questions' });
+                return;
+            }
+            
+            if (results.length === 0) {
+                res.status(404).json({ message: 'No questions found for this quiz' });
+                return;
+            }
+            
+            const questions = results.map(q => ({
+                que_id: q.que_id,
+                q_id: q.q_id,
+                q_text: q.q_text,
+                answers: q.answers,  // Assuming answers are already in JSON format
+                correct_answer: q.correct_answer
+            }));
+            
+            res.status(200).json(questions);
+        });
+    } catch (error) {
+        console.error('Error in getQuiz:', error);
+        res.status(500).json({ error: 'An unexpected error occurred' });
+    }
+};
+
+
+
 export const submitResponse = async (req, res) => {
     const { quiz_id, responses } = req.body;
-    const userId = req.user.id; 
+    const userId = 5; // Hardcoded user ID
 
     try {
         let totalMarks = 0;
 
         const responsePromises = responses.map(async (response) => {
-            const [questionRow] = await db.promise().query('SELECT correct_answer FROM question WHERE que_id = ?', [response.questionId]);
+            const [questionRow] = await db.promise().query('SELECT correct_answer FROM question WHERE que_id = ?', [response.que_id]);
             if (questionRow.length === 0) {
                 throw new Error('Question not found');
             }
@@ -96,7 +113,7 @@ export const submitResponse = async (req, res) => {
 
             await db.promise().query(
                 'INSERT INTO quiz_responses (mark, quiz_id, que_id, id) VALUES (?, ?, ?, ?)',
-                [isCorrect ? 1 : 0, quiz_id, response.questionId, userId]
+                [isCorrect ? 1 : 0, quiz_id, response.que_id, userId]
             );
         });
 

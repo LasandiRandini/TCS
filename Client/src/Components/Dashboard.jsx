@@ -137,8 +137,24 @@ const Dashboard = () => {
           <Link to="/Settings" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/Settings') ? 'bg-gray-700' : ''}`}>Settings</Link>
         </li>
         <li>
-          <Link to="/QuizCalander" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/QuizCalander') ? 'bg-gray-700' : ''}`}>Quizzes</Link>
+          <button
+            className="hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 flex justify-between items-center w-full text-left"
+            onClick={() => toggleMenu('quiz')}
+          >
+            Quizzes Handle {activeMenu === 'quiz' ? '▾' : '▸'}
+          </button>
+          {activeMenu === 'quiz' && (
+            <ul className="ml-4 space-y-2 mt-2">
+              <li>
+                <Link to="/QuizCalander" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/QuizCalander') ? 'bg-gray-700' : ''}`}>Add new Quiz</Link>
+              </li>
+              <li>
+                <Link to="/UpdateQuiz" className={`hover:bg-gray-700 px-4 py-2 block rounded transition duration-200 ${isActive('/UpdateQuiz') ? 'bg-gray-700' : ''}`}>Update Quiz</Link>
+              </li>
+            </ul>
+          )}
         </li>
+        
       </ul>
     </div>
   );

@@ -3,23 +3,24 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Quiz2 = () => {
-    const { quizId } = useParams();
-    const [quizDetails, setQuizDetails] = useState(null);
+    const { q_id } = useParams();
+    const [questions, setQuestions] = useState(null);
     const [responses, setResponses] = useState({});
+    const [result, setResult] = useState(null); // State for the quiz result
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchQuizDetails = async () => {
+        const fetchQuestions = async () => {
             try {
-                const response = await axios.get(`http://localhost:8800/api/quizes/getQuiz/${quizId}`);
-                setQuizDetails(response.data);
+                const response = await axios.get(`http://localhost:8800/api/quizes/getQuiz/${q_id}`);
+                setQuestions(response.data);
             } catch (error) {
-                console.error('Error fetching quiz details:', error);
+                console.error('Error fetching quiz questions:', error);
             }
         };
 
-        fetchQuizDetails();
-    }, [quizId]);
+        fetchQuestions();
+    }, [q_id]);
 
     const handleAnswerChange = (questionId, answer) => {
         setResponses({ ...responses, [questionId]: answer });
@@ -28,29 +29,52 @@ const Quiz2 = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.post('http://localhost:8800/api/quizes/submitResponse', {
-                quiz_id: quizId,
-                responses: Object.entries(responses).map(([questionId, answer]) => ({ questionId, answer }))
+            const response = await axios.post('http://localhost:8800/api/quizes/submitResponse', {
+                quiz_id: q_id,
+                responses: Object.entries(responses).map(([que_id, answer]) => ({ que_id, answer }))
             });
-            navigate('/result');
+            setResult(response.data); // Set the result in the state
         } catch (error) {
             console.error('Error submitting responses:', error);
         }
     };
 
-    if (!quizDetails) return <div>Loading...</div>;
+    if (!questions) return <div>Loading...</div>;
+
+    // Result interface
+    if (result) {
+        return (
+            <div className="rounded-lg bg-white md:px-10 py-12 w-full">
+                <h1 className="text-2xl font-bold mb-4">Quiz Result</h1>
+                <div className="text-center">
+                    <p className="text-xl font-bold mb-4">
+                        You scored {result.totalMarks} out of {questions.length}
+                    </p>
+                    {result.totalMarks >= questions.length / 2 ? (
+                        <p className="text-green-500 text-3xl">🎉 Great job! 🎉</p>
+                    ) : (
+                        <p className="text-red-500 text-3xl">😢 Better luck next time! 😢</p>
+                    )}
+                    <button
+                        onClick={() => navigate('/')}
+                        className="mt-6 bg-indigo-900 hover:bg-indigo-950 text-white font-semibold py-2 px-4 rounded"
+                    >
+                        Go Home
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div className="rounded-lg bg-white md:px-10 py-8 w-full">
-            <h1 className="text-2xl font-bold mb-4">{quizDetails.title}</h1>
-            <h2 className="text-xl mb-4">Unit: {quizDetails.unitName}</h2>
-            <h3 className="text-lg mb-4">Due Date: {new Date(quizDetails.dueDate).toLocaleString()}</h3>
+        <div className="rounded-lg bg-white md:px-10 py-12 w-full">
+            <h1 className="text-2xl font-bold mb-4">Quiz</h1>
             <form onSubmit={handleSubmit}>
-                {quizDetails.questions.map((question, qIndex) => (
+                {questions.map((question, qIndex) => (
                     <div key={qIndex} className="mb-4 bg-gray-100 px-4 py-3.5 rounded-lg shadow-md">
                         <div className="mb-4">
                             <label className="font-bold text-gray-700">Question {qIndex + 1}</label>
-                            <p>{question.question}</p>
+                            <p>{question.q_text}</p>
                         </div>
                         {question.answers.map((answer, aIndex) => (
                             <div key={aIndex} className="mb-3 w-11/12 ml-auto mr-auto">
@@ -58,7 +82,7 @@ const Quiz2 = () => {
                                     type="radio"
                                     name={`question-${qIndex}`}
                                     value={aIndex + 1}
-                                    onChange={() => handleAnswerChange(question.id, aIndex + 1)}
+                                    onChange={() => handleAnswerChange(question.que_id, aIndex + 1)}
                                     className="mr-2"
                                 />
                                 <span>{answer}</span>
