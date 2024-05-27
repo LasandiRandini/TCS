@@ -1,7 +1,7 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Quiz from '../Pages/Quiz';
+
 
 const UpdateQuiz = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -32,7 +32,7 @@ const UpdateQuiz = () => {
 
   return (
     <div className="flex h-screen bg-primary justify-center items-center">
-      <div className="w-1/2 bg-white rounded shadow-lg p-6">
+      <div className=" bg-white rounded shadow-lg p-6">
         <Link to="/QuizCalander" className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Add Quiz</Link>
         
         <table className="w-full">
@@ -48,7 +48,7 @@ const UpdateQuiz = () => {
           </thead>
           <tbody>
             {quizzes.map(quiz => (
-              <tr key={Quiz.q_id} className="border-b">
+              <tr key={quiz.q_id} className="border-b">
                 <td className="py-2 px-4">{quiz.q_year}</td>
                 <td className="py-2 px-4">{quiz.q_unit}</td> 
                 <td className="py-2 px-4">{quiz.q_title}</td>
@@ -56,7 +56,7 @@ const UpdateQuiz = () => {
                 <td className="py-2 px-4">{quiz.end_date}</td>
                 <td className="py-2 px-4">{quiz.duration}</td>
                 <td className="py-2 px-4">
-                  <Link to={`/UpdateQuiz2/${quiz.q_id}`} className="bg-yellow-500 text-white font-bold py-1 px-2 rounded">Edit</Link>
+                  <Link to={`/UpdateQuiz2/${quiz.q_id}`} className="bg-yellow-500 text-white font-bold py-1 px-2 mr-2 rounded">Edit</Link>
                   <button className="bg-yellow-500 text-white btn btn-danger mt-2 font-bold py-1 px-2 rounded" onClick={() => handleDelete(quiz.q_id)}>Delete</button>
                 </td>
               </tr>

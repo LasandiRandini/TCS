@@ -41,6 +41,7 @@ import CreateQuiz from "./AdminPages/CreateQuiz";
 import QuizCalender from "./AdminPages/QuizCalander";
 import Quiz2 from "./Pages/Quiz2";
 import UpdateQuiz from "./AdminPages/UpdateQuiz";
+import UpdateQuiz2 from  "./AdminPages/UpdateQuiz2";
 
 
 const PLayout = () => {
@@ -244,6 +245,10 @@ const router = createBrowserRouter([
       {
         path: "/UpdateQuiz",
         element: <UpdateQuiz />,
+      },
+      {
+        path: "/UpdateQuiz2/:q_id",
+        element: <UpdateQuiz2 />,
       },
     ],
   },

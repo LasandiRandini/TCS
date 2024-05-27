@@ -1,10 +1,11 @@
 import express from "express"
-import { addQuestion,getQuestions} from "../controllers/question.js"
+import {displayQuizzes,updateQuiz,deleteQuiz} from "../controllers/question.js"
 
 const router = express.Router()
 
-router.post("/addQuestion", addQuestion)
-router.get("/getQuestions",getQuestions)
+router.get("/displayQuizzes",displayQuizzes)
+router.put("/updateQuiz/:q_id",updateQuiz)
+router.delete("/deleteQuiz/:q_id",deleteQuiz)
 
 
 export default router
