@@ -62,34 +62,34 @@ export const getQuiz = async (req, res) => {
     const { q_id } = req.params;
 
     try {
-        const query = 'SELECT que_id, q_id, q_text, answers, correct_answer FROM question WHERE q_id = ?';
-        db.query(query, [q_id], (err, results) => {
-            if (err) {
-                console.error('Error fetching quiz questions:', err);
-                res.status(500).json({ error: 'An error occurred while fetching quiz questions' });
-                return;
-            }
-            
-            if (results.length === 0) {
-                res.status(404).json({ message: 'No questions found for this quiz' });
-                return;
-            }
-            
-            const questions = results.map(q => ({
-                que_id: q.que_id,
-                q_id: q.q_id,
-                q_text: q.q_text,
-                answers: q.answers,  // Assuming answers are already in JSON format
-                correct_answer: q.correct_answer
-            }));
-            
-            res.status(200).json(questions);
-        });
+        const quizQuery = 'SELECT duration FROM quiz WHERE q_id = ?';
+        const [quizResults] = await db.promise().query(quizQuery, [q_id]);
+        if (quizResults.length === 0) {
+            return res.status(404).json({ message: 'Quiz not found' });
+        }
+        const duration = quizResults[0].duration;
+
+        const questionQuery = 'SELECT que_id, q_id, q_text, answers, correct_answer FROM question WHERE q_id = ?';
+        const [questionResults] = await db.promise().query(questionQuery, [q_id]);
+        if (questionResults.length === 0) {
+            return res.status(404).json({ message: 'No questions found for this quiz' });
+        }
+
+        const questions = questionResults.map(q => ({
+            que_id: q.que_id,
+            q_id: q.q_id,
+            q_text: q.q_text,
+            answers: q.answers,  
+            correct_answer: q.correct_answer
+        }));
+        
+        res.status(200).json({ questions, duration });
     } catch (error) {
         console.error('Error in getQuiz:', error);
         res.status(500).json({ error: 'An unexpected error occurred' });
     }
 };
+
 
 
 

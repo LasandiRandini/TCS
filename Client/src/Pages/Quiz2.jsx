@@ -7,13 +7,15 @@ const Quiz2 = () => {
     const [questions, setQuestions] = useState(null);
     const [responses, setResponses] = useState({});
     const [result, setResult] = useState(null); // State for the quiz result
+    const [timeLeft, setTimeLeft] = useState(null); // State for the countdown timer
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
                 const response = await axios.get(`http://localhost:8800/api/quizes/getQuiz/${q_id}`);
-                setQuestions(response.data);
+                setQuestions(response.data.questions);
+                setTimeLeft(response.data.duration * 60); // Set initial countdown time in seconds
             } catch (error) {
                 console.error('Error fetching quiz questions:', error);
             }
@@ -22,12 +24,24 @@ const Quiz2 = () => {
         fetchQuestions();
     }, [q_id]);
 
+    useEffect(() => {
+        if (timeLeft === 0) {
+            handleSubmit(); // Auto-submit when time is up
+        }
+
+        const timer = timeLeft > 0 && setInterval(() => {
+            setTimeLeft(timeLeft - 1);
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [timeLeft]);
+
     const handleAnswerChange = (questionId, answer) => {
         setResponses({ ...responses, [questionId]: answer });
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        if (event) event.preventDefault(); // Prevent default only if there's an event (manual submit)
         try {
             const response = await axios.post('http://localhost:8800/api/quizes/submitResponse', {
                 quiz_id: q_id,
@@ -40,6 +54,12 @@ const Quiz2 = () => {
     };
 
     if (!questions) return <div>Loading...</div>;
+
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+    };
 
     // Result interface
     if (result) {
@@ -69,6 +89,10 @@ const Quiz2 = () => {
     return (
         <div className="rounded-lg bg-white md:px-10 py-12 w-full">
             <h1 className="text-2xl font-bold mb-4">Quiz</h1>
+            <div className="mb-4">
+                <span className="font-bold">Time Left: </span>
+                <span>{formatTime(timeLeft)}</span>
+            </div>
             <form onSubmit={handleSubmit}>
                 {questions.map((question, qIndex) => (
                     <div key={qIndex} className="mb-4 bg-gray-100 px-4 py-3.5 rounded-lg shadow-md">

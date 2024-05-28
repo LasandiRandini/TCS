@@ -47,9 +47,12 @@ import UpdateQuiz2 from  "./AdminPages/UpdateQuiz2";
 const PLayout = () => {
   return (
     <>
+    
       <PNav />
+      
       <Outlet />
       <Footer />
+      
     </>
   );
 };
