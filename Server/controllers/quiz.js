@@ -41,7 +41,7 @@ export const addQuestion = async (req, res) => {
 
 export const getAllQuizzes = (req, res) => {
     try {
-        const query = 'SELECT q_id,q_unit, q_title, start_date, end_date, duration FROM quiz';
+        const query = 'SELECT q_id,q_year,q_unit, q_title, start_date, end_date, duration FROM quiz';
         db.query(query, (err, results) => {
             if (err) {
                 console.error('Error fetching quizzes:', err);

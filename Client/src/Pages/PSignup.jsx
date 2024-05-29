@@ -40,9 +40,9 @@ const PSignup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen gradienBg p-6">
+    <div className="flex justify-center items-center min-h-screen  p-6 bg-gray-700">
       <div className="w-full max-w-lg bg-black bg-opacity-40 shadow-md rounded-lg shadow-lg p-8">
-        <h1 className="text-3xl font-semibold text-center mb-6 text-black-700">Register</h1>
+        <h1 className="text-3xl font-semibold text-center mb-6 text-white">Register</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col">
             <label htmlFor="first_name" className="text-sm text-white font-medium mb-1">First Name</label>

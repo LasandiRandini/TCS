@@ -1,7 +1,6 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
-
-
+import Adminheader from "../Components/Adminheader";
 
 const DeletePractical = () => {
   const [practicals, setPracticals] = useState([]);
@@ -31,7 +30,9 @@ const DeletePractical = () => {
   };
 
   return (
-    <div className="flex h-screen bg-primary justify-center items-center">
+    <div>
+    <Adminheader pageName="Delete a Practical" />
+    <div className="flex mt-5 bg-primary justify-center items-center">
       <div className=" bg-white rounded shadow-lg p-6">
      
         
@@ -64,6 +65,7 @@ const DeletePractical = () => {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import  { useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AdLogin = () => {
@@ -8,73 +8,80 @@ const AdLogin = () => {
     admin_password: "",
   });
   const [err, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-const handleChange = (e) => {
+  
+  const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      await axios.post("http://localhost:8800/api/Aauth/alogin", inputs);
+      const response = await axios.post("http://localhost:8800/api/Aauth/alogin", inputs);
       navigate("/AVideo");
+      localStorage.setItem('admin', JSON.stringify(response.data));
     } catch (err) {
       setError(err.response.data);
     }
+    setLoading(false);
   };
 
   return (
-    <div className="auth flex justify-center items-center h-screen">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h1 className="text-2xl mb-4 text-center">Login</h1>
-        <form className="mb-4">
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="admin_username">
-              Username
-            </label>
-            <input
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="admin_username"
-              type="text"
-              placeholder="Username"
-              name="admin_username"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="admin_password">
-              Password
-            </label>
-            <input
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="admin_password"
-              type="password"
-              placeholder="Password"
-              name="admin_password"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-              onClick={handleSubmit}
-            >
-              Login
-            </button>
-            {err && <p className="text-red-500 text-xs italic">{err}</p>}
-          </div>
-        </form>
-        
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r bg-gray-700">
+      <div className="flex shadow-lg rounded-lg overflow-hidden w-full max-w-4xl">
+        <div className="w-1/2 hidden md:block">
+          <img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDV8fGFkbWlufGVufDB8fHx8MTY4NTY2MzQ3NA&ixlib=rb-1.2.1&q=80&w=1080" alt="Admin Login" className="w-full h-full object-cover"/>
+        </div>
+        <div className="w-full md:w-1/2 bg-white p-8">
+          <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Admin Login</h1>
+          <form className="mb-4" onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="admin_username">
+                Username
+              </label>
+              <input
+                required
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="admin_username"
+                type="text"
+                placeholder="Username"
+                name="admin_username"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-6">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="admin_password">
+                Password
+              </label>
+              <input
+                required
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="admin_password"
+                type="password"
+                placeholder="Password"
+                name="admin_password"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <button
+                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? 'Logging in...' : 'Login'}
+              </button>
+              {err && <p className="text-red-500 text-xs italic">{err}</p>}
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
-  
 };
 
 export default AdLogin;
-

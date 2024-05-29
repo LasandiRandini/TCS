@@ -1,6 +1,7 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Adminheader from "../Components/Adminheader";
 
 const EditVideo = () => {
   const [videos, setVideos] = useState([]);
@@ -30,7 +31,10 @@ const EditVideo = () => {
   };
 
   return (
-    <div className="flex h-screen bg-primary justify-center items-center">
+    <div>
+   
+    <Adminheader pageName="Update Video Units" />
+    <div className="flex mt-5 bg-primary justify-center items-center">
       <div className="w-1/2 bg-white rounded shadow-lg p-6">
         <Link to="/AVideo" className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Add Video</Link>
         
@@ -60,6 +64,7 @@ const EditVideo = () => {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 };

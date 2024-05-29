@@ -1,6 +1,6 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import Adminheader from "../Components/Adminheader";
 
 const DeleteStudent = () => {
   const [users, setUsers] = useState([]);
@@ -30,7 +30,9 @@ const DeleteStudent = () => {
   };
 
   return (
-    <div className="flex h-screen bg-primary justify-center items-center">
+    <div>
+    <Adminheader pageName="Delete a student" />
+    <div className="flex  bg-primary justify-center items-center">
       <div className=" bg-white rounded shadow-lg p-6">
      
         
@@ -71,6 +73,7 @@ const DeleteStudent = () => {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 };

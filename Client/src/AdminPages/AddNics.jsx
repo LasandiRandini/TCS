@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import Adminheader from "../Components/Adminheader";
 
 const AddNics = () => {
   const [nic_no, setNic] = useState("");
@@ -27,6 +28,9 @@ const AddNics = () => {
   };
 
   return (
+    <div>
+      <Adminheader pageName="Add NICs" />
+  
     <div className="max-w-md mx-auto mt-40 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-center">
         Adding Physical Class Student NICs
@@ -60,6 +64,7 @@ const AddNics = () => {
           </button>
         </div>
       </form>
+    </div>
     </div>
   );
 };

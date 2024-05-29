@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Adminheader from "../Components/Adminheader";
 
 const Admin = () => {
   const [receipts, setReceipts] = useState([]);
@@ -26,6 +27,9 @@ const Admin = () => {
   };
 
   return (
+    <div>
+   
+    <Adminheader pageName="Check Reciepts" />
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {receipts.map((receipt, index) => (
@@ -50,7 +54,7 @@ const Admin = () => {
           </div>
         ))}
       </div>
-     
+     </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Adminheader from '../Components/Adminheader';
 
 const APractical = () => {
   const [inputs, setInputs] = useState({
@@ -23,13 +24,15 @@ const APractical = () => {
     e.preventDefault();
     try {
       await axios.post('http://localhost:8800/api/practicals/practical', inputs);
-      navigate('/AVideo'); 
+      navigate('/AddTimeslots'); 
     } catch (err) {
       setError(err.response.data.error);
     }
   };
 
   return (
+    <div>
+    <Adminheader pageName="Add a Practical" />
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
       <div className="w-full max-w-lg bg-white rounded-lg shadow-lg p-6">
         <h1 className="text-2xl font-bold text-center mb-6">Add Practical</h1>
@@ -120,6 +123,7 @@ const APractical = () => {
           {error && <p className="text-red-500 text-xs italic mt-4 text-center">{error}</p>}
         </form>
       </div>
+    </div>
     </div>
   );
 };

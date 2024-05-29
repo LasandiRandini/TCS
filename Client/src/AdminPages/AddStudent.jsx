@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Adminheader from "../Components/Adminheader";
 
 const AddStudent = () => {
   const [nic_no, setNic] = useState("");
@@ -28,6 +29,8 @@ const AddStudent = () => {
   };
 
   return (
+    <div>
+    <Adminheader pageName="Add Physical Class Students" />
     <div className="max-w-md mx-auto mt-40 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-center">
         Register a Physical Student
@@ -58,6 +61,7 @@ const AddStudent = () => {
           </button>
         </div>
       </form>
+    </div>
     </div>
   )
 };

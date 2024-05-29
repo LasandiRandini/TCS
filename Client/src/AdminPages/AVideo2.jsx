@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Adminheader from "../Components/Adminheader";
 
 function AVideo() {
   const [units, setUnits] = useState([]);
@@ -47,6 +48,9 @@ function AVideo() {
   };
 
   return (
+    <div>
+   
+    <Adminheader pageName="Add videos " />
     <div className="container mx-auto px-4 py-8">
       <div className="bg-gray-100 p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold mb-6">Units Data Table</h2>
@@ -151,6 +155,7 @@ function AVideo() {
           {error && <p className="text-red-500 text-xs italic mt-4 text-center">{error}</p>}
         </form>
       </div>
+    </div>
     </div>
   );
 }

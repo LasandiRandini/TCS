@@ -6,8 +6,9 @@ import { AuthContext } from "../context/authContext";
 const PNav = () => {
     const { currentUser } = useContext(AuthContext);
     let Links =[
+        {name:"Home",link:"/PHome"},
         {name:"Video Lessons",link:"/Video"},
-        {name:"My Lessons",link:"/MyVideo"},
+       
         {name:"Practical",link:"/Practical"},
         {name:"Quiz",link:"/Quiz"},
         {name:"Instruction",link:"/Instruction"},
@@ -16,7 +17,7 @@ const PNav = () => {
       let [open, setOpen] =useState(false);
 
     return (
-        <div className='shadow-md w-full fixed top-0 left-5 shadow-5xl bg-white '>
+        <div className='shadow-md w-full fixed top-0 left-5 shadow-5xl bg-white z-10 '>
           <div className='md:px-10 py-4 px-20  md:flex justify-between items-center
               '> 
                 <div className=" flex cursor-pointer items-cente gap-2">

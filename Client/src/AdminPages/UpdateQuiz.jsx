@@ -1,7 +1,7 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import Adminheader from '../Components/Adminheader';
 
 const UpdateQuiz = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -31,7 +31,9 @@ const UpdateQuiz = () => {
   };
 
   return (
-    <div className="flex h-screen bg-primary justify-center items-center">
+    <div>
+    <Adminheader pageName="Update Quiz" />
+    <div className="flex mt-4 bg-primary justify-center items-center">
       <div className=" bg-white rounded shadow-lg p-6">
         <Link to="/QuizCalander" className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Add Quiz</Link>
         
@@ -64,6 +66,7 @@ const UpdateQuiz = () => {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 };

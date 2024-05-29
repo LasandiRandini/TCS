@@ -1,123 +1,144 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import teacher from "../assets/teacher.png";
+import { useNavigate } from 'react-router-dom';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import 'react-datetime/css/react-datetime.css';
 import magazine from "../assets/Mag.jpg";
-import {Link} from 'react-router-dom';
 
+const PHome = () => {
+  const [events, setEvents] = useState([]);
+  const [notices, setNotices] = useState([]);
+  const [eventsError, setEventsError] = useState(null);
+  const [noticesError, setNoticesError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-const Home = () => {
-  const [notices, setnotices] = useState([]);
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  const handleEventClick = (clickInfo) => {
+    const { type } = clickInfo.event.extendedProps;
+    if (type === 'practical') {
+      navigate('/Practical');
+    } else if (type === 'quiz') {
+      navigate('/Quiz');
+    } else {
+      navigate('/PHome');
+    }
+  };
 
   useEffect(() => {
-    const fetchNotices = async () => {
+    const fetchEvents = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/api/Notices/getNotice');
-        setnotices(response.data);
+        const response = await axios.get('http://localhost:8800/api/events/getAllEvents', {
+          params: { academicYear: user.al_year }
+        });
+        setEvents(response.data);
       } catch (err) {
-        setError(err.response ? err.response.data.error : 'Network Error');
+        setEventsError(err.response ? err.response.data.message : 'Network Error');
       }
     };
 
-    fetchNotices();
-  }, []);
+    const fetchNotices = async () => {
+      try {
+        const response = await axios.get('http://localhost:8800/api/Notices/getNotice');
+        setNotices(response.data);
+      } catch (err) {
+        setNoticesError(err.response ? err.response.data.message : 'Network Error');
+      }
+    };
+
+    Promise.all([fetchEvents(), fetchNotices()]).finally(() => setLoading(false));
+  }, [user.al_year]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
-    
-
-      {/* Banner content */}
-      <div className="md:px-12 p-4 max-w-screen-2xl mx-auti mt-20">
-        <div className="gradienBg rounded-x1 rounded-br-[80px] md:p-9 px-4 py-9">
-          <div className="flex flex-col md:flex-row-reverse justify-between items-center gap-10">
-            <div className="md:w-3/5">
-              <h2 className="md:text-7xl text-4xl font-bold text-white mb-6 leading-relaxed">
-                Welcome to Enginnering Technology Academy
-              </h2>
-              <p className="text-[#EBEBEB] text-2xl mb-8">
-                Join Mr. Buwanekabahu Muthukumarana engineering technology
-                tuition classes for expert guidance in electrical, mechanical,
-                and computer science topics. Our interactive sessions foster
-                hands-on learning and critical thinking, preparing students for
-                success in engineering technology
-              </p>
-
-              <div>
-              <Link to="/PSignup">
-  <button
-    className="py-3 px-8 bg-red-600 font-semibold text-white rounded hover:bg-red-400 transition-all duration-300"
-  >
-    Register Here
-  </button>
-</Link>
-              </div>
-            </div>
-            <div>
-              <img src={teacher} alt="" className="lg:h-[500px]" />
-            </div>
-          </div>
+      <div className="md:px-12 p-4 mt-20">
+        <div>
+          <h1 className="text-3xl font-semibold text-red-700">Hello..! 👋</h1>
+          <h1 className="mb-10 text-3xl font-semibold text-gray-700">
+            {user ? `${user.first_name} ${user.last_name}` : "User Profile"}
+          </h1>
         </div>
       </div>
 
-  {/* Notices */}
-    
-  <div className="my-24 md:px-14 px-4 max-w-screen-2xl mx-auto">
-       
-       
-          <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-12">
-            {notices.map((notice, index) => (
+      <div className="rounded-s-3xl bg-white md:px-5 w-500 z-5">
+        {eventsError ? (
+          <p className="text-red-500">Error: {eventsError}</p>
+        ) : (
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView="dayGridMonth"
+            events={events}
+            eventContent={renderEventContent}
+            eventClick={handleEventClick}
+            height={600}
+            headerToolbar={{
+              start: 'prev,next',
+              center: 'title',
+              end: 'today'
+            }}
+            dayHeaderContent={renderDayHeader}
+            firstDay={1} // Start the week on Monday
+          />
+        )}
+      </div>
+
+      <div className="my-24 md:px-14 px-4 max-w-screen-2xl mx-auto">
+        <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-12">
+          {noticesError ? (
+            <p className="text-red-500">Error: {noticesError}</p>
+          ) : (
+            notices.map((notice, index) => (
               <div key={index} className="bg-[rgba(255,255,255,0.04)] rounded-[35px] shadow-3xl p-8 hover:-translate-y-4 transition-all duration-300">
-                 {error ? (
-          <p className="text-red-500">Error: {error}</p>
-                 ):(
                 <div className="bg-white rounded-lg shadow-md overflow-hidden">
                   <p className="md:text-2xl text-1xl text-center font-bold mb-6 leading-relaxed">{notice.name}</p>
                   <p className="md:text-1xl text-1xl mb-6 leading-relaxed">{notice.n_description}</p>
                   <img src={`http://localhost:8800/public/image/${notice.image}`} alt={notice.image} className="w-full h-auto pt-6 lg:h-[400px]" />
                 </div>
-             
-            )}
-            </div>
-          ))}
-      </div>   
+              </div>
+            ))
+          )}
+        </div>
       </div>
-           
 
-      {/* Magazine */}
-
-      <div
-        className="md:px-14 p-4 max-w-s 
-my-24 px-4 max-w-screen-2xl mx-auto"
-      >
+      <div className="md:px-14 p-4 max-w-screen-2xl mx-auto my-24">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="md:w-1/3">
             <img src={magazine} alt="" className="lg:h-[400px]" />
           </div>
-
           <div className="md:w-4/5">
-            <h2
-              className="md: text-5xl text-3xl font-bold
-text-primary mb-5 leading-normal text-white"
-            >
+            <h2 className="md:text-5xl text-3xl font-bold text-primary mb-5 leading-normal text-blue-800">
               We have been improving our product <span>for many years.</span>
             </h2>
-            <p className=" text-black text-lg mb-7">
-              {" "}
-              A good example of a paragraph contains a topic conclusion. There
-              are many different kinds of animals that live in China.
+            <p className="text-black text-lg mb-7">
+              A good example of a paragraph contains a topic conclusion. There are many different kinds of animals that live in China.
             </p>
-            <button
-              className="py-3 px-8 bg-red-600 font-semibold text-white rounded 
-                                hover:bg-red-400 transition-all duration-300"
-            >
+            <button className="py-3 px-8 bg-red-600 font-semibold text-white rounded hover:bg-red-400 transition-all duration-300">
               View Magazine
             </button>
           </div>
         </div>
       </div>
-  
     </>
   );
 };
 
-export default Home;
+function renderDayHeader(arg) {
+  return <div className="text-blue-800 no-underline">{arg.text}</div>;
+}
+
+function renderEventContent(eventInfo) {
+  return (
+    <>
+      <b>{eventInfo.timeText}</b>
+      <i className="text-xs font-medium text-white text-center ml-1 overflow-hidden whitespace-nowrap text-ellipsis">{eventInfo.event.title}</i>
+    </>
+  );
+}
+
+export default PHome;

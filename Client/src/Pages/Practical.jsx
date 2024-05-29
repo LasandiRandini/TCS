@@ -7,13 +7,17 @@ const Practical = () => {
   const [selectedSlot, setSelectedSlot] = useState({});
   const [error, setError] = useState(null);
 
-  const student_id = 9;
+  
+  const user = JSON.parse(localStorage.getItem("user"))
+  console.log(user);
 
   useEffect(() => {
     const fetchPracticals = async () => {
       try {
         const response = await axios.get('http://localhost:8800/api/practicals/getpractical');
-        setPracticals(response.data);
+        console.log(response.data)
+
+        setPracticals((response.data).filter(practical => practical.year == user.al_year));
       } catch (err) {
         setError(err.response ? err.response.data.error : 'Network Error');
         console.error('Error fetching practicals:', err.message);
@@ -21,7 +25,7 @@ const Practical = () => {
     };
 
     fetchPracticals();
-  }, []);
+  });
 
   const fetchTimeSlots = async (practical_id) => {
     if (!practical_id) {
@@ -46,7 +50,7 @@ const Practical = () => {
 
   const handleVote = async (practical_id, slot_id) => {
     try {
-      await axios.post('http://localhost:8800/api/practicals/vote', { student_id, slot_id });
+      await axios.post('http://localhost:8800/api/practicals/vote', { student_id:user.id, slot_id });
       setError(null);
       fetchTimeSlots(practical_id);
     } catch (err) {
@@ -62,7 +66,7 @@ const Practical = () => {
         {error ? (
           <p className="text-red-500 text-center">Error: {error}</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
             {practicals.map((practical, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
                 <h2 className="text-2xl font-bold mb-2">{practical.title}</h2>

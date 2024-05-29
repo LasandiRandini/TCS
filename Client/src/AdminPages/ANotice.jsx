@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import Adminheader from "../Components/Adminheader";
 
 function ANotice() {
   const [inputs, setInputs] = useState({
@@ -55,7 +56,9 @@ function ANotice() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+    <div>
+    <Adminheader pageName="Add a Notice" />
+    <div className="flex justify-center items-center  bg-gray-100 p-4">
       <div className="flex flex-col w-full max-w-lg px-6 py-8 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Create Notice</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -125,6 +128,7 @@ function ANotice() {
         </form>
         {error && <p className="text-red-500 text-sm mt-4 text-center">{error}</p>}
       </div>
+    </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import Adminheader from "../Components/Adminheader";
 
 function AVideo() {
   const [inputs, setInputs] = useState({
@@ -32,8 +33,11 @@ function AVideo() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+    <div>
+   
+    <Adminheader pageName="Add new Video Unut" />
+    <div className="flex justify-center items-center mt-5 p-4">
+      <div className="w-full max-w-md  rounded-lg shadow-lg p-6">
         <h1 className="text-2xl font-bold text-center mb-6">Add New Unit</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col">
@@ -98,6 +102,7 @@ function AVideo() {
         </form>
       </div>
     </div>
+  </div>
   );
 }
 

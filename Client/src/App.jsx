@@ -42,17 +42,18 @@ import QuizCalender from "./AdminPages/QuizCalander";
 import Quiz2 from "./Pages/Quiz2";
 import UpdateQuiz from "./AdminPages/UpdateQuiz";
 import UpdateQuiz2 from  "./AdminPages/UpdateQuiz2";
+import UploadVideo from "./AdminPages/UploadVideo";
 
 
 const PLayout = () => {
   return (
     <>
     
-      <PNav />
       
-      <Outlet />
+          <PNav />
+     <Outlet />
       <Footer />
-      
+    
     </>
   );
 };
@@ -70,7 +71,7 @@ const DashLayout = () => {
   return (
     <div>
       <div className="flex ">
-        <div className="w-[300px] ">
+        <div className="w-[280px] ">
           <Dashboard />
         </div>
 
@@ -241,6 +242,10 @@ const router = createBrowserRouter([
          path: "/EditVideo",
          element: <EditVideo />,
        },
+       {
+        path: "/UploadVideo",
+        element: <UploadVideo />,
+      },
        {
         path: "/UpdateUnit/:unit_id",
         element: <UpdateUnit />,

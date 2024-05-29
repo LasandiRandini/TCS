@@ -1,6 +1,7 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Adminheader from "../Components/Adminheader";
 
 const EditNotice = () => {
   const [notices, setNotices] = useState([]);
@@ -30,8 +31,12 @@ const EditNotice = () => {
   };
 
   return (
-    <div className="flex h-screen bg-primary justify-center items-center">
-      <div className="w-1/2 bg-white rounded shadow-lg p-6">
+   
+      <div>
+   
+    <Adminheader pageName="Edit Notices" />
+    <div className="flex mt-5  bg-primary justify-center items-center">
+      <div className=" bg-white rounded shadow-lg p-6">
         <Link to="/ANotice" className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Add Notice</Link>
         
         <table className="w-full">
@@ -61,6 +66,8 @@ const EditNotice = () => {
         </table>
       </div>
     </div>
+    </div>
+    
   );
 };
 

@@ -4,19 +4,23 @@ import axios from 'axios';
 
 const Quiz = () => {
     const [quizzes, setQuizzes] = useState([]);
+    const user = JSON.parse(localStorage.getItem("user"))
+    console.log(user);
 
     useEffect(() => {
         const fetchQuizzes = async () => {
             try {
                 const response = await axios.get('http://localhost:8800/api/quizes/getAllQuizzes');
                 setQuizzes(response.data);
+                
+        setQuizzes((response.data).filter(quiz => quiz.q_year == user.al_year));
             } catch (error) {
                 console.error('Error fetching quizzes:', error);
             }
         };
 
         fetchQuizzes();
-    }, []);
+    });
 
     const formatDateTime = (dateTimeString) => {
         const dateTime = new Date(dateTimeString);

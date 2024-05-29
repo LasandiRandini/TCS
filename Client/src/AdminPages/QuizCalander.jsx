@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import axios from 'axios';
+import Adminheader from "../Components/Adminheader";
 
 function QuizCalander() {
     const [quizData, setQuizData] = useState({ q_title: '', q_unit: '', q_year: '', start_date: null, end_date: null, duration: '' });
@@ -28,6 +29,8 @@ function QuizCalander() {
     };
 
     return (
+        <div>
+        <Adminheader pageName="Create New Quiz" />
         <div className='rounded-lg bg-white md:px-10 py-10 w-full'>
             <div className="inset-0 flex items-center justify-center z-50">
                 <div className="bg-white rounded-lg shadow-lg w-1/2">
@@ -98,6 +101,7 @@ function QuizCalander() {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 }
