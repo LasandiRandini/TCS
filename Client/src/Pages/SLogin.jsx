@@ -42,8 +42,8 @@ const SLogin = () => {
         <div className="w-1/2 hidden md:block">
           <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHRlY2hub2xvZ3l8ZW58MHx8fHwxNjUyNzMxNjEx&ixlib=rb-1.2.1&q=80&w=1080" alt="Login" className="w-full h-full object-cover"/>
         </div>
-        <div className="w-full md:w-1/2 bg-black bg-opacity-40 px-8 py-10">
-          <h1 className="text-2xl mb-4 text-center text-white">Login</h1>
+        <div className="w-full md:w-1/2 bg-black bg-opacity-60 px-8 py-10">
+          <h1 className="text-2xl mb-4 text-center  font-bold  text-white">Login</h1>
           <form className="mb-4" onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="username" className="block text-gray-300 text-sm font-bold mb-2">Username</label>

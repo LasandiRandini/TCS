@@ -12,8 +12,8 @@ const Adminheader = ({ pageName }) => {
                         
       
                             <div className='flex items-center gap-2 p-3'>
-                            <HiHome className='w-8 h-8 bg-text-primary rounded-2xl text-black  '/>
-                            <h1 className=" text-2xl font-semibold text-gray-600">
+                            <HiHome className='w-6 h-6 bg-text-primary rounded-2xl text-black  '/>
+                            <h1 className=" text-1xl font-semibold text-gray-600">
             {admin ? ` ${admin.admin_first_name} ${admin.admin_last_name}` : " User Profile"}
           </h1>
                                 

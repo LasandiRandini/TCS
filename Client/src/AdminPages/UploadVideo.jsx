@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import axios from "axios";
 import Adminheader from "../Components/Adminheader";
 import {
   getStorage,
@@ -8,19 +7,27 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../firebase";
+import axios from "axios";
 
 const UploadVideo = () => {
   const [video, setVideo] = useState(null);
   const [videoperc, setVideoperc] = useState(0);
+  const [videoUrl, setVideoUrl] = useState("");
+  const [videoUnit, setVideoUnit] = useState("");
+  const [vunitId, setVunitId] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   useEffect(() => {
-    video && handleUpload(video, "videoUrl");
+    if (video) {
+      uploadVideo(video);
+    }
   }, [video]);
 
-  const uploadFile = async (file, fileType) => {
+  const uploadVideo = (file) => {
     const storage = getStorage(app);
-    const folder = fileType === "videUrl" ? "images/" : "videos/";
-    const fileName = new Data().getTime() + file.name;
+    const folder = "videos/";
+    const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, folder + fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -29,57 +36,49 @@ const UploadVideo = () => {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        fileType === "imgUrl"
-        ? setImgPerc
+        setVideoperc(Math.round(progress));
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
             break;
           case "running":
-            console.log(" Upload is running");
+            console.log("Upload is running");
             break;
           default:
             break;
         }
       },
       (error) => {
-        switch (error.code) {
-          case "storage/unauthorized":
-            console.log(error);
-            break;
-          case "storage/canceled":
-            break;
-          case "storage/unknown":
-            break;
-          default:
-            break;
-        }
+        console.error("Error during upload:", error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("DownloadURL - ", downloadURL);
-          // setInputs((prev) => {
-          //   return{
-          //     ...prev,
-          //     [fileType]:downloadURL,
-          //   };
-          // });
+          console.log("Download URL:", downloadURL);
+          setVideoUrl(downloadURL);
         });
       }
     );
   };
-}
 
   const handleUpload = async (e) => {
     e.preventDefault();
 
+    if (!videoUrl) {
+      console.error("Video URL not available. Please wait until the upload is complete.");
+      return;
+    }
+
     try {
-      // const response = await axios.post(
-      //   "http://localhost:5000/upload",
-      //   formData,
-      //   {
+      await axios.post("http://localhost:8800/api/videos/uploadVideo", {
+        video_link: videoUrl,
+        video_name: videoUnit,
+        vunit_id: vunitId,
+        start_date: startDate,
+        end_date: endDate,
+      });
+      alert("Video uploaded successfully!");
     } catch (error) {
-      console.log(error);
+      console.error("Error uploading video:", error);
     }
   };
 
@@ -90,19 +89,49 @@ const UploadVideo = () => {
         <header className="text-center mb-6">
           <h1 className="text-3xl font-bold mb-2">Video Upload</h1>
           <p className="text-gray-600">Select a video file to upload</p>
+          <label htmlFor="video" className="block mt-4 text-sm text-gray-500">Video:</label>
+          {videoperc > 0 && <p>Uploading: {videoperc}%</p>}
         </header>
         <div className="flex flex-col items-center">
           <input
             type="file"
             accept="video/*"
             id="video"
-            onChange={(e) => setVideo((prev) => e.target.files[0])}
+            onChange={(e) => setVideo(e.target.files[0])}
             className="block w-full text-sm text-gray-500
                        file:mr-4 file:py-2 file:px-4
                        file:rounded-full file:border-0
                        file:text-sm file:font-semibold
                        file:bg-indigo-50 file:text-indigo-700
                        hover:file:bg-indigo-100 mb-4"
+          />
+          <input
+            type="text"
+            placeholder="Video Name"
+            value={videoUnit}
+            onChange={(e) => setVideoUnit(e.target.value)}
+            className="mb-4 p-2 border rounded w-full"
+          />
+          <input
+            type="text"
+            placeholder="Vunit ID"
+            value={vunitId}
+            onChange={(e) => setVunitId(e.target.value)}
+            className="mb-4 p-2 border rounded w-full"
+          />
+          <input
+            type="date"
+            placeholder="Start Date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className="mb-4 p-2 border rounded w-full"
+          />
+          <input
+            type="date"
+            placeholder="End Date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="mb-4 p-2 border rounded w-full"
           />
           <button
             onClick={handleUpload}
