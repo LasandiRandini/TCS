@@ -20,8 +20,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post("/addReceipt", upload.single("file"), addReceipt); 
+// router.post("/addReceipt", upload.single("file"), addReceipt); 
 router.get("/showReceipt", showReceipt); 
+router.post("/addReceipt", addReceipt);
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
