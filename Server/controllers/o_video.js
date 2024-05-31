@@ -1,14 +1,18 @@
 import { db } from "../db.js";
 
+
+
+
+
+
 // export const addReceipt = async (req, res) => {
-//   const reciepts = req.file ? req.file.filename : null;
-//   const r_unit_id = req.body.r_unit_id;
+//   const { fileUrl, r_unit_id } = req.body;
 
 //   try {
 //     const [result] = await db
 //       .promise()
 //       .query("INSERT INTO reciept (reciepts, r_unit_id) VALUES (?, ?)", [
-//         reciepts,
+//         fileUrl,
 //         r_unit_id,
 //       ]);
 
@@ -24,17 +28,16 @@ import { db } from "../db.js";
 // };
 
 
-
-
 export const addReceipt = async (req, res) => {
-  const { fileUrl, r_unit_id } = req.body;
+  const { fileUrl, r_unit_id, u_id } = req.body;
 
   try {
     const [result] = await db
       .promise()
-      .query("INSERT INTO reciept (reciepts, r_unit_id) VALUES (?, ?)", [
+      .query("INSERT INTO reciept (reciepts, r_unit_id, u_id) VALUES (?, ?, ?)", [
         fileUrl,
         r_unit_id,
+        u_id,
       ]);
 
     if (result.affectedRows === 1) {
@@ -48,6 +51,8 @@ export const addReceipt = async (req, res) => {
   }
 };
 
+
+
 // export const showReceipt = async (req, res) => {
 //   try {
 //     const sql = `
@@ -58,9 +63,15 @@ export const addReceipt = async (req, res) => {
 
 //     db.query(sql, (err, result) => {
 //       if (err) {
-//         return res.json("Error");
+//         return res.status(500).json({ error: "Error fetching receipts" });
 //       } else {
-//         return res.json(result);
+      
+//         const receiptsWithFirebaseURLs = result.map((receipt) => ({
+//           ...receipt,
+//           reciepts: `https://firebasestorage.googleapis.com/v0/b/videos-b64b2.appspot.com/o/uploads/${receipt.reciepts}`,
+          
+//         }));
+//         return res.json(receiptsWithFirebaseURLs);
 //       }
 //     });
 //   } catch (error) {
@@ -72,20 +83,25 @@ export const addReceipt = async (req, res) => {
 export const showReceipt = async (req, res) => {
   try {
     const sql = `
-      SELECT reciept.reciepts, videounit.unit_name, videounit.v_year 
+      SELECT 
+        reciept.reciepts, 
+        videounit.unit_name, 
+        videounit.v_year,
+        users.snic_no,
+        users.first_name,
+        users.last_name
       FROM reciept
       JOIN videounit ON reciept.r_unit_id = videounit.unit_id
+      JOIN users ON reciept.u_id = users.id
     `;
 
     db.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json({ error: "Error fetching receipts" });
       } else {
-        // Assuming reciepts column stores Firebase Storage URLs
         const receiptsWithFirebaseURLs = result.map((receipt) => ({
           ...receipt,
-          reciepts: `https://storage.googleapis.com/videos-b64b2.appspot.com/uploads/${receipt.reciepts}`,
-          
+          reciepts: `https://firebasestorage.googleapis.com/v0/b/videos-b64b2.appspot.com/o/uploads/${receipt.reciepts}?alt=media`,
         }));
         return res.json(receiptsWithFirebaseURLs);
       }

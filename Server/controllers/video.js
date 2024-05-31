@@ -160,3 +160,23 @@ export const uploadVideo = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+
+export const getUnitById = async (req, res) => {
+  const { unit_id } = req.params;
+
+  try {
+    const [unitData] = await db.promise().query('SELECT * FROM videounit WHERE unit_id = ?', [unit_id]);
+
+    if (unitData.length === 0) {
+      return res.status(404).json({ error: 'Unit not found' });
+    }
+
+    res.status(200).json(unitData[0]);
+  } catch (error) {
+    console.error('Error fetching unit data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+

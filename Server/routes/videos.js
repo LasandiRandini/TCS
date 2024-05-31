@@ -1,5 +1,5 @@
 import express from "express"
-import {addUnit,addVideo, getUnit,updateUnit,deleteUnit,displayUnits,uploadVideo} from "../controllers/video.js"
+import {addUnit,addVideo, getUnit,updateUnit,deleteUnit,displayUnits,uploadVideo,getUnitById} from "../controllers/video.js"
 
 
 const router = express.Router()
@@ -11,5 +11,6 @@ router.get("/displayUnits",displayUnits)
 router.put("/updateUnit/:unit_id",updateUnit)
 router.delete("/deleteUnit/:unit_id",deleteUnit)
 router.post("/uploadVideo",uploadVideo)
+router.get('/getUnit/:unit_id', getUnitById);
 
 export default router
