@@ -52,7 +52,7 @@ const AddTimeslots = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-200 min-h-screen">
     <Adminheader pageName="Add Practical Time-Slots" />
     <div className="flex flex-col items-center justify-center  bg-primary">
      

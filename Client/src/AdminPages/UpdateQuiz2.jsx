@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
+import Adminheader from "../Components/Adminheader";
 
 function UpdateUnit() {
   const [inputs, setInputs] = useState({
@@ -34,8 +35,10 @@ function UpdateUnit() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-xl bg-white p-8 rounded-lg shadow-lg">
+    <div className="bg-gray-200 min-h-screen">
+    <Adminheader pageName="Update Quiz" />
+    <div className="flex justify-center items-center mt-5 min-h-screen ">
+      <div className="w-full max-w-xl bg-white p-5 rounded-lg shadow-lg">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Update Quiz</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col">
@@ -120,6 +123,7 @@ function UpdateUnit() {
         {error && <p className="text-red-500 text-center text-sm mt-4">{error}</p>}
         {success && <p className="text-green-500 text-center text-sm mt-4">{success}</p>}
       </div>
+    </div>
     </div>
   );
 }

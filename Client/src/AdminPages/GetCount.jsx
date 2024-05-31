@@ -74,7 +74,7 @@ const GetCount = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-200 min-h-screen">
       <Adminheader pageName="Get Student Count for Practicals" />
       <div className="flex mt-6 bg-primary justify-center items-center">
         <div className="bg-white rounded shadow-lg p-10 w-full max-w-6xl mx-auto">

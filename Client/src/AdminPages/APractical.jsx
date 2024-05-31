@@ -31,7 +31,7 @@ const APractical = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-200 min-h-screen">
     <Adminheader pageName="Add a Practical" />
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
       <div className="w-full max-w-lg bg-white rounded-lg shadow-lg p-6">

@@ -32,10 +32,10 @@ const EditNotice = () => {
 
   return (
    
-      <div>
+      <div className="bg-gray-200 min-h-screen">
    
     <Adminheader pageName="Edit Notices" />
-    <div className="flex mt-5  bg-primary justify-center items-center">
+    <div className="flex mt-5 ml-5 mr-5 bg-primary justify-center items-center">
       <div className=" bg-white rounded shadow-lg p-6">
         <Link to="/ANotice" className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Add Notice</Link>
         

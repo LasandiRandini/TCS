@@ -30,7 +30,7 @@ const DeletePractical = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-200 min-h-screen">
     <Adminheader pageName="Delete a Practical" />
     <div className="flex mt-5 bg-primary justify-center items-center">
       <div className=" bg-white rounded shadow-lg p-6">

@@ -29,9 +29,9 @@ function QuizCalander() {
     };
 
     return (
-        <div>
+        <div className="bg-gray-200 min-h-screen">
         <Adminheader pageName="Create New Quiz" />
-        <div className='rounded-lg bg-white md:px-10 py-10 w-full'>
+        <div className='rounded-lg  md:px-10 py-10 w-full'>
             <div className="inset-0 flex items-center justify-center z-50">
                 <div className="bg-white rounded-lg shadow-lg w-1/2">
                     <div className="p-4">

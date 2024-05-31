@@ -17,7 +17,7 @@ const Home = () => {
             <div className="flex flex-col md:flex-row-reverse items-center gap-10">
               <div className="md:w-3/5">
                 <h2 className="text-4xl md:text-7xl font-bold text-white mb-6 leading-relaxed hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                  Welcome to Engineering Technology Academy
+                  Welcome to Engineering Technology LABS
                 </h2>
                 <p className="text-[#EBEBEB] text-lg md:text-2xl mb-8 hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                   Join Mr. Buwanekabahu Muthukumaranas engineering technology tuition classes for expert guidance in electrical, mechanical, and computer science topics. Our interactive sessions foster hands-on learning and critical thinking, preparing students for success in engineering technology.

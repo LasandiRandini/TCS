@@ -30,10 +30,10 @@ const DeleteStudent = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-200 min-h-screen">
     <Adminheader pageName="Delete a student" />
-    <div className="flex  bg-primary justify-center items-center">
-      <div className=" bg-white rounded shadow-lg p-6">
+    <div className="flex   justify-center items-center mt-5 ml-5 mr-5">
+      <div className=" bg-white rounded shadow-lg p-2">
      
         
         <table className="w-full">

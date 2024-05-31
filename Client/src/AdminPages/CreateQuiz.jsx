@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Adminheader from '../Components/Adminheader';
 
 const CreateQuiz = () => {
     const { quizId } = useParams();
@@ -40,7 +41,10 @@ const CreateQuiz = () => {
     };
 
     return (
-        <div className="rounded-lg bg-white md:px-10 py-8 w-full">
+        <div className="bg-gray-200 min-h-screen">
+        <Adminheader pageName="Add a Notice" />
+    
+        <div className="rounded-lg  md:px-10 py-8 w-full">
             <form onSubmit={handleSubmit}>
                 {questions.map((question, qIndex) => (
                     <div key={qIndex} className="mb-4 bg-gray-100 px-4 py-3.5 rounded-lg shadow-md">
@@ -94,6 +98,7 @@ const CreateQuiz = () => {
                     </button>
                 </div>
             </form>
+        </div>
         </div>
     );
 };

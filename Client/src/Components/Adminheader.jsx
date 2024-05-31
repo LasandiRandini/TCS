@@ -7,8 +7,8 @@ const Adminheader = ({ pageName }) => {
   console.log(admin);
 
         return (
-                     <div className="bg-blue-100 h-16 flex justify-between ">
-                            <p className="text-text-primary font-inter font-bold text-2xl p-3 mb-12">{pageName}</p>
+                     <div className="bg-white h-16 flex justify-between shadow-md">
+                            <p className="text-text-primary font-inter font-bold text-2xl p-3  text-indigo-600">{pageName}</p>
                         
       
                             <div className='flex items-center gap-2 p-3'>

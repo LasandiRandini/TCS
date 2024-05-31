@@ -48,7 +48,7 @@ function AVideo() {
   };
 
   return (
-    <div>
+    <div className="bg-gray-200 min-h-screen">
    
     <Adminheader pageName="Add videos " />
     <div className="container mx-auto px-4 py-8">

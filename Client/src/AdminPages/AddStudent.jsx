@@ -29,9 +29,9 @@ const AddStudent = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-200 min-h-screen">
     <Adminheader pageName="Add Physical Class Students" />
-    <div className="max-w-md mx-auto mt-40 p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-md mx-auto mt-40 p-6 bg-gray-100  shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-center">
         Register a Physical Student
       </h2>

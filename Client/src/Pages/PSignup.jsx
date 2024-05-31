@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const PSignup = () => {
   const [inputs, setInputs] = useState({
@@ -20,6 +20,15 @@ const PSignup = () => {
 
   const [err, setError] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const nic = queryParams.get('nic_no');
+    if (nic) {
+      setInputs((prev) => ({ ...prev, snic_no: nic }));
+    }
+  }, [location.search]);
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -39,8 +48,35 @@ const PSignup = () => {
     }
   };
 
+  const districts = [
+    "Colombo",
+    "Gampaha",
+    "Kalutara",
+    "Kandy",
+    "Matale",
+    "Nuwara Eliya",
+    "Galle",
+    "Matara",
+    "Hambantota",
+    "Jaffna",
+    "Kilinochchi",
+    "Mannar",
+    "Vavuniya",
+    "Mullaitivu",
+    "Batticaloa",
+    "Ampara",
+    "Trincomalee",
+    "Kurunegala",
+    "Puttalam",
+    "Anuradhapura",
+    "Polonnaruwa",
+    "Badulla",
+    "Monaragala",
+    "Ratnapura",
+    "Kegalle"
+  ];
   return (
-    <div className="flex justify-center items-center min-h-screen  p-6 bg-gray-700">
+    <div className="flex justify-center items-center min-h-screen p-6 bg-gray-700">
       <div className="w-full max-w-lg bg-black bg-opacity-40 shadow-md rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-semibold text-center mb-6 text-white">Register</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -70,15 +106,19 @@ const PSignup = () => {
           </div>
           <div className="flex flex-col">
             <label htmlFor="district" className="text-sm text-white font-medium mb-1">District</label>
-            <input
+            <select
               required
               className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               id="district"
-              type="text"
-              placeholder="District"
               name="district"
+              value={inputs.district}
               onChange={handleChange}
-            />
+            >
+              <option value="" disabled>Select District</option>
+              {districts.map((district, index) => (
+                <option key={index} value={district}>{district}</option>
+              ))}
+            </select>
           </div>
           <div className="flex flex-col">
             <label htmlFor="email" className="text-sm text-white font-medium mb-1">Email</label>
@@ -101,6 +141,7 @@ const PSignup = () => {
               type="text"
               placeholder="NIC Number"
               name="snic_no"
+              value={inputs.snic_no}
               onChange={handleChange}
             />
           </div>

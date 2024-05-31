@@ -1,62 +1,58 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-
-const OProfile = () => {
-  const [userProfile, setProfileData] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    console.log("Fetching profile data...");
-    fetchProfile();
-  }, []);
-
-  const fetchProfile = async () => {
-    try {
-      const response = await axios.get('http://localhost:8800/api/auth/profile'); 
-      console.log("Profile data response:", response.data); 
-      setProfileData(response.data);
-      setError(null);
-    } catch (error) {
-      console.error("Error fetching profile data:", error); 
-      setError('Error fetching profile data');
-    }
-  };
-
-  console.log("UserProfile:", userProfile); 
-  console.log("Error:", error); 
+const PProfile = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
 
   return (
-    <>
-   
-   <div className="my-24 md:px-20 mx-20 px-4 max-w-screen-2xl item-center mx-auto"></div>
-    <div className="container mx-auto">
-      <h1 className="text-2xl mb-4 text-center">User Profile</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      {userProfile && (
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p><strong>First Name:</strong> {userProfile.first_name}</p>
-            <p><strong>Last Name:</strong> {userProfile.last_name}</p>
-            <p><strong>NIC No:</strong> {userProfile.nic_no}</p>
-            <p><strong>District:</strong> {userProfile.district}</p>
-            <p><strong>Email:</strong> {userProfile.email}</p>
-            <p><strong>Contact No:</strong> {userProfile.contact_no}</p>
-          </div>
-          <div>
-            <p><strong>AL Year:</strong> {userProfile.al_year}</p>
-            <p><strong>Institute:</strong> {userProfile.institute}</p>
-            <p><strong>Parent Contact No:</strong> {userProfile.parent_contact_no}</p>
-            <p><strong>Parent Email:</strong> {userProfile.parent_email}</p>
-            
+    <div className="min-h-screen bg-gray-50">
+      {/* Profile Content */}
+      <div className="container mx-auto p-10 bg-gray-50 rounded-lg shadow-lg mt-12">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-4">
+            <div className="h-16 w-16 bg-gray-200 rounded-full flex items-center justify-center text-2xl font-bold text-gray-500">
+              {user?.first_name[0]}
+            </div>
+            <div>
+              <h1 className="text-2xl font-semibold text-gray-700">
+                {user ? `${user.first_name} ${user.last_name}` : "User Profile"}
+              </h1>
+              <p className="text-sm text-gray-500">
+                {user?.id} - {user?.first_name.toUpperCase()}{" "}
+                {user?.last_name.toUpperCase()}
+              </p>
+            </div>
           </div>
         </div>
-       
-      )}
-       
+
+        {user ? (
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              Profile
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="mb-2">
+                  <strong>Name:</strong> {user.first_name} {user.last_name}
+                </p>
+                <p className="mb-2">
+                  <strong>Email address:</strong> {user.email}
+                </p>
+
+                <p className="mb-2">
+                  <strong>NIC No:</strong> {user.snic_no}
+                </p>
+
+                <p className="mb-2">
+                  <strong>AL Year:</strong> {user.al_year}
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <p className="text-center text-red-500">No user data found</p>
+        )}
+      </div>
     </div>
-    
-    </>
   );
 };
 
-export default OProfile;
+export default PProfile;

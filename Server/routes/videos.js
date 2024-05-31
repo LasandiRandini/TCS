@@ -10,6 +10,6 @@ router.post("/addVideo", addVideo)
 router.get("/displayUnits",displayUnits)
 router.put("/updateUnit/:unit_id",updateUnit)
 router.delete("/deleteUnit/:unit_id",deleteUnit)
-router.get("/uploadVideo",uploadVideo)
+router.post("/uploadVideo",uploadVideo)
 
 export default router

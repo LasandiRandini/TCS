@@ -31,12 +31,12 @@ const EditVideo = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-200 min-h-screen">
    
     <Adminheader pageName="Update Video Units" />
     <div className="flex mt-5 bg-primary justify-center items-center">
-      <div className="w-1/2 bg-white rounded shadow-lg p-6">
-        <Link to="/AVideo" className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Add Video</Link>
+      <div className=" bg-white rounded shadow-lg p-2 ml-5 mr-5">
+        <Link to="/AVideo" className="bg-blue-500 text-white font-bold py-2 px-3 rounded mb-4 inline-block">Add Video</Link>
         
         <table className="w-full">
           <thead>
@@ -53,11 +53,11 @@ const EditVideo = () => {
               <tr key={video.unit_id} className="border-b">
                 <td className="py-2 px-4">{video.unit_name}</td>
                 <td className="py-2 px-4">{video.v_year}</td> 
-                <td className="py-2 px-4">{video.unit_description}</td>
+                <td className="py-2 px-3">{video.unit_description}</td>
                 <td className="py-2 px-4">{video.price}</td>
                 <td className="py-2 px-4">
-                  <Link to={`/UpdateUnit/${video.unit_id}`} className="bg-yellow-500 text-white font-bold py-1 px-2 rounded">Edit</Link>
-                  <button className="bg-yellow-500 text-white btn btn-danger mt-2 font-bold py-1 px-2 rounded" onClick={() => handleDelete(video.unit_id)}>Delete</button>
+                  <Link to={`/UpdateUnit/${video.unit_id}`} className="bg-indigo-500 text-white font-bold py-1 px-2 mr-4 rounded">Edit</Link>
+                  <button className="bg-indigo-500 text-white btn btn-danger mt-2 font-bold py-1 px-2 rounded" onClick={() => handleDelete(video.unit_id)}>Delete</button>
                 </td>
               </tr>
             ))}

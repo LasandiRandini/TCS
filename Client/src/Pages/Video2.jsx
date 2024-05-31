@@ -70,7 +70,7 @@ const Video = () => {
             >
               <h3 className="text-xl font-semibold mb-2">{video.unit_name}</h3>
               <p className="text-gray-600 mb-4">{video.unit_description}</p>
-              <p className="text-lg font-bold text-black-500">${video.price}</p>
+              <p className="text-lg font-bold text-black-500">{video.price}LKR</p>
               <input
                 type="file"
                 id={`file-${index}`}

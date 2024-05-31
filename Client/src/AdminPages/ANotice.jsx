@@ -56,7 +56,7 @@ function ANotice() {
   };
 
   return (
-    <div>
+    <div className="bg-gray-200 min-h-screen">
     <Adminheader pageName="Add a Notice" />
     <div className="flex justify-center items-center  bg-gray-100 p-4">
       <div className="flex flex-col w-full max-w-lg px-6 py-8 bg-white rounded-lg shadow-md">

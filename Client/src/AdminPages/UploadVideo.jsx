@@ -8,6 +8,7 @@ import {
 } from "firebase/storage";
 import app from "../firebase";
 import axios from "axios";
+import swal from 'sweetalert';
 
 const UploadVideo = () => {
   const [video, setVideo] = useState(null);
@@ -52,9 +53,9 @@ const UploadVideo = () => {
         console.error("Error during upload:", error);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("Download URL:", downloadURL);
-          setVideoUrl(downloadURL);
+        getDownloadURL(uploadTask.snapshot.ref).then((videoUrl) => {
+          console.log("Download URL:", videoUrl);
+          setVideoUrl(videoUrl);
         });
       }
     );
@@ -62,28 +63,39 @@ const UploadVideo = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-
+  
     if (!videoUrl) {
       console.error("Video URL not available. Please wait until the upload is complete.");
       return;
     }
-
+  
+    const payload = {
+      video_link: videoUrl,
+      video_name: videoUnit,
+      vunit_id: vunitId,
+      start_date: startDate,
+      end_date: endDate,
+    };
+    
+    console.log("Payload to be sent:", payload);
+  
     try {
-      await axios.post("http://localhost:8800/api/videos/uploadVideo", {
-        video_link: videoUrl,
-        video_name: videoUnit,
-        vunit_id: vunitId,
-        start_date: startDate,
-        end_date: endDate,
+      const response = await axios.post("http://localhost:8800/api/videos/uploadVideo", payload);
+      console.log("Response from server:", response);
+      swal({
+        title: "Good job!",
+        text: "Video uploaded successfully!",
+        icon: "success",
+        button: "Ok",
       });
-      alert("Video uploaded successfully!");
     } catch (error) {
-      console.error("Error uploading video:", error);
+      console.error("Error uploading video:", error.response ? error.response.data : error.message);
+      alert("Failed to upload video. Please check the console for more details.");
     }
   };
 
   return (
-    <div>
+    <div className="bg-gray-200 min-h-screen">
       <Adminheader pageName="Add a Notice" />
       <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
         <header className="text-center mb-6">

@@ -60,7 +60,7 @@ function AVideo() {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex bg-gray-200 min-h-screen">
         
         <div className="flex flex-col w-full px-4 py-8 bg-white rounded-lg shadow-md">
           <div className="flex flex-col mb-4">

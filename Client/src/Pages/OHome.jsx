@@ -5,17 +5,28 @@ import {Link} from 'react-router-dom';
 
 
 const OHome = () => {
+
+  
+
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
   return (
     <>
-    
+    <div>
+    <div className="md:px-12 p-4 mt-20">
+          <h1 className="text-3xl font-semibold text-red-700">Hello..! 👋</h1>
+          <h1 className=" text-3xl font-semibold text-gray-700">
+            {user ? `${user.first_name} ${user.last_name}` : "User Profile"}
+          </h1>
+        </div>
+        </div>
 
       {/* Banner content */}
-      <div className="md:px-10 p-4 max-w-screen-2xl mx-auti mt-20">
+      <div className="md:px-10 p-4 max-w-screen-2xl mx-auti ">
         <div className="gradienBg rounded-x1 rounded-br-[80px] md:p-9 px-4 py-9">
           <div className="flex flex-col md:flex-row-reverse justify-between items-center gap-10">
             <div className="md:w-3/5">
               <h2 className="md:text-7xl text-4xl font-bold text-white mb-6 hover:-translate-y-4 transition-all duration-300 cursor-pointer leading-relaxed">
-                Welcome to Enginnering Technology Academy
+                Welcome to Enginnering Technology LABS
               </h2>
               <p className="text-[#EBEBEB] text-2xl mb-8 hover:-translate-y-4 transition-all duration-300 cursor-pointer">
                 Join Mr. Buwanekabahu Muthukumarana engineering technology
