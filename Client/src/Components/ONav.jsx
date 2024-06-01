@@ -7,7 +7,7 @@ const ONav = () => {
   //  const { currentUser } = useContext(AuthContext);
   let Links = [
     { name: "Home", link: "/OHome" },
-    { name: "Video Lessons", link: "/Video" },
+    { name: "Video Lessons", link: "/Video2" },
 
     { name: "Instruction", link: "/OInstruction" },
     { name: "Profile", link: "/OProfile" },

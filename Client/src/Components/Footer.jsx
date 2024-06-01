@@ -5,7 +5,7 @@ import {FiTwitter,FiFacebook} from 'react-icons/fi'
 import {AiOutlineInstagram,AiOutlineYoutube,AiFillGithub} from 'react-icons/ai'
 const Footer = () => {
   return (
-    <div className="mt-20">
+    <div className="mt-20 ">
       <div className="download w-full  py-16 rounded-xl">
         <div className="flex flex-col justify-center items-center space-y-5">
           <h1 className="textxl md:text-3xl font-bold">

@@ -43,6 +43,8 @@ import Quiz2 from "./Pages/Quiz2";
 import UpdateQuiz from "./AdminPages/UpdateQuiz";
 import UpdateQuiz2 from  "./AdminPages/UpdateQuiz2";
 import UploadVideo from "./AdminPages/UploadVideo";
+import Video3 from "./Pages/Video3";
+import VideoGallery from "./Pages/VideoGallery";
 
 
 const PLayout = () => {
@@ -135,9 +137,14 @@ const router = createBrowserRouter([
         path: "/PProfile",
         element: <PProfile />,
       },
+     
       {
-        path: "/Video2",
-        element: <Video2 />,
+        path: "/Video3",
+        element: <Video3 />,
+      },
+      {
+        path: "/VideoGallery/:unitId",
+        element: <VideoGallery />,
       },
       {
         path: "/Quiz",
@@ -161,6 +168,10 @@ const router = createBrowserRouter([
       {
         path: "/OHome",
         element: <OHome />,
+      },
+      {
+        path: "/Video2",
+        element: <Video2 />,
       }
     ]},
 

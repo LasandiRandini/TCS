@@ -69,7 +69,7 @@ const PNav = () => {
 
     let Links = [
         { name: "Home", link: "/PHome" },
-        { name: "Video Lessons", link: "/Video" },
+        { name: "Video Lessons", link: "/Video3" },
         { name: "Practical", link: "/Practical" },
         { name: "Quiz", link: "/Quiz" },
         { name: "Instruction", link: "/Instruction" },
@@ -96,8 +96,8 @@ const PNav = () => {
                     ))}
                     {user && (
                         <li className='md:ml-10 md:my-0 my-7 pr-8 font-semibold flex items-center gap-2 cursor-pointer' onClick={() => window.location.href = "/PProfile"}>
-                            <span className='text-gray-800 hover:text-red-400 duration-500'>{`${user.first_name} ${user.last_name}`}</span>
-                            <UserCircleIcon className="h-8 w-8 text-gray-800 hover:text-red-400 duration-500" />
+                            <span className='text-red-700 hover:text-red-400 duration-500'>{`${user.first_name} ${user.last_name}`}</span>
+                            <UserCircleIcon className="h-8 w-8 text-red-700 hover:text-red-400 duration-500" />
                         </li>
                     )}
                 </ul>
