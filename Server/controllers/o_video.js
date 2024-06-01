@@ -80,10 +80,12 @@ export const addReceipt = async (req, res) => {
 //   }
 // };
 
+// showReceipt Controller
 export const showReceipt = async (req, res) => {
   try {
     const sql = `
       SELECT 
+        reciept.reciept_id, 
         reciept.reciepts, 
         videounit.unit_name, 
         videounit.v_year,
@@ -112,39 +114,38 @@ export const showReceipt = async (req, res) => {
   }
 };
 
+// approveReceipt Controller
 export const approveReceipt = async (req, res) => {
-  const { nic_no, unit_id } = req.body;
-
+  const { receipt_id } = req.params;
   try {
-  
-    const userIdQuery = `SELECT user_id FROM users WHERE nic_no = ?`;
-    db.query(userIdQuery, [nic_no], (err, userIdResult) => {
+    const sql = "UPDATE reciept SET permission = 'ok' WHERE reciept_id = ?";
+    db.query(sql, [receipt_id], (err, result) => {
       if (err) {
-        console.error('Error while fetching user ID:', err);
-        return res.status(500).send('Internal server error');
+        return res.status(500).json({ error: "Error approving receipt" });
+      } else {
+        return res.status(200).json("Receipt approved");
       }
-      const userId = userIdResult[0]?.user_id;
-
-      if (!userId) {
-        return res.status(404).send('User not found');
-      }
-
-   
-      const approveReceiptQuery = `
-        UPDATE receipts 
-        SET is_approved = 1 
-        WHERE user_id = ? AND unit_id = ?
-      `;
-      db.query(approveReceiptQuery, [userId, unit_id], (err, result) => {
-        if (err) {
-          console.error('Error while approving receipt:', err);
-          return res.status(500).send('Internal server error');
-        }
-        res.send('Receipt approved successfully');
-      });
     });
-  } catch (err) {
-    console.error('Error while approving receipt:', err);
-    res.status(500).send('Internal server error');
+  } catch (error) {
+    console.error("Error while approving receipt:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+export const getApprovedUnits = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const sql = "SELECT v.* FROM videounit v JOIN receipt r ON v.unit_id = r.r_unit_id WHERE r.u_id = ? AND r.permission = 'ok'";
+    db.query(sql, [userId], (err, rows) => {
+      if (err) {
+        return res.status(500).json({ error: "Error fetching approved units" });
+      } else {
+        return res.status(200).json(rows);
+      }
+    });
+  } catch (error) {
+    console.error("Error while fetching approved units:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };

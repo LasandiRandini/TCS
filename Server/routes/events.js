@@ -3,7 +3,7 @@ import {  getAllEvents} from "../controllers/event.js"
 
 const router = express.Router()
 
-router.get("/ getAllEvents",  getAllEvents)
+router.get("/getAllEvents",  getAllEvents)
 
 
 export default router

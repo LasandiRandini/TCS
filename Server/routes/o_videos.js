@@ -2,7 +2,7 @@ import express from "express";
 import { fileURLToPath } from 'url';
 import multer from "multer";
 import path from "path";
-import { showReceipt, addReceipt } from "../controllers/o_video.js";
+import { showReceipt, addReceipt,approveReceipt,getApprovedUnits } from "../controllers/o_video.js";
 import { __dirname } from '../dirname.js';
 
 
@@ -23,6 +23,8 @@ const upload = multer({ storage: storage });
 // router.post("/addReceipt", upload.single("file"), addReceipt); 
 router.get("/showReceipt", showReceipt); 
 router.post("/addReceipt", addReceipt);
+router.put("/approveReceipt/:receipt_id", approveReceipt);
+router.get("/getApprovedUnits/:userId", getApprovedUnits);
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
