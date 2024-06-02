@@ -30,8 +30,8 @@ const Quiz = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 p-6">
-            <h1 className="text-4xl font-bold text-center mb-8">Quizzes</h1>
+        <div className="md:px-10 p-4 mt-20 min-h-screen  p-6">
+        
             <ul className="space-y-6">
                 {quizzes.map(quiz => (
                     <li key={quiz.q_id} className="bg-white p-6 rounded-lg shadow-lg">

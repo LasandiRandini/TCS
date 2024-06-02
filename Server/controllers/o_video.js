@@ -155,16 +155,49 @@ export const getApprovedUnits = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+// export const enrollInUnit = async (req, res) => {
+//   const { userId, unitId, enrollmentStatus, startDate } = req.body;
+
+//   try {
+//     const [result] = await db
+//       .promise()
+//       .query(
+//         "INSERT INTO video_user (vuser_id, unit_id, enrollment, start_date) VALUES (?, ?, ?, ?)",
+//         [userId, unitId, enrollmentStatus, startDate]
+//       );
+
+//     if (result.affectedRows === 1) {
+//       res.status(201).json({ message: "Enrollment successful" });
+//     } else {
+//       res.status(500).json({ error: "Failed to enroll in unit" });
+//     }
+//   } catch (error) {
+//     console.error("Error while enrolling in unit:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+
+
+// Enroll in unit
 export const enrollInUnit = async (req, res) => {
   const { userId, unitId, enrollmentStatus, startDate } = req.body;
 
   try {
-    const [result] = await db
-      .promise()
-      .query(
-        "INSERT INTO video_user (vuser_id, unit_id, enrollment, start_date) VALUES (?, ?, ?, ?)",
-        [userId, unitId, enrollmentStatus, startDate]
-      );
+    const [existingRows] = await db.promise().query(
+      "SELECT COUNT(*) AS count FROM video_user WHERE vuser_id = ? AND unit_id = ? AND enrollment = 'enrolled'",
+      [userId, unitId]
+    );
+
+    if (existingRows[0].count > 0) {
+      res.status(200).json({ message: "Already enrolled" });
+      return;
+    }
+
+    const [result] = await db.promise().query(
+      "INSERT INTO video_user (vuser_id, unit_id, enrollment, start_date) VALUES (?, ?, ?, ?)",
+      [userId, unitId, enrollmentStatus, startDate]
+    );
 
     if (result.affectedRows === 1) {
       res.status(201).json({ message: "Enrollment successful" });
@@ -179,21 +212,65 @@ export const enrollInUnit = async (req, res) => {
 
 
 
+export const checkReceiptStatus = async (req, res) => {
+  const { userId, unitId } = req.body;
+
+  try {
+    const [rows] = await db.promise().query(
+      "SELECT permission FROM reciept WHERE u_id = ? AND r_unit_id = ?",
+      [userId, unitId]
+    );
+
+    if (rows.length > 0 && rows[0].permission === 'ok') {
+      res.status(200).json({ allowed: true });
+    } else {
+      res.status(200).json({ allowed: false });
+    }
+  } catch (error) {
+    console.error("Error while checking receipt status:", error);
+    res.status(500).json({ message: 'Failed to check receipt status' });
+  }
+};
+
+
+
+export const checkEnrollment = async (req, res) => {
+  const { userId, unitId } = req.body;
+
+  try {
+    const [rows] = await db.promise().query(
+      "SELECT COUNT(*) AS count FROM video_user WHERE vuser_id = ? AND unit_id = ? AND enrollment = 'enrolled'",
+      [userId, unitId]
+    );
+
+    
+ if (rows[0].count > 0) {
+      res.status(200).json({ enrolled: true });
+    } else {
+      res.status(200).json({ enrolled: false });
+    }
+  } catch (error) {
+    console.error("Error while checking enrollment:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 
 export const getVideosByUnitId = async (req, res) => {
-  const { unit_id } = req.params;
+  const { unitId } = req.params; 
   try {
+    
     const query = `
       SELECT vu.unit_name, v.video_id, v.video_name, v.video_link
       FROM video v
       JOIN videounit vu ON v.vunit_id = vu.unit_id
       WHERE vu.unit_id = ?
     `;
-    db.query(query, [unit_id], (err, results) => {
+    db.query(query, [unitId], (err, results) => {
       if (err) {
         return res.status(500).json({ error: "Error fetching videos" });
       } else {
-        return res.status(200).json(results);
+        return res.status(200).json(results); // Return the results as JSON
       }
     });
   } catch (error) {

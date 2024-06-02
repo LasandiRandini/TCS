@@ -163,7 +163,8 @@ const AReceipts = () => {
                     </div>
                   </a>
                 ) : (
-                  <img src={receipt.reciepts} alt={`Receipt ${index}`} className="w-full h-auto" />
+                  <embed src={receipt.reciepts} type="application/pdf" width="100%" height="500px" />
+                  
                 )}
                 <div className="p-4">
                   <p className="text-xl font-semibold">{receipt.unit_name}</p>

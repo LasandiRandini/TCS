@@ -202,7 +202,7 @@ const PHome = () => {
   }
 
   return (
-    <div className="md:px-12 p-4 mt-20 bg-gray-100 min-h-screen">
+    <div className="md:px-12 p-4 mt-20 min-h-screen">
       <div className="rounded-lg bg-white shadow-md p-5">
         {eventsError ? (
           <p className="text-red-500">Error: {eventsError}</p>

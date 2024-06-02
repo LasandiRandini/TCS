@@ -15,7 +15,7 @@ const ONav = () => {
   let [open, setOpen] = useState(false);
 
   return (
-    <div className="shadow-md w-full fixed top-0 left-5 shadow-5xl bg-white ">
+    <div className="fixed top-4 left-4 right-4 bg-gray-100 shadow-md rounded-full z-10">
       <div
         className="md:px-10 py-4 px-20  md:flex justify-between items-center
               "

@@ -1,9 +1,3 @@
-#root {
-  background-color: #ffffffaa;
- 
-  background-size: cover; 
-}
-
 .gradienBg {
   background: linear-gradient(90deg, #344955 0%, #78A083 100%);
 }
@@ -13,5 +7,24 @@
 }
 
 .page-background {
-  background-color: #344955 0%; 
+  background-color: #344955 0%;
+}
+
+.background-image {
+  @apply fixed top-0 left-0 w-full h-full bg-cover bg-center;
+  z-index: -1;
+  transition: opacity 1.5s ease-out;
+}
+
+.background-overlay {
+  @apply absolute top-0 left-0 w-full h-full ; 
+}
+
+.scrolled .background-image {
+  opacity: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
 }
