@@ -162,7 +162,7 @@ export const voteForTimeSlot = (req, res) => {
     const { votes_count, max_limit } = timeSlotResult[0];
 
     if (votes_count >= max_limit) {
-      return res.status(400).json({ error: 'This time slot is full' });
+      return res.status(400).json({ error: 'ඔබ මීට පෙර මෙම practical session එක සදහා time slot වෙන් කර ගෙන ඇත' });
     }
 
     const voteSql = 'INSERT INTO practicalvotes (student_id, slot_id) VALUES (?, ?)';

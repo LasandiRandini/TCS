@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// router.post("/addReceipt", upload.single("file"), addReceipt); 
+
 router.get("/showReceipt", showReceipt); 
 router.post("/addReceipt", addReceipt);
 router.put("/approveReceipt/:receipt_id", approveReceipt);

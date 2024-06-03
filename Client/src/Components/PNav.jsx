@@ -133,7 +133,7 @@ const PNav = () => {
     let [open, setOpen] = useState(false);
 
     return (
-        <div className='fixed top-4 left-4 right-4 bg-gray-100 shadow-md rounded-full z-10'>
+        <div className='fixed top-4 left-4 right-4 bg-white shadow-md rounded-full z-10'>
             <div className='max-w-screen-xl mx-auto flex justify-between items-center p-1'>
                 <div className="flex items-center cursor-pointer">
                     <img src={Logo} alt="Logo" className="h-12 w-auto" />

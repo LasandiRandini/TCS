@@ -2,12 +2,12 @@ import { db } from '../db.js';
 
 // Create Quiz API
 export const createQuiz = async (req, res) => {
-  const { q_title, q_unit, q_year, start_date, end_date, duration } = req.body;
+  const { q_title, q_unit,quiz_type, q_year, start_date, end_date, duration } = req.body;
 
   try {
     const [result] = await db.promise().query(
-      'INSERT INTO quiz (q_title, q_unit, q_year, start_date, end_date, duration) VALUES (?, ?, ?, ?, ?, ?)',
-      [q_title, q_unit, q_year, start_date, end_date, duration]
+      'INSERT INTO quiz (q_title, q_unit,quiz_type, q_year, start_date, end_date, duration) VALUES (?,?, ?, ?, ?, ?, ?)',
+      [q_title, q_unit,quiz_type, q_year, start_date, end_date, duration]
     );
 
     if (result.affectedRows === 1) {
@@ -39,9 +39,30 @@ export const addQuestion = async (req, res) => {
     }
 };
 
+// export const getAllQuizzes = (req, res) => {
+//     try {
+//         const query = 'SELECT q_id,quiz_type,q_year,q_unit, q_title, start_date, end_date, duration FROM quiz';
+//         db.query(query, (err, results) => {
+//             if (err) {
+//                 console.error('Error fetching quizzes:', err);
+//                 res.status(500).json({ message: 'Internal server error' });
+//             } else {
+//                 res.status(200).json(results);
+//             }
+//         });
+//     } catch (error) {
+//         console.error('Error in getAllQuizzes:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
+
 export const getAllQuizzes = (req, res) => {
     try {
-        const query = 'SELECT q_id,q_year,q_unit, q_title, start_date, end_date, duration FROM quiz';
+        const query = `
+            SELECT q_id, quiz_type, q_year, q_unit, q_title, start_date, end_date, duration
+            FROM quiz
+            WHERE end_date >= NOW()
+        `;
         db.query(query, (err, results) => {
             if (err) {
                 console.error('Error fetching quizzes:', err);

@@ -64,7 +64,7 @@ const Quiz2 = () => {
     // Result interface
     if (result) {
         return (
-            <div className="rounded-lg bg-white md:px-10 py-12 w-full">
+            <div className="rounded-lg bg-white md:px-10 py-12 bg-gray-300 w-full">
                 <h1 className="text-2xl font-bold mb-4">Quiz Result</h1>
                 <div className="text-center">
                     <p className="text-xl font-bold mb-4">

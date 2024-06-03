@@ -143,6 +143,7 @@
 
 // export default PHome;
 
+import "../App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -150,6 +151,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import 'react-datetime/css/react-datetime.css';
 import magazine from "../assets/Mag.jpg";
+import CLASS from '../assets/class.png';
 
 const PHome = () => {
   const [events, setEvents] = useState([]);
@@ -203,9 +205,13 @@ const PHome = () => {
 
   return (
     <div className="md:px-12 p-4 mt-20 min-h-screen">
-      <div className="rounded-lg bg-white shadow-md p-5">
+       <div
+        className="background-image"
+        style={{ backgroundImage: `url(${CLASS})` }}
+      ></div>
+      {/* <div className="rounded-lg  shadow-md p-5">
         {eventsError ? (
-          <p className="text-red-500">Error: {eventsError}</p>
+          <p className="text-white text-bold">Error: {eventsError}</p>
         ) : (
           <FullCalendar
             plugins={[dayGridPlugin]}
@@ -224,7 +230,31 @@ const PHome = () => {
             displayEventTime={false}
           />
         )}
-      </div>
+      </div> */}
+
+        <div className="rounded-lg shadow-md p-5 container mx-auto p-6 bg-gray-300 bg-opacity-75">
+          {eventsError ? (
+            <p className="text-white font-bold">Error: {eventsError}</p>
+          ) : (
+            <FullCalendar
+              plugins={[dayGridPlugin]}
+              initialView="dayGridMonth"
+              events={events}
+              eventContent={renderEventContent}
+              eventClick={handleEventClick}
+              height={600}
+              headerToolbar={{
+                start: 'prev,next today',
+                center: 'title',
+                end: ''
+              }}
+              dayHeaderContent={renderDayHeader}
+              firstDay={1}
+              displayEventTime={false}
+            />
+          )}
+        </div>
+   
 
       <div className="my-24 md:px-14 px-4 max-w-screen-2xl mx-auto">
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-12">
@@ -250,10 +280,10 @@ const PHome = () => {
             <img src={magazine} alt="Magazine" className="lg:h-[400px] object-cover rounded-lg shadow-md" />
           </div>
           <div className="md:w-4/5">
-            <h2 className="md:text-5xl text-3xl font-bold text-primary mb-5 leading-normal text-blue-800">
-              We have been improving our product <span className="text-red-600">for many years.</span>
+            <h2 className="md:text-5xl text-3xl font-bold text-primary mb-5 leading-normal text-blue-200">
+              We have been improving our product <span className="text-red-300">for many years.</span>
             </h2>
-            <p className="text-black text-lg mb-7">
+            <p className="text-white text-lg mb-7">
               A good example of a paragraph contains a topic conclusion. There are many different kinds of animals that live in China.
             </p>
             <button className="py-3 px-8 bg-red-600 font-semibold text-white rounded hover:bg-red-400 transition-all duration-300">
