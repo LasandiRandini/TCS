@@ -2,7 +2,7 @@ import express from "express";
 import { fileURLToPath } from 'url';
 import multer from "multer";
 import path from "path";
-import { showReceipt, addReceipt,approveReceipt,getApprovedUnits, getVideosByUnitId,enrollInUnit,checkEnrollment,checkReceiptStatus } from "../controllers/o_video.js";
+import { showReceipt, addReceipt,approveReceipt,getApprovedUnits, getVideosByUnitId,enrollInUnit,checkEnrollment,checkReceiptStatus,rejectReceipt } from "../controllers/o_video.js";
 import { __dirname } from '../dirname.js';
 
 
@@ -29,6 +29,8 @@ router.get("/getVideosByUnitId/:unitId", getVideosByUnitId);
 router.put("/enrollInUnit", enrollInUnit);
 router.post('/checkEnrollment', checkEnrollment);
 router.post('/checkReceiptStatus', checkReceiptStatus);
+router.put('/rejectReceipt/:receipt_id', rejectReceipt);
+
 
 
 app.use('/public', express.static(path.join(__dirname, 'public')));

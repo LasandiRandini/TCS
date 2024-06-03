@@ -209,30 +209,9 @@ const PHome = () => {
         className="background-image"
         style={{ backgroundImage: `url(${CLASS})` }}
       ></div>
-      {/* <div className="rounded-lg  shadow-md p-5">
-        {eventsError ? (
-          <p className="text-white text-bold">Error: {eventsError}</p>
-        ) : (
-          <FullCalendar
-            plugins={[dayGridPlugin]}
-            initialView="dayGridMonth"
-            events={events}
-            eventContent={renderEventContent}
-            eventClick={handleEventClick}
-            height={600}
-            headerToolbar={{
-              start: 'prev,next today',
-              center: 'title',
-              end: ''
-            }}
-            dayHeaderContent={renderDayHeader}
-            firstDay={1}
-            displayEventTime={false}
-          />
-        )}
-      </div> */}
+      
 
-        <div className="rounded-lg shadow-md p-5 container mx-auto p-6 bg-gray-300 bg-opacity-75">
+        <div className="rounded-lg shadow-md p-5 container mx-auto p-6 bg-gray-300 bg-opacity-80">
           {eventsError ? (
             <p className="text-white font-bold">Error: {eventsError}</p>
           ) : (

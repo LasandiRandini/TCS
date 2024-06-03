@@ -54,13 +54,14 @@ import { db } from "../db.js";
 
 
 
-// showReceipt Controller
+
 // export const showReceipt = async (req, res) => {
 //   try {
 //     const sql = `
 //       SELECT 
 //         reciept.reciept_id, 
 //         reciept.reciepts, 
+//         reciept.permission,
 //         videounit.unit_name, 
 //         videounit.v_year,
 //         users.snic_no,
@@ -75,11 +76,7 @@ import { db } from "../db.js";
 //       if (err) {
 //         return res.status(500).json({ error: "Error fetching receipts" });
 //       } else {
-//         const receiptsWithFirebaseURLs = result.map((receipt) => ({
-//           ...receipt,
-//           reciepts: `https://firebasestorage.googleapis.com/v0/b/videos-b64b2.appspot.com/o/uploads/${receipt.reciepts}?alt=media`,
-//         }));
-//         return res.json(receiptsWithFirebaseURLs);
+//         return res.json(result);
 //       }
 //     });
 //   } catch (error) {
@@ -89,23 +86,29 @@ import { db } from "../db.js";
 // };
 
 export const showReceipt = async (req, res) => {
-  try {
-    const sql = `
-      SELECT 
-        reciept.reciept_id, 
-        reciept.reciepts, 
-        reciept.permission,
-        videounit.unit_name, 
-        videounit.v_year,
-        users.snic_no,
-        users.first_name,
-        users.last_name
-      FROM reciept
-      JOIN videounit ON reciept.r_unit_id = videounit.unit_id
-      JOIN users ON reciept.u_id = users.id
-    `;
+  const { year } = req.query;
 
-    db.query(sql, (err, result) => {
+  let sql = `
+    SELECT 
+      reciept.reciept_id, 
+      reciept.reciepts, 
+      reciept.permission,
+      videounit.unit_name, 
+      videounit.v_year,
+      users.snic_no,
+      users.first_name,
+      users.last_name
+    FROM reciept
+    JOIN videounit ON reciept.r_unit_id = videounit.unit_id
+    JOIN users ON reciept.u_id = users.id
+  `;
+
+  if (year) {
+    sql += ` WHERE videounit.v_year = ?`;
+  }
+
+  try {
+    db.query(sql, year ? [year] : [], (err, result) => {
       if (err) {
         return res.status(500).json({ error: "Error fetching receipts" });
       } else {
@@ -117,7 +120,6 @@ export const showReceipt = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 
 // approveReceipt Controller
@@ -137,7 +139,22 @@ export const approveReceipt = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
+export const rejectReceipt = async (req, res) => {
+  const { receipt_id } = req.params;
+  try {
+    const sql = "UPDATE reciept SET permission = 'not ok' WHERE reciept_id = ?";
+    db.query(sql, [receipt_id], (err, result) => {
+      if (err) {
+        return res.status(500).json({ error: "Error rejecting receipt" });
+      } else {
+        return res.status(200).json("Receipt rejected");
+      }
+    });
+  } catch (error) {
+    console.error("Error while rejecting receipt:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 export const getApprovedUnits = async (req, res) => {
   const { userId } = req.params;
