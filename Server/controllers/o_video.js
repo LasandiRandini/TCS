@@ -251,6 +251,27 @@ export const checkReceiptStatus = async (req, res) => {
 
 
 
+// export const checkEnrollment = async (req, res) => {
+//   const { userId, unitId } = req.body;
+
+//   try {
+//     const [rows] = await db.promise().query(
+//       "SELECT COUNT(*) AS count FROM video_user WHERE vuser_id = ? AND unit_id = ? AND enrollment = 'enrolled'",
+//       [userId, unitId]
+//     );
+
+    
+//  if (rows[0].count > 0) {
+//       res.status(200).json({ enrolled: true });
+//     } else {
+//       res.status(200).json({ enrolled: false });
+//     }
+//   } catch (error) {
+//     console.error("Error while checking enrollment:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
 export const checkEnrollment = async (req, res) => {
   const { userId, unitId } = req.body;
 
@@ -260,8 +281,7 @@ export const checkEnrollment = async (req, res) => {
       [userId, unitId]
     );
 
-    
- if (rows[0].count > 0) {
+    if (rows[0].count > 0) {
       res.status(200).json({ enrolled: true });
     } else {
       res.status(200).json({ enrolled: false });
@@ -271,7 +291,6 @@ export const checkEnrollment = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 export const getVideosByUnitId = async (req, res) => {
   const { unitId } = req.params; 

@@ -50,16 +50,7 @@ const Dashboard = () => {
                   Add a Unit
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/UploadVideo"
-                  className={`hover:bg-blue-200 px-4 py-2 block rounded transition text-gray-400 text-sm duration-200 ${
-                    isActive("/UploadVideo") ? "bg-white" : ""
-                  }`}
-                >
-                  Add a Video
-                </Link>
-              </li>
+              
               <li>
                 <Link
                   to="/EditVideo"
@@ -70,7 +61,16 @@ const Dashboard = () => {
                   Update Video Unit
                 </Link>
               </li>
-
+              <li>
+                <Link
+                  to="/EditVideoList"
+                  className={`hover:bg-blue-200 px-4 py-2 block rounded transition text-gray-400 text-sm duration-200 ${
+                    isActive("/EditVideoList") ? "bg-white" : ""
+                  }`}
+                >
+                  Update Videos
+                </Link>
+              </li>
               <li>
                 <Link
                   to="/ViewVideo"

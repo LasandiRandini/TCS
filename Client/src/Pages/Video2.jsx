@@ -613,9 +613,9 @@ const Video3 = () => {
           videos.map((video, index) => (
             <div
               key={index}
-              className="bg-gray-100 rounded-lg p-8 shadow-md hover:shadow-lg transition duration-300 relative"
-            >
-              <h3 className="text-xl font-semibold mb-2">{video.unit_name}</h3>
+              className="ml-20 mr-20 bg-white text-white rounded-lg p-5 shadow-md hover:shadow-lg transition duration-300 relative border border-gray-600"
+              >
+              <h3  className="text-xl text-black font-semibold mb-2">{video.unit_name}</h3>
               <p className="text-gray-600 mb-4">{video.unit_description}</p>
               <p className="text-lg font-bold text-black-500">{video.price} LKR</p>
               <input
@@ -627,13 +627,13 @@ const Video3 = () => {
               />
               <label
                 htmlFor={`file-${index}`}
-                className="w-1/2 block px-4 py-2 bg-gray-400 text-white rounded-md cursor-pointer hover:bg-blue-400 transition duration-300"
+                className="w-1/4 block px-4 py-2 bg-gray-400 text-white rounded-md cursor-pointer hover:bg-blue-400 transition duration-300"
               >
                 {inputs[index] ? inputs[index].name : "Upload Receipt"}
               </label>
               <button
                 onClick={() => handleUpload(video.unit_id, index)}
-                className="flex mt-2 px-4 py-2 bg-green-500 text-white rounded-md cursor-pointer hover:bg-green-700 transition duration-300"
+                className="flex mt-2 px-4 py-2 bg-red-800 text-white rounded-md cursor-pointer hover:bg-green-700 transition duration-300"
               >
                 Submit Receipt
               </button>
@@ -647,19 +647,12 @@ const Video3 = () => {
                   </div>
                 </div>
               )}
-              {/* <div className="absolute top-0 right-0 mt-10 mr-4">
-                <Button
-                  onClick={() => handleOpenPlaylist(video.unit_id)}
-                  className="bg-red-500 text-white px-6 mr-5 py-2 mt-4 rounded hover:bg-red-700 transition duration-300"
-                >
-                   පන්තියට ඉල්ලුම් කරන්න
-                </Button>
-              </div> */}
+         
 
 <div className="absolute top-0 right-0 mt-10 mr-4">
   <Button
     onClick={() => handleOpenPlaylist(video.unit_id)}
-    className="bg-red-500 text-white px-6 mr-5 py-2 mt-4 rounded hover:bg-red-700 transition duration-300"
+    className="bg-red-500 text-white px-6 mr-5  mt-12 rounded hover:bg-red-700 transition duration-300"
   >
     {video.enrollmentStatus === "enrolled" ? "වීඩියෝ මාලාව නරඹන්න" : "පන්තියට ඉල්ලුම් කරන්න"}
   </Button>

@@ -1,20 +1,40 @@
 import { db } from '../db.js';
 
 
+// export const addUnit = async (req, res) => {
+//   const { v_year, unit_name, unit_description, price } = req.body;
+
+//   try {
+//     const [result] = await db.promise().query('INSERT INTO videounit (v_year, unit_name, unit_description, price) VALUES (?, ?, ?, ?)', [v_year, unit_name, unit_description, price]);
+
+//     if (result.affectedRows === 1) {
+//       res.status(201).json({ message: 'Unit created successfully' });
+//     } else {
+//       res.status(500).json({ error: 'Failed to create uni' });
+//     }
+//   } catch (error) {
+//     console.error('Error while creating unit:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
 export const addUnit = async (req, res) => {
   const { v_year, unit_name, unit_description, price } = req.body;
 
   try {
-    const [result] = await db.promise().query('INSERT INTO videounit (v_year, unit_name, unit_description, price) VALUES (?, ?, ?, ?)', [v_year, unit_name, unit_description, price]);
+    const [result] = await db.promise().query(
+      'INSERT INTO videounit (v_year, unit_name, unit_description, price) VALUES (?, ?, ?, ?)', 
+      [v_year, unit_name, unit_description, price]
+    );
 
     if (result.affectedRows === 1) {
-      res.status(201).json({ message: 'Unit created successfully' });
+      const unitId = result.insertId;
+      res.status(201).json({ message: 'Unit created successfully', unit_id: unitId });
     } else {
-      res.status(500).json({ error: 'Failed to create uni' });
+      res.status(500).json({ error: 'Failed to create unit' });
     }
   } catch (error) {
     console.error('Error while creating unit:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
@@ -180,3 +200,27 @@ export const getUnitById = async (req, res) => {
 };
 
 
+
+
+export const getEnrolledVideos = async (req, res) => {
+  const { userId } = req.params;
+  
+  try {
+    const query = `
+      SELECT vu.unit_id, vu.unit_name, vu.unit_description
+      FROM videounit vu
+      JOIN video_user vuser ON vu.unit_id = vuser.unit_id
+      WHERE vuser.vuser_id = ? AND vuser.enrollment = 'enrolled'
+    `;
+    const [rows] = await db.promise().execute(query, [userId]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'No enrolled videos found' });
+    }
+
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error fetching enrolled videos:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

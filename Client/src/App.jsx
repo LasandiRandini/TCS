@@ -45,7 +45,8 @@ import UpdateQuiz2 from  "./AdminPages/UpdateQuiz2";
 import UploadVideo from "./AdminPages/UploadVideo";
 import Video3 from "./Pages/Video3";
 import VideoGallery from "./Pages/VideoGallery";
-
+import EditVideoList from "./AdminPages/EditVideoList";
+import OMyVideo from "./Pages/OMyVideo";
 
 const PLayout = () => {
   return (
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
     element: <AdLogin />,
   },
   {
+    path: "/VideoGallery/:unitId",
+    element: <VideoGallery />,
+  },
+  {
     path: "/",
     element: <PLayout />,
     children: [
@@ -143,9 +148,10 @@ const router = createBrowserRouter([
         element: <Video3 />,
       },
       {
-        path: "/VideoGallery/:unitId",
-        element: <VideoGallery />,
+        path: "/MyVideo",
+        element: <MyVideo />,
       },
+      
       {
         path: "/Quiz",
         element: <Quiz />,
@@ -172,6 +178,10 @@ const router = createBrowserRouter([
       {
         path: "/Video2",
         element: <Video2 />,
+      },
+      {
+        path: "/OMyVideo",
+        element: <OMyVideo />,
       }
     ]},
 
@@ -254,7 +264,11 @@ const router = createBrowserRouter([
          element: <EditVideo />,
        },
        {
-        path: "/UploadVideo",
+        path: "/EditVideoList",
+        element: <EditVideoList />,
+      },
+       {
+        path: "/UploadVideo/:unit_id",
         element: <UploadVideo />,
       },
        {

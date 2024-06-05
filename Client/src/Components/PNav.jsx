@@ -126,6 +126,7 @@ const PNav = () => {
     let Links = [
         { name: "Home", link: "/PHome" },
         { name: "Video Lessons", link: "/Video3" },
+        { name: "My Lessons", link: "/MyVideo" },
         { name: "Practical", link: "/Practical" },
         { name: "Quiz", link: "/Quiz" },
         { name: "Instruction", link: "/Instruction" },

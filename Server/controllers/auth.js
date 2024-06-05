@@ -222,3 +222,25 @@ export const displayUsers = async (req, res) => {
 export const logout = (req, res) => {};
 
 
+
+
+export const getStatusByNic = async (req, res) => {
+  const { snic_no } = req.params;
+
+  try {
+    const query = 'SELECT status FROM status WHERE nic_no = ?';
+    db.query(query, [snic_no], (err, results) => {
+      if (err) {
+        console.error('Error fetching user status:', err);
+        res.status(500).json({ error: 'An error occurred while fetching user status' });
+      } else if (results.length > 0) {
+        res.status(200).json({ status: results[0].status });
+      } else {
+        res.status(404).json({ error: 'Status not found for the provided NIC number' });
+      }
+    });
+  } catch (error) {
+    console.error('Error in getStatusByNic:', error);
+    res.status(500).json({ error: 'An unexpected error occurred' });
+  }
+};

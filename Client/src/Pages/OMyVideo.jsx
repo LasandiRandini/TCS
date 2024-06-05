@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -11,8 +9,6 @@ const MyVideo = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
-  
 
   useEffect(() => {
     if (!user) {

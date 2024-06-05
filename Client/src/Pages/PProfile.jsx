@@ -6,7 +6,7 @@ const PProfile = () => {
 
   return (
     <div className="min-h-screen bg-cover bg-center flex justify-center items-center" style={{ backgroundImage: `url(${PRACTICAL})` }}>
-      <div className="container mx-auto p-10 bg-gray-50 bg-gray-300 bg-opacity-75 rounded-lg shadow-lg mt-12">
+      <div className=" ml-5 mr-5 container mx-auto p-10 bg-gray-50 bg-gray-300 bg-opacity-75 rounded-lg shadow-lg mt-12">
         <div className="flex items-center  justify-between mb-6">
           <div className="flex items-center   space-x-4">
             <div className="h-16 w-16 bg-gray-200 rounded-full flex items-center justify-center text-2xl font-bold text-gray-500">
