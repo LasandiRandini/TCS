@@ -25,10 +25,10 @@ const ONav = () => {
 
   return (
     <div className="fixed top-4 left-4 right-4 bg-white shadow-md rounded-full z-10">
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center p-1">
+      <div className="max-w-screen-xl mx-auto flex justify-between items-center pb-3 p-1">
         <div className="flex cursor-pointer items-center gap-2">
           <img src={Logo} alt="Logo" className="h-12 w-auto" />
-          <span className="font-bold text-3xl text-lightblue ml-3 pt-1">
+          <span className="font-bold text-3xl text-lightblue ml-3 ">
             ET LABS
           </span>
         </div>
@@ -41,7 +41,7 @@ const ONav = () => {
         </div>
 
         <ul
-          className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${
+          className={`md:flex md:items-center md:pb-0 pb-4 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-4 mt-4 transition-all duration-400 ease-in ${
             open ? "top-12" : "top-[-490px]"
           }`}
         >

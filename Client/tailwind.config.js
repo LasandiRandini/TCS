@@ -15,7 +15,15 @@ export default {
       boxShadow: {
         '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
       },
+      blur: {
+        'sm': '4px',
+        
+      },
+
     },
+  },
+  variants: {
+    extend: {},
   },
   plugins: [],
 }

@@ -11,4 +11,5 @@ router.get('/getAllQuizzes', getAllQuizzes);
 router.get('/getQuiz/:q_id', getQuiz);
 router.post('/submitResponse', submitResponse);
 
+
 export default router

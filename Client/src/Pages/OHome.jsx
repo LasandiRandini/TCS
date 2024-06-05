@@ -253,7 +253,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import teacher from '../assets/teacher.png';
 import magazine from '../assets/Mag.jpg';
-import CLASS from '../assets/class.png';
+import ONLINE from '../assets/online.png';
 
 const OHome = () => {
   const [notices, setNotices] = useState([]);
@@ -295,7 +295,7 @@ const OHome = () => {
   return (
     <>
       <div className="md:px-12 p-4 mt-20 min-h-screen">
-        <div className="background-image" style={{ backgroundImage: `url(${CLASS})` }}></div>
+        <div className="background-image" style={{ backgroundImage: `url(${ONLINE})` }}></div>
 
         {/* Banner content */}
         <div className="md:px-10 p-4 max-w-screen-2xl mx-auto">
