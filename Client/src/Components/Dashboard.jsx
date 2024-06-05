@@ -40,16 +40,7 @@ const Dashboard = () => {
           </button>
           {activeMenu === "video" && (
             <ul className="ml-4 space-y-2 mt-2">
-              <li>
-                <Link
-                  to="/AVideo"
-                  className={`hover:bg-blue-200 px-4 py-2 block rounded transition  text-sm text-gray-400 duration-200 ${
-                    isActive("/AVideo") ? "bg-white" : ""
-                  }`}
-                >
-                  Add a Unit
-                </Link>
-              </li>
+             
               
               <li>
                 <Link
@@ -262,16 +253,7 @@ const Dashboard = () => {
           </button>
           {activeMenu === "quiz" && (
             <ul className="ml-4 space-y-2 mt-2">
-              <li>
-                <Link
-                  to="/QuizCalander"
-                  className={`hover:bg-blue-200 px-4 py-2 block rounded transition text-gray-400 text-sm text-sm duration-200 ${
-                    isActive("/QuizCalander") ? "bg-white" : ""
-                  }`}
-                >
-                  Add new Quiz
-                </Link>
-              </li>
+              
               <li>
                 <Link
                   to="/UpdateQuiz"

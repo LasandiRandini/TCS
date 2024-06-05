@@ -25,8 +25,8 @@ const ONav = () => {
 
   return (
     <div className="fixed top-4 left-4 right-4 bg-white shadow-md rounded-full z-10">
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center pb-3 p-1">
-        <div className="flex cursor-pointer items-center gap-2">
+      <div className="max-w-screen-xl mx-auto flex justify-between rounded-full items-center pb-3 p-1">
+        <div className="flex cursor-pointer items-center rounded-full gap-2">
           <img src={Logo} alt="Logo" className="h-12 w-auto" />
           <span className="font-bold text-3xl text-lightblue ml-3 ">
             ET LABS

@@ -669,6 +669,224 @@
 
 // export default Video3;
 
+// import { useState, useEffect } from "react";
+// import axios from "axios";
+// import { Button } from "flowbite-react";
+// import CLASS from '../assets/class.png';
+// import { useNavigate } from "react-router-dom";
+// import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+// import app from "../firebase";
+// import Swal from "sweetalert2";
+
+// const Video3 = () => {
+//   const [videos, setVideos] = useState([]);
+//   const [error, setError] = useState(null);
+//   const [inputs, setInputs] = useState({});
+//   const [uploadPercentages, setUploadPercentages] = useState({});
+
+//   const navigate = useNavigate();
+
+//   const user = JSON.parse(localStorage.getItem("user"));
+//   console.log(user);
+
+//   useEffect(() => {
+//     const fetchVideos = async () => {
+//       try {
+//         const response = await axios.get("http://localhost:8800/api/videos/displayUnits");
+//         console.log(response.data);
+//         setVideos(response.data.filter((video) => video.v_year === user.al_year));
+//       } catch (err) {
+//         setError("Failed to fetch videos");
+//         Swal.fire("Error", "Failed to fetch videos. Please try again later.", "error");
+//       }
+//     };
+
+//     fetchVideos();
+//   }, [user.al_year]);
+
+//   const handleFile = (e, index) => {
+//     const file = e.target.files[0];
+//     setInputs({ ...inputs, [index]: file });
+//   };
+
+//   const uploadFileToFirebase = (file, index) => {
+//     const storage = getStorage(app);
+//     const fileName = new Date().getTime() + file.name;
+//     const storageRef = ref(storage, `uploads/${fileName}`);
+//     const uploadTask = uploadBytesResumable(storageRef, file);
+
+//     return new Promise((resolve, reject) => {
+//       uploadTask.on(
+//         "state_changed",
+//         (snapshot) => {
+//           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//           setUploadPercentages((prev) => ({ ...prev, [index]: Math.round(progress) }));
+//         },
+//         (error) => {
+//           reject(error);
+//         },
+//         () => {
+//           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+//             resolve(downloadURL);
+//           });
+//         }
+//       );
+//     });
+//   };
+
+//   const handleUpload = async (videoId, index) => {
+//     try {
+//       const file = inputs[index];
+//       if (!file) {
+//         Swal.fire("Error", "No file selected. Please choose a file to upload.", "error");
+//         return;
+//       }
+
+//       const fileUrl = await uploadFileToFirebase(file, index);
+
+//       const formData = {
+//         r_unit_id: videoId,
+//         u_id: user.id,
+//         fileUrl,
+//       };
+
+//       await axios.post("http://localhost:8800/api/o_videos/addReceipt", formData);
+
+//       setInputs((prev) => ({ ...prev, [index]: null }));
+//       setError(null);
+//       setUploadPercentages((prev) => ({ ...prev, [index]: 0 }));
+
+//       Swal.fire(
+//         "ස්තුතියි!",
+//         "ඔබගේ සහභාගීත්වයට ස්තුතියි. පාඩම් මාලාව නැරඹීමට අවසරය ලබා දීම පිළිබඳව අපි ඔබට ඊමේල් පණිවිඩයක් මඟින් දැනුම් දෙන්නෙමු.",
+//         "success"
+//       );
+//     } catch (err) {
+//       Swal.fire("Error", "Failed to upload receipt. Please try again later.", "error");
+//     }
+//   };
+
+//   const handleOpenPlaylist = async (unitId) => {
+//     try {
+//       const checkReceiptResponse = await axios.post("http://localhost:8800/api/o_videos/checkReceiptStatus", {
+//         userId: user.id,
+//         unitId: unitId,
+//       });
+
+//       if (checkReceiptResponse.data.allowed) {
+//         const checkEnrollmentResponse = await axios.post("http://localhost:8800/api/o_videos/checkEnrollment", {
+//           userId: user.id,
+//           unitId: unitId,
+//         });
+
+//         if (checkEnrollmentResponse.data.enrolled) {
+//           Swal.fire({
+//             title: "Already Enrolled",
+//             text: "ඔබ දැනටමත් මෙයට enroll වී ඇත. වීඩියෝ මාලාව මෙතනින් නරඹන්න.",
+//             icon: "info",
+//             confirmButtonText: "Go to Playlist"
+//           }).then(() => {
+//             navigate(`/VideoGallery/${unitId}`);
+//           });
+//         } else {
+//           Swal.fire({
+//             title: "Enroll to the video Playlist",
+//             text: "ඔබ ලියාපදිංචි වූ පසු, ඔබට unit video-playlist නැරඹීම සදහා  මාස 3ක ප්‍රවේශයක් ඇත. ඔබට enroll වීමට අවශ්‍යද?",
+//             showCancelButton: true,
+//             confirmButtonText: 'Yes, enroll me!',
+//             cancelButtonText: 'No, cancel',
+//             icon: 'warning',
+//           }).then(async (result) => {
+//             if (result.isConfirmed) {
+//               try {
+//                 await axios.put("http://localhost:8800/api/o_videos/enrollInUnit", {
+//                   userId: user.id,
+//                   unitId: unitId,
+//                   enrollmentStatus: 'enrolled',
+//                   startDate: new Date().toISOString().split('T')[0] // YYYY-MM-DD format
+//                 });
+//                 Swal.fire("Enrolled!", "You have been enrolled!", "success");
+//                 navigate(`/VideoGallery/${unitId}`);
+//               } catch (err) {
+//                 Swal.fire("Error", "Failed to enroll. Please try again later.", "error");
+//               }
+//             }
+//           });
+//         }
+//       } else {
+//         Swal.fire("Error", "Permission not granted for this unit. Please check your payment receipt.", "error");
+//       }
+//     } catch (err) {
+//       Swal.fire("Error", "Failed to check receipt status. Please try again later.", "error");
+//     }
+//   };
+
+//   return (
+//     <div
+//       className="min-h-screen bg-cover bg-center flex justify-center items-center"
+//       style={{ backgroundImage: `url(${CLASS})` }}
+//     >
+//       <div className="container mx-auto my-24 px-4">
+//         <div className="grid grid-cols-1 gap-8 md:grid-cols-1">
+//           {error ? (
+//             <p className="text-red-500">Error: {error}</p>
+//           ) : (
+//             videos.map((video, index) => (
+//               <div
+//                 key={index}
+//                 className="ml-20 mr-20 bg-white text-white rounded-lg p-5 shadow-md hover:shadow-lg transition duration-300 relative border border-gray-600"
+//               >
+//                 <h3 className="text-xl text-black font-semibold mb-2">{video.unit_name}</h3>
+//                 <p className="text-gray-600 mb-4">{video.unit_description}</p>
+//                 <p className="text-lg font-bold text-black-500">{video.price} LKR</p>
+//                 <input
+//                   type="file"
+//                   id={`file-${index}`}
+//                   accept="image/png, image/jpeg, image/jpg, application/pdf"
+//                   onChange={(e) => handleFile(e, index)}
+//                   className="hidden"
+//                 />
+//                 <label
+//                   htmlFor={`file-${index}`}
+//                   className="w-1/4 block px-4 py-2 bg-gray-400 text-white rounded-md cursor-pointer hover:bg-blue-400 transition duration-300"
+//                 >
+//                   {inputs[index] ? inputs[index].name : "Upload Receipt"}
+//                 </label>
+//                 <button
+//                   onClick={() => handleUpload(video.unit_id, index)}
+//                   className="flex mt-2 px-4 py-2 bg-red-800 text-white rounded-md cursor-pointer hover:bg-green-700 transition duration-300"
+//                 >
+//                   Submit Receipt
+//                 </button>
+//                 {uploadPercentages[index] > 0 && (
+//                   <div className="w-full bg-gray-100 rounded-full mt-2">
+//                     <div
+//                       className="text-xl bg-gray-100 font-medium text-blue-800 text-center p-0.5 leading-none rounded-full"
+//                       style={{ width: `${uploadPercentages[index]}%` }}
+//                     >
+//                       {uploadPercentages[index]}%
+//                     </div>
+//                   </div>
+//                 )}
+//                 <div className="absolute top-0 right-0 mt-10 mr-4">
+//                   <Button
+//                     onClick={() => handleOpenPlaylist(video.unit_id)}
+//                     className="bg-red-500 text-white px-6 mr-5 mt-12 rounded hover:bg-red-700 transition duration-300"
+//                   >
+//                     {video.enrollmentStatus === "enrolled" ? "වීඩියෝ මාලාව නරඹන්න" : "පන්තියට ඉල්ලුම් කරන්න"}
+//                   </Button>
+//                 </div>
+//               </div>
+//             ))
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Video3;
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "flowbite-react";
@@ -683,9 +901,10 @@ const Video3 = () => {
   const [error, setError] = useState(null);
   const [inputs, setInputs] = useState({});
   const [uploadPercentages, setUploadPercentages] = useState({});
+  const [enrollmentStatus, setEnrollmentStatus] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
-
   const user = JSON.parse(localStorage.getItem("user"));
   console.log(user);
 
@@ -693,8 +912,31 @@ const Video3 = () => {
     const fetchVideos = async () => {
       try {
         const response = await axios.get("http://localhost:8800/api/videos/displayUnits");
-        console.log(response.data);
-        setVideos(response.data.filter((video) => video.v_year === user.al_year));
+        const videoData = response.data.filter((video) => video.v_year === user.al_year);
+
+        const statusPromises = videoData.map((video) =>
+          axios.post("http://localhost:8800/api/o_videos/checkEnrollment", {
+            userId: user.id,
+            unitId: video.unit_id,
+          }).then((res) => ({
+            unitId: video.unit_id,
+            enrolled: res.data.enrolled,
+          }))
+        );
+
+        const statuses = await Promise.all(statusPromises);
+
+        const statusMap = {};
+        statuses.forEach((status) => {
+          statusMap[status.unitId] = status.enrolled;
+        });
+
+        const sortedVideos = videoData.sort((a, b) => {
+          return statusMap[a.unit_id] - statusMap[b.unit_id];
+        });
+
+        setVideos(sortedVideos);
+        setEnrollmentStatus(statusMap);
       } catch (err) {
         setError("Failed to fetch videos");
         Swal.fire("Error", "Failed to fetch videos. Please try again later.", "error");
@@ -702,7 +944,7 @@ const Video3 = () => {
     };
 
     fetchVideos();
-  }, [user.al_year]);
+  }, [user.al_year, user.id]);
 
   const handleFile = (e, index) => {
     const file = e.target.files[0];
@@ -806,6 +1048,7 @@ const Video3 = () => {
                   startDate: new Date().toISOString().split('T')[0] // YYYY-MM-DD format
                 });
                 Swal.fire("Enrolled!", "You have been enrolled!", "success");
+                setEnrollmentStatus((prevStatus) => ({ ...prevStatus, [unitId]: true }));
                 navigate(`/VideoGallery/${unitId}`);
               } catch (err) {
                 Swal.fire("Error", "Failed to enroll. Please try again later.", "error");
@@ -821,17 +1064,32 @@ const Video3 = () => {
     }
   };
 
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredVideos = videos.filter((video) =>
+    video.unit_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div
       className="min-h-screen bg-cover bg-center flex justify-center items-center"
       style={{ backgroundImage: `url(${CLASS})` }}
     >
       <div className="container mx-auto my-24 px-4">
+        <input
+          type="text"
+          placeholder="Search by Unit Name"
+          className="border border-gray-400 rounded-md mb-4 px-3 py-2 mt-4 w-1/4"
+          value={searchQuery}
+          onChange={handleSearch}
+        />
         <div className="grid grid-cols-1 gap-8 md:grid-cols-1">
           {error ? (
             <p className="text-red-500">Error: {error}</p>
           ) : (
-            videos.map((video, index) => (
+            filteredVideos.map((video, index) => (
               <div
                 key={index}
                 className="ml-20 mr-20 bg-white text-white rounded-lg p-5 shadow-md hover:shadow-lg transition duration-300 relative border border-gray-600"
@@ -871,9 +1129,12 @@ const Video3 = () => {
                 <div className="absolute top-0 right-0 mt-10 mr-4">
                   <Button
                     onClick={() => handleOpenPlaylist(video.unit_id)}
-                    className="bg-red-500 text-white px-6 mr-5 mt-12 rounded hover:bg-red-700 transition duration-300"
+                    className={`bg-red-500 text-white px-6 mr-5 mt-12 rounded hover:bg-red-700 transition duration-300 ${
+                      enrollmentStatus[video.unit_id] ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    disabled={enrollmentStatus[video.unit_id]}
                   >
-                    {video.enrollmentStatus === "enrolled" ? "වීඩියෝ මාලාව නරඹන්න" : "පන්තියට ඉල්ලුම් කරන්න"}
+                    {enrollmentStatus[video.unit_id] ? "වීඩියෝ මාලාව නරඹන්න" : "පන්තියට ඉල්ලුම් කරන්න"}
                   </Button>
                 </div>
               </div>
