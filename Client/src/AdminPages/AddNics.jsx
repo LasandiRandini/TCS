@@ -78,8 +78,8 @@ import Swal from "sweetalert2";
 
 const AddNics = () => {
   const [nic_no, setNic] = useState("");
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [setError] = useState(null);
+  const [ setSuccess] = useState(null);
 
   const handleChange = (e) => {
     const { value } = e.target;

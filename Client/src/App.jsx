@@ -49,6 +49,7 @@ import EditVideoList from "./AdminPages/EditVideoList";
 import OMyVideo from "./Pages/OMyVideo";
 import QuizResult from "./AdminPages/QuizResult"
 import QuizList from "./Pages/QuizList";
+import AHome from "./AdminPages/AHome";
 
 const PLayout = () => {
   return (
@@ -191,6 +192,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <DashLayout />,
     children: [
+      {
+        path: "/AHome",
+        element: <AHome />,
+      },
       {
         path: "/AVideo",
         element: <AVideo />,

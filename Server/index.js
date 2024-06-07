@@ -11,6 +11,7 @@ import quizRouter from "./routes/quizes.js"
 import questionRouter from "./routes/questions.js"
 import eventRouter from "./routes/events.js"
 import updatevideoRouter from "./routes/updatevideos.js"
+import ahomeRouter from "./routes/ahomes.js"
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { __dirname } from "./dirname.js"
@@ -39,6 +40,7 @@ app.use("/api/quizes", quizRouter)
 app.use("/api/questions", questionRouter)
 app.use("/api/events", eventRouter)
 app.use("/api/updatevideos", updatevideoRouter)
+app.use("/api/ahomes", ahomeRouter)
 
 app.use('/public/reciepts', express.static(path.join(__dirname, 'public/reciepts')));
 app.use('/public/image', express.static(path.join(__dirname, 'public/image')));

@@ -43,15 +43,15 @@ export const showNotices = async (req, res) => {
     const query = 'SELECT n_id, year, name, n_description, image FROM notice';
     db.query(query, (err, results) => {
       if (err) {
-        console.error('Error fetching units data:', err);
-        res.status(500).json({ error: 'An error occurred while fetching units data' });
+        console.error('Error fetching notices data:', err);
+        res.status(500).json({ error: 'An error occurred while fetching notices data' });
       } else {
         res.status(200).json(results);
       }
     });
   } catch (error) {
    
-    console.error('Error in getUnits:', error);
+    console.error('Error in getPackags:', error);
     res.status(500).json({ error: 'An unexpected error occurred' });
   }
 };
