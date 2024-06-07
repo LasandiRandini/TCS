@@ -68,7 +68,7 @@ const Practical = () => {
       className="min-h-screen bg-cover bg-center flex justify-center items-center "
       style={{ backgroundImage: `url(${PRACTICAL})` }}
     >
-    <div className="flex justify-center items-center ">
+    <div className="container my-20 px-2 md:px-12 p-4 min-h-screen">
       <div className="container mx-auto p-6">
         <h1 className="text-1xl text-white font-bold mb-4">Practicals සදහා time slots තෝරා ගැනිමට අදාල practical එක තෝරා ගෙන, අදාල time slot එක තෝරා ගන්න.</h1>
         {error ? (

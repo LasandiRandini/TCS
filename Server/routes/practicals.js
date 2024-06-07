@@ -1,5 +1,5 @@
 import express from "express"
-import { practical, getpractical,displayPractical,deletePractical,getTimeSlots,voteForTimeSlot,addTimeSlots,getCount} from "../controllers/practical.js"
+import { practical, getpractical,displayPractical,deletePractical,getTimeSlots,voteForTimeSlot,addTimeSlots,getCount, updatePractical} from "../controllers/practical.js"
 
 const router = express.Router()
 
@@ -11,5 +11,6 @@ router.post("/addTimeSlots",addTimeSlots)
 router.get('/getTimeSlots/:practical_id', getTimeSlots);
 router.post('/vote', voteForTimeSlot);
 router.get('/getCount', getCount);
+router.put('/updatePractical/:practical_id', updatePractical);
 
 export default router

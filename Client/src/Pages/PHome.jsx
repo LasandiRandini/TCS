@@ -204,14 +204,14 @@ const PHome = () => {
   }
 
   return (
-    <div className="md:px-12 p-4 mt-20 min-h-screen">
+    <div className="md:px-12 p-4  min-h-screen">
        <div
         className="background-image"
         style={{ backgroundImage: `url(${CLASS})` }}
       ></div>
       
 
-        <div className="rounded-lg shadow-md p-5 container mx-auto p-6 bg-gray-300 bg-opacity-80">
+        <div className="container my-20 px-2 md:px-12 p-4 min-h-screen rounded-lg shadow-md   mx-auto  bg-gray-300 bg-opacity-80">
           {eventsError ? (
             <p className="text-white font-bold">Error: {eventsError}</p>
           ) : (

@@ -354,6 +354,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import swal from 'sweetalert';
 import Modal from 'react-modal';
+import Adminheader from "../Components/Adminheader";
 
 const ShowVideoUnits = () => {
   const [videoUnits, setVideoUnits] = useState([]);
@@ -505,15 +506,16 @@ const ShowVideoUnits = () => {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl mb-4">Video Units</h2>
+    <div className=" bg-gray-200 mx-auto ">
+        <Adminheader pageName="Update Video Units" />
+    
       <input
         type="text"
         placeholder="Search by Unit Name and Year"
-        className="border border-gray-300 rounded-md px-3 py-2 mb-4 w-1/4"
+        className="border border-gray-300 rounded-md px-3 ml-4 mt-4 py-2 mb-4 w-1/4"
         onChange={handleSearch}
       />
-      <table className="min-w-full divide-y divide-gray-200 rounded-lg shadow">
+      <table className="min-w-full divide-y divide-gray-200  rounded-lg shadow">
         <thead>
           <tr className="bg-gray-400 text-white font-bold tracking-wider">
             <th className="p-4 border border-gray-200"></th>
@@ -583,7 +585,7 @@ const ShowVideoUnits = () => {
                                   {video.video_link}
                                 </a>
                               </td>
-                              <td className="p-2 text-left border border-gray-200">
+                              <td className="flex p-2 text-left border border-gray-200">
                                 <button
                                   onClick={() => handleUpdateVideo(video)}
                                   className="bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 transition duration-300 mr-2 mb-2"

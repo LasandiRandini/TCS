@@ -257,7 +257,7 @@ import ONLINE from '../assets/online.png';
 
 const OHome = () => {
   const [notices, setNotices] = useState([]);
-  const [eventsError, setEventsError] = useState(null);
+  const [ setEventsError] = useState(null);
   const [noticesError, setNoticesError] = useState(null);
   const [loading, setLoading] = useState(true);
   const user = JSON.parse(localStorage.getItem("user"));
@@ -294,11 +294,11 @@ const OHome = () => {
 
   return (
     <>
-      <div className="md:px-12 p-4 mt-20 min-h-screen">
+      <div className="md:px-12 p-4 mt-2  min-h-screen">
         <div className="background-image" style={{ backgroundImage: `url(${ONLINE})` }}></div>
 
         {/* Banner content */}
-        <div className="md:px-10 p-4 max-w-screen-2xl mx-auto">
+        <div className="md:px-10 p-4 max-w-screen-2xl mt-20 mx-auto">
           <div className="gradienBg rounded-xl rounded-br-[80px] md:p-9 px-4 py-9">
             <div className="flex flex-col md:flex-row-reverse justify-between items-center gap-10">
               <div className="md:w-3/5">

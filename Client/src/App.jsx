@@ -47,6 +47,8 @@ import Video3 from "./Pages/Video3";
 import VideoGallery from "./Pages/VideoGallery";
 import EditVideoList from "./AdminPages/EditVideoList";
 import OMyVideo from "./Pages/OMyVideo";
+import QuizResult from "./AdminPages/QuizResult"
+import QuizList from "./Pages/QuizList";
 
 const PLayout = () => {
   return (
@@ -214,6 +216,14 @@ const router = createBrowserRouter([
       {
         path: "/AQuiz",
         element: <AQuiz />,
+      },
+      {
+        path: "/QuizResult/:quizId",
+        element: <QuizResult />,
+      },
+      {
+        path: "/QuizList",
+        element: <QuizList />,
       },
       {
         path: "/CreateQuiz/:quizId",

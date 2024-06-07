@@ -17,6 +17,7 @@ import { __dirname } from "./dirname.js"
 import path from "path";
 
 
+
 const app = express();
 app.use(cors());
 
@@ -41,6 +42,14 @@ app.use("/api/updatevideos", updatevideoRouter)
 
 app.use('/public/reciepts', express.static(path.join(__dirname, 'public/reciepts')));
 app.use('/public/image', express.static(path.join(__dirname, 'public/image')));
+
+
+
+
+  
+
+
+
 
 app.listen(8800, () => {
     console.log("Connected!")

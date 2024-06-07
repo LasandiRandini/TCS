@@ -45,13 +45,13 @@ const Quiz = () => {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center flex justify-center items-center "
+      className="min-h-screen  h-[100%]  bg-cover bg-center flex justify-center items-center "
       style={{ backgroundImage: `url(${CLASS})` }}
     >
-      <div className="container mx-auto p-6 rounded-lg ml-5 mr-5">
+      <div className="container my-20 px-2 md:px-12 p-4 min-h-screen">
         <div className="mb-8 ml-5 mr-5 ">
-          <h2 className="text-2xl font-bold mb-4  text-white mt-10">Weekly Quizzes</h2>
-          <div className=" space-y-4 rounded-lg shadow-md p-5 container mx-auto p-6 bg-gray-300 bg-opacity-75">
+          <h2 className="text-2xl font-bold mb-4  text-white ">Weekly Quizzes</h2>
+          <div className=" space-y-4 rounded-lg shadow-md p-5 container mx-auto  bg-gray-300 bg-opacity-75">
             {weeklyQuizzes.map((quiz) => (
               <div
                 key={quiz.q_id}

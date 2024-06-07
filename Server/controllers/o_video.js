@@ -1,9 +1,32 @@
 import { db } from "../db.js";
 
+import nodemailer from 'nodemailer';
 
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'kh.lasandirandini@gmail.com',
+    pass: 'LaRaKH@2001#'
+  }
+});
 
+const sendEmail = (email, unitName) => {
+  const mailOptions = {
+    from: 'kh.lasandirandini@gmail.com',
+    to: email,
+    subject: 'Enrollment Confirmation',
+    text: `You have successfully enrolled for the videos in ${unitName}. You can log in to the system and watch the related videos. Good luck!`
+  };
 
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('Error sending email:', error);
+    } else {
+      console.log('Email sent:', info.response);
+    }
+  });
+};
 
 // export const addReceipt = async (req, res) => {
 //   const { fileUrl, r_unit_id } = req.body;
@@ -122,16 +145,55 @@ export const showReceipt = async (req, res) => {
 };
 
 
-// approveReceipt Controller
+// // approveReceipt Controller
+// export const approveReceipt = async (req, res) => {
+//   const { receipt_id } = req.params;
+//   try {
+//     const sql = "UPDATE reciept SET permission = 'ok' WHERE reciept_id = ?";
+//     db.query(sql, [receipt_id], (err, result) => {
+//       if (err) {
+//         return res.status(500).json({ error: "Error approving receipt" });
+//       } else {
+//         return res.status(200).json("Receipt approved");
+//       }
+//     });
+//   } catch (error) {
+//     console.error("Error while approving receipt:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
 export const approveReceipt = async (req, res) => {
   const { receipt_id } = req.params;
+
   try {
-    const sql = "UPDATE reciept SET permission = 'ok' WHERE reciept_id = ?";
-    db.query(sql, [receipt_id], (err, result) => {
+    const sqlUpdate = "UPDATE reciept SET permission = 'ok' WHERE reciept_id = ?";
+    db.query(sqlUpdate, [receipt_id], (err, result) => {
       if (err) {
         return res.status(500).json({ error: "Error approving receipt" });
       } else {
-        return res.status(200).json("Receipt approved");
+        const sqlSelect = `
+          SELECT users.email, videounit.unit_name 
+          FROM reciept 
+          JOIN users ON reciept.u_id = users.id 
+          JOIN videounit ON reciept.r_unit_id = videounit.unit_id 
+          WHERE reciept.reciept_id = ?
+        `;
+
+        db.query(sqlSelect, [receipt_id], (err, results) => {
+          if (err) {
+            console.error('Failed to fetch user email:', err);
+            return res.status(500).json({ error: "Database error" });
+          }
+
+          if (results.length > 0) {
+            const { email, unit_name } = results[0];
+            sendEmail(email, unit_name);
+            return res.status(200).json("Receipt approved and email sent");
+          } else {
+            return res.status(404).json({ error: "No matching record found" });
+          }
+        });
       }
     });
   } catch (error) {
@@ -139,15 +201,56 @@ export const approveReceipt = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+// export const rejectReceipt = async (req, res) => {
+//   const { receipt_id } = req.params;
+//   try {
+//     const sql = "UPDATE reciept SET permission = 'not ok' WHERE reciept_id = ?";
+//     db.query(sql, [receipt_id], (err, result) => {
+//       if (err) {
+//         return res.status(500).json({ error: "Error rejecting receipt" });
+//       } else {
+//         return res.status(200).json("Receipt rejected");
+//       }
+//     });
+//   } catch (error) {
+//     console.error("Error while rejecting receipt:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+
 export const rejectReceipt = async (req, res) => {
   const { receipt_id } = req.params;
   try {
-    const sql = "UPDATE reciept SET permission = 'not ok' WHERE reciept_id = ?";
-    db.query(sql, [receipt_id], (err, result) => {
+    const sqlUpdate = "UPDATE reciept SET permission = 'not ok' WHERE reciept_id = ?";
+    db.query(sqlUpdate, [receipt_id], (err, result) => {
       if (err) {
         return res.status(500).json({ error: "Error rejecting receipt" });
       } else {
-        return res.status(200).json("Receipt rejected");
+        const sqlSelect = `
+          SELECT users.email, units.unit_name 
+          FROM reciept 
+          JOIN users ON reciept.u_id = users.id 
+          JOIN units ON reciept.unit_id = units.id 
+          WHERE reciept.reciept_id = ?
+        `;
+
+        db.query(sqlSelect, [receipt_id], (err, results) => {
+          if (err) {
+            console.error('Failed to fetch user email:', err);
+            return res.status(500).json({ error: "Database error" });
+          }
+
+          if (results.length > 0) {
+            const { email, unit_name } = results[0];
+            sendEmail(email, unit_name, false);
+            return res.status(200).json("Receipt rejected and email sent");
+          } else {
+            return res.status(404).json({ error: "No matching record found" });
+          }
+        });
       }
     });
   } catch (error) {

@@ -192,3 +192,194 @@ export const submitResponse = async (req, res) => {
     }
 };
 
+
+
+// export const getQuizResults = (req, res) => {
+//     try {
+//         const quizId = req.params.quizId;
+//         const query = `
+//             SELECT users.id AS studentID, quiz_responses.mark AS mark, question.q_text AS question
+//             FROM quiz_responses
+//             INNER JOIN users ON quiz_responses.id = users.id
+//             INNER JOIN question ON quiz_responses.que_id = question.que_id
+//             WHERE quiz_responses.quiz_id = ?
+//         `;
+//         db.query(query, [quizId], (err, results) => {
+//             if (err) {
+//                 console.error('Error fetching quiz results:', err);
+//                 res.status(500).json({ message: 'Internal server error' });
+//             } else {
+//                 const quizResults = results.map(result => ({
+//                     studentName: result.studentID,
+//                     mark: result.mark,
+//                     question: result.question
+//                 }));
+//                 res.status(200).json(quizResults);
+//             }
+//         });
+//     } catch (error) {
+//         console.error('Error in getQuizResults:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
+
+// export const getQuizResults = (req, res) => {
+//     try {
+//         const quizId = req.params.quizId;
+//         const query = `
+//             SELECT users.id AS studentID, question.que_id AS questionID, quiz_responses.mark AS mark
+//             FROM quiz_responses
+//             INNER JOIN users ON quiz_responses.id = users.id
+//             INNER JOIN question ON quiz_responses.que_id = question.que_id
+//             WHERE quiz_responses.quiz_id = ?
+//         `;
+//         db.query(query, [quizId], (err, results) => {
+//             if (err) {
+//                 console.error('Error fetching quiz results:', err);
+//                 res.status(500).json({ message: 'Internal server error' });
+//             } else {
+//                 const studentResults = {};
+
+//                 results.forEach(result => {
+//                     if (!studentResults[result.studentID]) {
+//                         studentResults[result.studentID] = {
+//                             studentID: result.studentID,
+//                             totalMarks: 0,
+//                             questions: []
+//                         };
+//                     }
+
+//                     studentResults[result.studentID].totalMarks += result.mark;
+//                     studentResults[result.studentID].questions.push(result.questionID);
+//                 });
+
+//                 const quizResults = Object.values(studentResults).map(studentResult => ({
+//                     studentID: studentResult.studentID,
+//                     totalMarks: studentResult.totalMarks,
+//                     questions: studentResult.questions.map((_, index) => index + 1) // Map questions to 1, 2, 3, ...
+//                 }));
+
+//                 res.status(200).json(quizResults);
+//             }
+//         });
+//     } catch (error) {
+//         console.error('Error in getQuizResults:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
+
+// export const getQuizResults = async (req, res) => {
+//     const { quizId } = req.params;
+
+//     try {
+//         // Fetch all the responses for the given quiz ID
+//         const [responses] = await db.promise().query(
+//             `SELECT qr.id as user_id, u.first_name, u.last_name, qr.que_id, qr.mark
+//              FROM quiz_responses qr
+//              JOIN users u ON qr.id = u.id
+//              WHERE qr.quiz_id = ?`,
+//             [quizId]
+//         );
+
+//         // Process responses to calculate total marks and organize by user
+//         const results = {};
+//         responses.forEach((response) => {
+//             const { user_id, first_name, last_name, que_id, mark } = response;
+//             if (!results[user_id]) {
+//                 results[user_id] = {
+//                     id: user_id,
+//                     name: `${first_name} ${last_name}`,
+//                     marks: {},
+//                     total: 0,
+//                 };
+//             }
+//             results[user_id].marks[que_id] = mark;
+//             results[user_id].total += mark;
+//         });
+
+//         // Convert results object to array
+//         const resultsArray = Object.values(results);
+
+//         // Sort results by total marks to calculate ranks
+//         resultsArray.sort((a, b) => b.total - a.total);
+//         resultsArray.forEach((result, index) => {
+//             result.rank = index + 1;
+//         });
+
+//         res.status(200).json(resultsArray);
+//     } catch (error) {
+//         console.error('Error fetching quiz results:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
+
+export const getQuizResults = async (req, res) => {
+    const { quizId } = req.params;
+
+    try {
+      
+        const [responses] = await db.promise().query(
+            `SELECT qr.id as user_id, u.first_name, u.last_name, qr.que_id, qr.mark
+             FROM quiz_responses qr
+             JOIN users u ON qr.id = u.id
+             WHERE qr.quiz_id = ?`,
+            [quizId]
+        );
+
+      
+        const results = {};
+        responses.forEach((response) => {
+            const { user_id, first_name, last_name, que_id, mark } = response;
+            if (!results[user_id]) {
+                results[user_id] = {
+                    id: user_id,
+                    name: `${first_name} ${last_name}`,
+                    marks: {},
+                    total: 0,
+                };
+            }
+            results[user_id].marks[que_id] = mark;
+            results[user_id].total += mark;
+        });
+
+        // Convert results object to array
+        const resultsArray = Object.values(results);
+
+        // Sort results by total marks to calculate ranks
+        resultsArray.sort((a, b) => b.total - a.total);
+        resultsArray.forEach((result, index) => {
+            result.rank = index + 1;
+        });
+
+        res.status(200).json(resultsArray);
+    } catch (error) {
+        console.error('Error fetching quiz results:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export const getQuizzes = (req, res) => {
+    try {
+        const query = `
+            SELECT q_id, q_unit, q_year, quiz_type
+            FROM quiz
+        `;
+        db.query(query, (err, results) => {
+            if (err) {
+                console.error('Error fetching quizzes:', err);
+                res.status(500).json({ message: 'Internal server error' });
+            } else {
+                const quizzes = results.map(quiz => ({
+                    id: quiz.q_id,
+                    unit: quiz.q_unit,
+                    year: quiz.q_year,
+                    quiz_type: quiz.quiz_type
+                }));
+                res.status(200).json(quizzes);
+            }
+        });
+    } catch (error) {
+        console.error('Error in getQuizzes:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};

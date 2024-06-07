@@ -1,5 +1,5 @@
 import express from "express"
-import { createQuiz,addQuestion,getAllQuizzes,submitResponse,getQuiz} from "../controllers/quiz.js"
+import { createQuiz,addQuestion,getAllQuizzes,submitResponse,getQuiz,getQuizResults,getQuizzes} from "../controllers/quiz.js"
 
 
 
@@ -10,6 +10,7 @@ router.post('/addQuestion', addQuestion);
 router.get('/getAllQuizzes', getAllQuizzes);
 router.get('/getQuiz/:q_id', getQuiz);
 router.post('/submitResponse', submitResponse);
-
+router.get('/getQuizResults/:quizId', getQuizResults);
+router.get('/getQuizzes', getQuizzes);
 
 export default router

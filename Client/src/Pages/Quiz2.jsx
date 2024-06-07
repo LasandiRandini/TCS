@@ -855,6 +855,7 @@ const Quiz2 = () => {
                 className="min-h-screen bg-cover bg-center flex justify-center items-center"
                 style={{ backgroundImage: `url(${CLASS})` }}
             >
+                
                 <div className="container ml-5 mr-5 mx-auto p-6 rounded-lg bg-white md:px-10 py-12 w-full">
                     <h1 className="text-2xl text-center font-bold mb-4">Quiz Result</h1>
                     <div className="text-center">
@@ -883,7 +884,7 @@ const Quiz2 = () => {
             className="min-h-screen bg-cover bg-center flex justify-center items-center"
             style={{ backgroundImage: `url(${CLASS})` }}
         >
-            <div className="container mx-auto p-6 rounded-lg md:px-10 py-12 ">
+            <div className="container my-20 px-2 md:px-12 p-4 min-h-screen ">
                 <div className="mb-4 mt-10">
                     <span className="text-2xl text-white">Time Left: </span>
                     <span className="text-2xl text-white">{formatTime(timeLeft)}</span>

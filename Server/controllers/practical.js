@@ -2,14 +2,35 @@
 
 import { db } from '../db.js';
 
+// export const practical = async (req, res) => {
+//   const { year, title, date, duration, institute, description } = req.body;
+
+//   try {
+//     const [result] = await db.promise().query('INSERT INTO practical (year, title, date, duration, institute, description) VALUES (?, ?, ?, ?, ?, ?)', [year, title, date, duration, institute, description]);
+
+//     if (result.affectedRows === 1) {
+//       res.status(201).json({ message: 'Practical created successfully' });
+//     } else {
+//       res.status(500).json({ error: 'Failed to create practical' });
+//     }
+//   } catch (error) {
+//     console.error('Error while creating practical:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
+
 export const practical = async (req, res) => {
   const { year, title, date, duration, institute, description } = req.body;
 
   try {
-    const [result] = await db.promise().query('INSERT INTO practical (year, title, date, duration, institute, description) VALUES (?, ?, ?, ?, ?, ?)', [year, title, date, duration, institute, description]);
+    const [result] = await db.promise().query(
+      'INSERT INTO practical (year, title, date, duration, institute, description) VALUES (?, ?, ?, ?, ?, ?)',
+      [year, title, date, duration, institute, description]
+    );
 
     if (result.affectedRows === 1) {
-      res.status(201).json({ message: 'Practical created successfully' });
+      const practicalId = result.insertId;  // Get the ID of the newly inserted practical
+      res.status(201).json({ message: 'Practical created successfully', practicalId });
     } else {
       res.status(500).json({ error: 'Failed to create practical' });
     }
@@ -215,5 +236,35 @@ export const getCount = async (req, res) => {
   } catch (error) {
     console.error('Error in getPracticalTimeSlots:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const updatePractical = async (req, res) => {
+  const { practical_id } = req.params;
+  const { title, year, date, duration, institute, description } = req.body;
+
+  try {
+    const sql = `
+      UPDATE practical
+      SET title=?, year=?, date=?, duration=?, institute=?, description=?
+      WHERE practical_id=?
+    `;
+    const params = [title, year, date, duration, institute, description, practical_id];
+
+    db.query(sql, params, (err, result) => {
+      if (err) {
+        console.error('Error updating practical:', err);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: 'Practical not found' });
+      }
+
+      return res.status(200).json({ message: 'Practical updated successfully' });
+    });
+  } catch (error) {
+    console.error('Error updating practical:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
