@@ -133,7 +133,7 @@ export const getQuiz = async (req, res) => {
         const checkQuery = 'SELECT COUNT(*) as count FROM quiz_responses WHERE quiz_id = ? AND id = ?';
         const [checkResults] = await db.promise().query(checkQuery, [q_id, user_id]);
         if (checkResults[0].count > 0) {
-            return res.status(403).json({ message: 'You have already taken this quiz' });
+            return res.status(403).json({ message: 'You hav already taken this quiz' });
         }
 
        
