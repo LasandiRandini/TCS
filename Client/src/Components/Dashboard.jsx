@@ -63,16 +63,7 @@ const Dashboard = () => {
                     Update Videos
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/ViewVideo"
-                    className={`hover:bg-blue-200 px-4 py-2 block rounded transition text-gray-500 text-sm duration-200 ${
-                      isActive("/ViewVideo") ? "bg-white" : ""
-                    }`}
-                  >
-                    View Videos
-                  </Link>
-                </li>
+                
               </ul>
             )}
           </li>
@@ -95,16 +86,7 @@ const Dashboard = () => {
                     Check Receipts
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/Premission"
-                    className={`hover:bg-blue-200 px-4 py-2 block rounded transition text-gray-500 text-sm duration-200 ${
-                      isActive("/Premission") ? "bg-white" : ""
-                    }`}
-                  >
-                    Give Permissions
-                  </Link>
-                </li>
+                
               </ul>
             )}
           </li>
@@ -268,9 +250,9 @@ const Dashboard = () => {
           </li>
           <li>
             <Link
-              to="/home"
+              to="/ASetting"
               className={`hover:bg-blue-200 px-4 py-2 block rounded transition text-gray-900 duration-200 ${
-                isActive("/home") ? "bg-white" : ""
+                isActive("/ASetting") ? "bg-white" : ""
               }`}
             >
               <FaHome className="inline-block mr-2" /> Settings

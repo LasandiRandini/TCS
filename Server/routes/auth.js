@@ -1,5 +1,5 @@
 import express from "express"
-import { register,login, logout,profile,deleteStudent ,displayUsers,getStatusByNic} from "../controllers/auth.js"
+import { register,login, logout,profile,deleteStudent ,displayUsers,getStatusByNic,getAlYears} from "../controllers/auth.js"
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router()
@@ -11,5 +11,6 @@ router.get("/profile",verifyToken, profile)
 router.delete("/deleteStudent/:id", deleteStudent)
 router.get("/displayUsers",displayUsers)
 router.get('/getStatusByNic/:snic_no', getStatusByNic);
+router.get("/getAlYears",getAlYears);
 
 export default router

@@ -131,6 +131,7 @@ export const addTimeSlots = async (req, res) => {
   }
 };
 
+
 export const getTimeSlots = async (req, res) => {
   const { practical_id } = req.params;
 

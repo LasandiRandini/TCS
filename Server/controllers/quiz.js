@@ -85,45 +85,6 @@ export const getAllQuizzes = (req, res) => {
     }
 };
 
-export const getQuiz = async (req, res) => {
-    const { q_id } = req.params;
-    const { user_id } = req.query; // Get user ID from query parameters
-
-    try {
-        // Check if the user has already taken the quiz
-        const checkQuery = 'SELECT COUNT(*) as count FROM quiz_responses WHERE quiz_id = ? AND id = ?';
-        const [checkResults] = await db.promise().query(checkQuery, [q_id, user_id]);
-        if (checkResults[0].count > 0) {
-            return res.status(403).json({ message: 'You have already taken this quiz' });
-        }
-
-        const quizQuery = 'SELECT duration FROM quiz WHERE q_id = ?';
-        const [quizResults] = await db.promise().query(quizQuery, [q_id]);
-        if (quizResults.length === 0) {
-            return res.status(404).json({ message: 'Quiz not found' });
-        }
-        const duration = quizResults[0].duration;
-
-        const questionQuery = 'SELECT que_id, q_id, q_text, answers, correct_answer FROM question WHERE q_id = ?';
-        const [questionResults] = await db.promise().query(questionQuery, [q_id]);
-        if (questionResults.length === 0) {
-            return res.status(404).json({ message: 'No questions found for this quiz' });
-        }
-
-        const questions = questionResults.map(q => ({
-            que_id: q.que_id,
-            q_id: q.q_id,
-            q_text: q.q_text,
-            answers: q.answers,
-            correct_answer: q.correct_answer
-        }));
-
-        res.status(200).json({ questions, duration });
-    } catch (error) {
-        console.error('Error in getQuiz:', error);
-        res.status(500).json({ error: 'An unexpected error occurred' });
-    }
-};
 
 
 
@@ -159,6 +120,60 @@ export const getQuiz = async (req, res) => {
 //         res.status(500).json({ message: 'Internal server error' });
 //     }
 // };
+
+
+
+
+export const getQuiz = async (req, res) => {
+    const { q_id } = req.params;
+    const { user_id } = req.query;
+
+    try {
+       
+        const checkQuery = 'SELECT COUNT(*) as count FROM quiz_responses WHERE quiz_id = ? AND id = ?';
+        const [checkResults] = await db.promise().query(checkQuery, [q_id, user_id]);
+        if (checkResults[0].count > 0) {
+            return res.status(403).json({ message: 'You have already taken this quiz' });
+        }
+
+       
+        const quizQuery = 'SELECT duration FROM quiz WHERE q_id = ?';
+        const [quizResults] = await db.promise().query(quizQuery, [q_id]);
+        if (quizResults.length === 0) {
+            return res.status(404).json({ message: 'Quiz not found' });
+        }
+        const duration = quizResults[0].duration;
+
+
+        const questionQuery = 'SELECT que_id, q_id, q_text, answers, correct_answer FROM question WHERE q_id = ?';
+        const [questionResults] = await db.promise().query(questionQuery, [q_id]);
+        if (questionResults.length === 0) {
+            return res.status(404).json({ message: 'No questions found for this quiz' });
+        }
+
+        
+        const shuffleArray = (array) => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        };
+
+        const questions = shuffleArray(questionResults.map(q => ({
+            que_id: q.que_id,
+            q_id: q.q_id,
+            q_text: q.q_text,
+            answers: q.answers,
+            correct_answer: q.correct_answer
+        })));
+
+        res.status(200).json({ questions, duration });
+    } catch (error) {
+        console.error('Error in getQuiz:', error);
+        res.status(500).json({ error: 'An unexpected error occurred' });
+    }
+};
 
 export const submitResponse = async (req, res) => {
     const { quiz_id, responses, user_id } = req.body;

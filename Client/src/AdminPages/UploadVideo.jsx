@@ -179,8 +179,7 @@ const UploadVideo = () => {
   const [videoperc, setVideoperc] = useState(0);
   const [videoUrl, setVideoUrl] = useState("");
   const [videoUnit, setVideoUnit] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+
 
   useEffect(() => {
     if (video) {
@@ -236,8 +235,7 @@ const UploadVideo = () => {
       video_link: videoUrl,
       video_name: videoUnit,
       vunit_id: unit_id, // Use the unit_id from URL params
-      start_date: startDate,
-      end_date: endDate,
+     
     };
     
     console.log("Payload to be sent:", payload);
@@ -287,20 +285,7 @@ const UploadVideo = () => {
             onChange={(e) => setVideoUnit(e.target.value)}
             className="mb-4 p-2 border rounded w-full"
           />
-          <input
-            type="date"
-            placeholder="Start Date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="mb-4 p-2 border rounded w-full"
-          />
-          <input
-            type="date"
-            placeholder="End Date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="mb-4 p-2 border rounded w-full"
-          />
+          
           <button
             onClick={handleUpload}
             className="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-md

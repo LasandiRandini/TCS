@@ -50,6 +50,7 @@ import OMyVideo from "./Pages/OMyVideo";
 import QuizResult from "./AdminPages/QuizResult"
 import QuizList from "./Pages/QuizList";
 import AHome from "./AdminPages/AHome";
+import ASetting from "./AdminPages/ASetting";
 
 const PLayout = () => {
   return (
@@ -247,7 +248,7 @@ const router = createBrowserRouter([
         element: <DeletePractical />,
       },
       {
-        path: "/AddTimeslots",
+        path: "/AddTimeslots/:practical_id",
         element: <AddTimeslots />,
       },
       {
@@ -297,6 +298,10 @@ const router = createBrowserRouter([
       {
         path: "/UpdateQuiz2/:q_id",
         element: <UpdateQuiz2 />,
+      },
+      {
+        path: "/ASetting",
+        element: <ASetting />,
       },
     ],
   },

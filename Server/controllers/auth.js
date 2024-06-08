@@ -244,3 +244,13 @@ export const getStatusByNic = async (req, res) => {
     res.status(500).json({ error: 'An unexpected error occurred' });
   }
 };
+
+export const getAlYears = (req, res) => {
+  const query = 'SELECT al_year FROM al_years';
+  db.query(query, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: 'Database query error' });
+    }
+    res.status(200).json(results);
+  });
+};

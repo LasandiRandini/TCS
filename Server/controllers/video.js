@@ -100,12 +100,12 @@ export const deleteUnit = async (req, res) => {
 
 
 export const addVideo = async (req, res) => {
-  const { video_name, video_link,  vunit_id,start_date, end_date } = req.body;
+  const { video_name, video_link,  vunit_id } = req.body;
   
   try {
    
-    const query = 'INSERT INTO video ( video_name, video_link,vunit_id, start_date, end_date) VALUES (?, ?, ?, ?, ?)';
-    const [result] = await db.query(query, [ video_name, video_link,vunit_id, start_date, end_date]);
+    const query = 'INSERT INTO video ( video_name, video_link,vunit_id) VALUES (?, ?, ?)';
+    const [result] = await db.query(query, [ video_name, video_link,vunit_id]);
 
     if (result.affectedRows === 1) {
       res.status(201).json({ message: 'Video added successfully' });
@@ -165,10 +165,10 @@ export const displayUnits = async (req, res) => {
 
 
 export const uploadVideo = async (req, res) => {
-  const { video_link, video_name, vunit_id, start_date, end_date } = req.body;
+  const { video_link, video_name, vunit_id } = req.body;
 
   try {
-    const [result] = await db.promise().query('INSERT INTO video (video_link, video_name, vunit_id, start_date, end_date) VALUES (?, ?, ?, ?, ?)',  [video_link, video_name, vunit_id, start_date, end_date]);
+    const [result] = await db.promise().query('INSERT INTO video (video_link, video_name, vunit_id) VALUES (?, ?, ?)',  [video_link, video_name, vunit_id]);
 
     if (result.affectedRows === 1) {
       res.status(201).json({ message: 'Video uploaded successfully' });
