@@ -151,16 +151,7 @@ const Dashboard = () => {
                     Update Practical
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/AddTimeslots"
-                    className={`hover:bg-blue-200 px-4 py-2 block rounded transition text-gray-500 text-sm duration-200 ${
-                      isActive("/AddTimeslots") ? "bg-white" : ""
-                    }`}
-                  >
-                    Add Timeslots
-                  </Link>
-                </li>
+              
                 <li>
                   <Link
                     to="/GetCount"

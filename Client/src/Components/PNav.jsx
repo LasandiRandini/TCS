@@ -168,7 +168,7 @@ const PNav = () => {
                                     <li className='md:ml-8 text-1xl font-medium my-2 md:my-0'>
                                         <button 
                                             onClick={handleLogout}
-                                            className='border border-red-400 text-red-400 hover:bg-red-600 hover:text-white transition duration-300 rounded px-2 py-1'
+                                            className='border border-red-700 text-red-700 hover:bg-red-600 hover:text-white transition duration-300 rounded px-2 py-1'
                                         >
                                             Logout
                                         </button>

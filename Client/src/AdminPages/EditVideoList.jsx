@@ -473,11 +473,7 @@ const ShowVideoUnits = () => {
     }
   };
 
-  const handleUpdateUnit = (unit) => {
-    setSelectedUnitId(unit.unit_id);
-    setUnitInputs(unit);
-    setIsUnitUpdateModalOpen(true);
-  };
+ 
 
   const handleUnitUpdateModalClose = () => {
     setIsUnitUpdateModalOpen(false);
@@ -542,12 +538,7 @@ const ShowVideoUnits = () => {
                 <td className="p-4 text-left border border-gray-200">{unit.unit_description}</td>
                 <td className="p-4 text-right border border-gray-200">{unit.price}</td>
                 <td className="p-4 text-left border border-gray-200">
-                  <button
-                    onClick={() => handleUpdateUnit(unit)}
-                    className="bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 transition duration-300 mr-2 mb-2"
-                  >
-                    Update
-                  </button>
+                 
                   <button
                     onClick={() => handleDeleteUnit(unit.unit_id)}
                     className="bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 transition duration-300"

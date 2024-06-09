@@ -395,10 +395,32 @@ export const checkEnrollment = async (req, res) => {
   }
 };
 
-export const getVideosByUnitId = async (req, res) => {
-  const { unitId } = req.params; 
-  try {
+// export const getVideosByUnitId = async (req, res) => {
+//   const { unitId } = req.params; 
+//   try {
     
+//     const query = `
+//       SELECT vu.unit_name, v.video_id, v.video_name, v.video_link
+//       FROM video v
+//       JOIN videounit vu ON v.vunit_id = vu.unit_id
+//       WHERE vu.unit_id = ?
+//     `;
+//     db.query(query, [unitId], (err, results) => {
+//       if (err) {
+//         return res.status(500).json({ error: "Error fetching videos" });
+//       } else {
+//         return res.status(200).json(results); // Return the results as JSON
+//       }
+//     });
+//   } catch (error) {
+//     console.error("Error while fetching videos:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+export const getVideosByUnitId = async (req, res) => {
+  const { unitId } = req.params;
+  try {
     const query = `
       SELECT vu.unit_name, v.video_id, v.video_name, v.video_link
       FROM video v
@@ -409,7 +431,7 @@ export const getVideosByUnitId = async (req, res) => {
       if (err) {
         return res.status(500).json({ error: "Error fetching videos" });
       } else {
-        return res.status(200).json(results); // Return the results as JSON
+        return res.status(200).json(results);
       }
     });
   } catch (error) {
@@ -417,4 +439,3 @@ export const getVideosByUnitId = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-

@@ -58,3 +58,62 @@ export const deleteAlYear = async (req, res) => {
         res.status(500).json({ error: 'An unexpected error occurred' });
     }
 };
+
+export const addInstitute = async (req, res) => {
+    const { institute } = req.body;
+
+    if (!institute) {
+        return res.status(400).json({ message: 'Institute is required' });
+    }
+
+    try {
+        const query = 'INSERT INTO institutes (institute) VALUES (?)';
+        await db.promise().query(query, [institute]);
+        res.status(201).json({ message: 'Institute added successfully' });
+    } catch (error) {
+        console.error('Error in addInstitute:', error);
+        res.status(500).json({ error: 'An unexpected error occurred' });
+    }
+};
+
+export const getInstitutes = async (req, res) => {
+    try {
+        const query = 'SELECT institute FROM institutes';
+        const [results] = await db.promise().query(query);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error('Error in getInstitutes:', error);
+        res.status(500).json({ error: 'An unexpected error occurred' });
+    }
+};
+
+export const updateInstitute = async (req, res) => {
+    const { old_institute } = req.params;
+    const { new_institute } = req.body;
+
+    if (!new_institute) {
+        return res.status(400).json({ message: 'New Institute is required' });
+    }
+
+    try {
+        const query = 'UPDATE institutes SET institute = ? WHERE institute = ?';
+        await db.promise().query(query, [new_institute, old_institute]);
+        res.status(200).json({ message: 'Institute updated successfully' });
+    } catch (error) {
+        console.error('Error in updateInstitute:', error);
+        res.status(500).json({ error: 'An unexpected error occurred' });
+    }
+};
+
+export const deleteInstitute = async (req, res) => {
+    const { institute } = req.params;
+
+    try {
+        const query = 'DELETE FROM institutes WHERE institute = ?';
+        await db.promise().query(query, [institute]);
+        res.status(200).json({ message: 'Institute deleted successfully' });
+    } catch (error) {
+        console.error('Error in deleteInstitute:', error);
+        res.status(500).json({ error: 'An unexpected error occurred' });
+    }
+};

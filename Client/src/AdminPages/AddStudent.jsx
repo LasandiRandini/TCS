@@ -25,7 +25,7 @@ const AddStudent = () => {
 
   const handleRegister = async () => {
     await addStudent();
-    navigate("/PSignup");
+    navigate(`/PSignup?nic_no=${nic_no}`);
   };
 
   return (

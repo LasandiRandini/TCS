@@ -897,6 +897,32 @@ const PSignup = () => {
   const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
+  const [alYears, setAlYears] = useState([]);
+  const [institutes, setInstitutes] = useState([]);
+
+  useEffect(() => {
+    const fetchAlYears = async () => {
+      try {
+        const response = await axios.get("http://localhost:8800/api/auth/getAlYears");
+        setAlYears(response.data);
+      } catch (error) {
+        console.error("Failed to fetch AL years", error);
+      }
+    };
+    fetchAlYears();
+  }, []);
+
+  useEffect(() => {
+    const fetchInstitutes = async () => {
+      try {
+        const response = await axios.get("http://localhost:8800/api/settings/institutes");
+        setInstitutes(response.data);
+      } catch (error) {
+        console.error("Failed to fetch Institutess", error);
+      }
+    };
+    fetchInstitutes();
+  }, []);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -1119,28 +1145,42 @@ const PSignup = () => {
                 <label className="block text-sm font-medium text-gray-200">
                   AL Year | AL වර්ෂය<span className="text-red-500"> *</span>
                 </label>
-                <input
-                  type="text"
+                <select
                   name="al_year"
                   value={inputs.al_year}
                   onChange={handleChange}
                   className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                />
+                >
+                  <option value="">Select a year</option>
+                  {alYears.map((year) => (
+                    <option key={year.al_year} value={year.al_year}>
+                      {year.al_year}
+                    </option>
+                  ))}
+                </select>
                 {formErrors.al_year && (
                   <p className="text-red-200 text-sm">{formErrors.al_year}</p>
                 )}
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-200">
                   Institute | ආයතනය<span className="text-red-500"> *</span>
                 </label>
-                <input
-                  type="text"
+                <select
+                  
                   name="institute"
                   value={inputs.institute}
                   onChange={handleChange}
                   className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                />
+                >
+                  <option value="">Select the Instutute</option>
+                  {institutes.map((institute) => (
+                    <option key={institute.instutute} value={institute.institute}>
+                      {institute.institute}
+                    </option>
+                    ))}
+                </select>
                 {formErrors.institute && (
                   <p className="text-red-200 text-sm">{formErrors.institute}</p>
                 )}

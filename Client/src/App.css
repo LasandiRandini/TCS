@@ -13,7 +13,7 @@
 .background-image {
   @apply fixed top-0 left-0 w-full h-full bg-cover bg-center;
   z-index: -1;
-  transition: opacity 1.5s ease-out;
+  transition: opacity 1s ease-out;
 }
 
 .background-overlay {

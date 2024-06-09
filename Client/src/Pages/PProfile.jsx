@@ -30,7 +30,7 @@ const PProfile = () => {
                 <p className="mb-3"><strong>NIC No:</strong> {user.snic_no}</p>
               </div>
               <div>
-                <p className="mb-3"><strong>District:</strong> {user.district}</p>
+            
                 <p className="mb-3"><strong>AL Year:</strong> {user.al_year}</p>
                 <p className="mb-3"><strong>Institute:</strong> {user.institute}</p>
                 <p className="mb-3"><strong>Parent Contact No:</strong> {user.parent_contact_no}</p>
