@@ -61,46 +61,82 @@ export const register = (req, res) => {
 };
 
 
+// export const login = (req, res) => {
+//   const q = "SELECT * FROM users WHERE username=?";
+
+//   db.query(q, [req.body.username], (err, data) => {
+//     if (err) return res.json(err);
+//     if (data.length == 0) return res.status(404).json("User not found!");
+
+//     const isPasswordCorrect = bcrypt.compareSync(
+//       req.body.password,
+//       data[0].password
+//     );
+//     if (!isPasswordCorrect)
+//       return res.status(400).json("Wrong username or password!");
+
+//     const token = Jwt.sign({ id: data[0].id }, "jwtkey");
+//     const { password, ...other } = data[0];
+
+//     res.cookie("access_token", token, {
+//       httpOnly: true,
+//     });
+
+    
+//     const nicQuery = "SELECT snic_no FROM users WHERE username = ?";
+//     db.query(nicQuery, [req.body.username], (nicErr, nicData) => {
+//       if (nicErr) return res.json(nicErr);
+//       if (nicData.length == 0) return res.status(404).json("NIC not found!");
+
+//       const nic_no = nicData[0].snic_no;
+
+   
+//       const statusQuery = "SELECT status FROM status WHERE nic_no = ?";
+//       db.query(statusQuery, [nic_no], (statusErr, statusData) => {
+//         if (statusErr) return res.json(statusErr);
+//         if (statusData.length == 0) return res.status(404).json("Status not found!");
+
+        
+//         res.status(200).json({ ...other, status: statusData[0].status });
+//       });
+// });
+// });
+// };
+
+
 export const login = (req, res) => {
   const q = "SELECT * FROM users WHERE username=?";
 
   db.query(q, [req.body.username], (err, data) => {
     if (err) return res.json(err);
-    if (data.length == 0) return res.status(404).json("User not found!");
+    if (data.length === 0) return res.status(404).json("User not found!");
 
-    const isPasswordCorrect = bcrypt.compareSync(
-      req.body.password,
-      data[0].password
-    );
-    if (!isPasswordCorrect)
-      return res.status(400).json("Wrong username or password!");
+    const user = data[0];
+    const isPasswordCorrect = bcrypt.compareSync(req.body.password, user.password);
 
-    const token = Jwt.sign({ id: data[0].id }, "jwtkey");
-    const { password, ...other } = data[0];
+    if (!isPasswordCorrect) return res.status(400).json("Wrong username or password!");
+    if (user.activeness !== 'active') return res.status(403).json("Account is inactive!");
 
-    res.cookie("access_token", token, {
-      httpOnly: true,
-    });
+    const token = Jwt.sign({ id: user.id }, "jwtkey");
+    const { password, ...other } = user;
 
-    
+    res.cookie("access_token", token, { httpOnly: true });
+
     const nicQuery = "SELECT snic_no FROM users WHERE username = ?";
     db.query(nicQuery, [req.body.username], (nicErr, nicData) => {
       if (nicErr) return res.json(nicErr);
-      if (nicData.length == 0) return res.status(404).json("NIC not found!");
+      if (nicData.length === 0) return res.status(404).json("NIC not found!");
 
       const nic_no = nicData[0].snic_no;
-
-   
       const statusQuery = "SELECT status FROM status WHERE nic_no = ?";
       db.query(statusQuery, [nic_no], (statusErr, statusData) => {
         if (statusErr) return res.json(statusErr);
-        if (statusData.length == 0) return res.status(404).json("Status not found!");
+        if (statusData.length === 0) return res.status(404).json("Status not found!");
 
-        
-        res.status(200).json({ ...other, status: statusData[0].status });
+        res.status(200).json({ ...other, status: statusData[0].status, active: true });
       });
-});
-});
+    });
+  });
 };
 
 export const profile = (req, res) => {
@@ -202,24 +238,24 @@ export const deleteStudent = async (req, res) => {
 };
 
 
-export const displayUsers = async (req, res) => {
-  try {
-    const query = 'SELECT id,first_name,last_name,distric, snic_no,email,contact_no,al_year,institute,parent_contact_no,parent_email FROM users';
-    db.query(query, (err, results) => {
-      if (err) {
-        console.error('Error fetching practical data:', err);
-        res.status(500).json({ error: 'An error occurred while fetching practical data' });
-      } else {
-        console.log(results);
-        res.status(200).json(results);
-      }
-    });
-  } catch (err) {
-    console.error('Error in getpractical:', err);
-    res.status(500).json({ error: 'An unexpected error occurred' });
-  }
-};
-export const logout = (req, res) => {};
+// export const displayUsers = async (req, res) => {
+//   try {
+//     const query = 'SELECT id,first_name,last_name,distric, snic_no,email,contact_no,al_year,institute,parent_contact_no,parent_email FROM users';
+//     db.query(query, (err, results) => {
+//       if (err) {
+//         console.error('Error fetching practical data:', err);
+//         res.status(500).json({ error: 'An error occurred while fetching practical data' });
+//       } else {
+//         console.log(results);
+//         res.status(200).json(results);
+//       }
+//     });
+//   } catch (err) {
+//     console.error('Error in getpractical:', err);
+//     res.status(500).json({ error: 'An unexpected error occurred' });
+//   }
+// };
+
 
 
 
@@ -252,5 +288,103 @@ export const getAlYears = (req, res) => {
       return res.status(500).json({ error: 'Database query error' });
     }
     res.status(200).json(results);
+  });
+};
+
+export const getAllStudents = (req, res) => {
+  const query = `
+    SELECT users.first_name, users.last_name, users.contact_no, users.institute, users.snic_no AS nic_no, status.status
+    FROM users
+    JOIN status ON users.snic_no = status.nic_no
+  `;
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching students:', err);
+      res.status(500).json({ error: 'Error fetching students' });
+      return;
+    }
+    res.status(200).json(results);
+  });
+};
+
+// Update student status
+export const updateStudentStatus = (req, res) => {
+  const { nic_no } = req.params;
+  
+  // Get current status
+  const getStatusQuery = 'SELECT status FROM status WHERE nic_no = ?';
+  db.query(getStatusQuery, [nic_no], (err, results) => {
+    if (err) {
+      console.error('Error fetching current status:', err);
+      res.status(500).json({ error: 'Error fetching current status' });
+      return;
+    }
+    
+    if (results.length === 0) {
+      res.status(404).json({ error: 'Student not found' });
+      return;
+    }
+    
+    const currentStatus = results[0].status;
+    const newStatus = currentStatus === 'online' ? 'physical' : 'online';
+    
+    const updateStatusQuery = 'UPDATE status SET status = ? WHERE nic_no = ?';
+    db.query(updateStatusQuery, [newStatus, nic_no], (err) => {
+      if (err) {
+        console.error('Error updating student status:', err);
+        res.status(500).json({ error: 'Error updating student status' });
+        return;
+      }
+      res.status(200).json({ message: 'Student status updated successfully' });
+    });
+  });
+};
+export const displayUsers = async (req, res) => {
+  try {
+    const query = `
+      SELECT 
+        users.id, 
+        users.first_name, 
+        users.last_name, 
+        users.distric, 
+        users.snic_no, 
+        users.email, 
+        users.contact_no, 
+        users.al_year, 
+        users.institute, 
+        users.parent_contact_no, 
+        users.parent_email, 
+        users.activeness,
+        status.status, 
+        status.nic_no 
+      FROM users
+      JOIN status ON users.snic_no = status.nic_no
+    `;
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error('Error fetching user data:', err);
+        res.status(500).json({ error: 'An error occurred while fetching user data' });
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  } catch (err) {
+    console.error('Error in displayUsers:', err);
+    res.status(500).json({ error: 'An unexpected error occurred' });
+  }
+};
+
+// Controller to update activeness
+export const updateActiveness = (req, res) => {
+  const { id } = req.params;
+  const { activeness } = req.body;
+  const query = 'UPDATE users SET activeness = ? WHERE id = ?';
+  db.query(query, [activeness, id], (err) => {
+    if (err) {
+      console.error('Error updating activeness:', err);
+      res.status(500).send('Error updating activeness');
+    } else {
+      res.send('Activeness updated successfully');
+    }
   });
 };

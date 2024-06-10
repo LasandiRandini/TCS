@@ -51,6 +51,7 @@ import QuizResult from "./AdminPages/QuizResult"
 import QuizList from "./Pages/QuizList";
 import AHome from "./AdminPages/AHome";
 import ASetting from "./AdminPages/ASetting";
+import ChangeStatus from "./AdminPages/ChangeStatus";
 
 const PLayout = () => {
   return (
@@ -302,6 +303,10 @@ const router = createBrowserRouter([
       {
         path: "/ASetting",
         element: <ASetting />,
+      },
+      {
+        path: "/ChangeStatus",
+        element: <ChangeStatus />,
       },
     ],
   },

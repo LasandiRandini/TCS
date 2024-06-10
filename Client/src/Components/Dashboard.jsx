@@ -162,6 +162,7 @@ const Dashboard = () => {
                     Count of Students
                   </Link>
                 </li>
+               
               </ul>
             )}
           </li>
@@ -196,12 +197,22 @@ const Dashboard = () => {
                 </li>
                 <li>
                   <Link
+                    to="/ChangeStatus"
+                    className={`hover:bg-blue-200 px-4 py-2 block rounded transition text-gray-500 text-sm duration-200 ${
+                      isActive("/ChangeStatus") ? "bg-white" : ""
+                    }`}
+                  >
+                    Change student Status
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     to="/DeleteStudent"
                     className={`hover:bg-blue-200 px-4 py-2 block rounded transition text-gray-500 text-sm duration-200 ${
                       isActive("/DeleteStudent") ? "bg-white" : ""
                     }`}
                   >
-                    Delete a Student
+                    Change Student Activeness
                   </Link>
                 </li>
               </ul>
