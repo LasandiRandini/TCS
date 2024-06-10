@@ -287,7 +287,7 @@ const PNav = () => {
                 </div>
             </div>
             <div className={`transition-filter duration-300 ${isScrolled ? 'blur-sm' : ''}`}>
-                {/* Rest of your page content */}
+                
             </div>
         </>
     );
