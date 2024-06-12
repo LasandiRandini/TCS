@@ -216,7 +216,7 @@ const Home = () => {
         {/* New Content Section */}
         <div className="container mx-auto my-24 px-4 md:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col items-center text-center p-6 bg-yellow-100 rounded-lg shadow-lg">
+            <div className="flex flex-col items-center text-center p-6 bg-red-200 rounded-lg shadow-lg">
               <FaBook className="w-16 h-16 mb-4 text-yellow-600" />
               <h3 className="text-2xl font-semibold text-black mb-2">Learn</h3>
               <p className="text-lg text-black">
@@ -224,7 +224,7 @@ const Home = () => {
 
               </p>
             </div>
-            <div className="flex flex-col items-center text-center p-6 bg-yellow-100 rounded-lg shadow-lg">
+            <div className="flex flex-col items-center text-center p-6 bg-red-200 rounded-lg shadow-lg">
               <FaFlask className="w-16 h-16 mb-4 text-yellow-600" />
               <h3 className="text-2xl font-semibold text-black mb-2">Explore</h3>
               <p className="text-lg text-black">
@@ -232,7 +232,7 @@ const Home = () => {
 
               </p>
             </div>
-            <div className="flex flex-col items-center text-center p-6 bg-yellow-100 rounded-lg shadow-lg">
+            <div className="flex flex-col items-center text-center p-6 bg-red-200 rounded-lg shadow-lg">
               <FaCogs className="w-16 h-16 mb-4 text-yellow-600" />
               <h3 className="text-2xl font-semibold text-black mb-2">Achieve</h3>
               <p className="text-lg text-black">

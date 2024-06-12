@@ -249,7 +249,7 @@ const PNav = () => {
 
     return (
         <>
-            <div className={`fixed shadow-md rounded-full bg-gray-100 bg-opacity-50 mt-2 w-full z-10`}>
+            <div className={`fixed shadow-md rounded-full bg-gray-300 bg-opacity-50 mt-2 w-full z-10`}>
                 <div className='md:px-10 md:flex max-w-screen-xl mx-auto flex justify-between items-center'>
                     <div className="flex items-center cursor-pointer">
                         <img src={Logo} alt="Logo" className="h-12 w-auto mb-2" />
@@ -275,7 +275,7 @@ const PNav = () => {
                                     <li className='md:ml-8 text-1xl font-medium my-2 md:my-0'>
                                         <button 
                                             onClick={handleLogout}
-                                            className='border border-red-700 text-red-700 hover:bg-red-600 hover:text-white transition duration-300 rounded px-2 py-1'
+                                            className='border border-red-200 text-red-200 hover:bg-red-600 hover:text-white transition duration-300 rounded px-2 py-1'
                                         >
                                             Logout
                                         </button>

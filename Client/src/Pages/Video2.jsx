@@ -1057,7 +1057,7 @@ const Video3 = () => {
           });
         }
       } else {
-        Swal.fire("Error", "Permission not granted for this unit. Please check your payment receipt.", "error");
+        Swal.fire("Error", "ඔබට මෙම විඩියෝ මාලාව නැරැඹීමට අවසර නැත.", "error");
       }
     } catch (err) {
       Swal.fire("Error", "Failed to check receipt status. Please try again later.", "error");
@@ -1081,21 +1081,21 @@ const Video3 = () => {
         <input
           type="text"
           placeholder="Search by Unit Name"
-          className="border border-gray-400 rounded-md mb-4 px-3 py-2 mt-4 w-1/4"
+          className="border border-gray-400 rounded-md bg-black  bg-opacity-40 mb-4 px-3 py-2 mt-4 w-1/4"
           value={searchQuery}
           onChange={handleSearch}
         />
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-1">
+        <div className="grid grid-cols-1  gap-8 md:grid-cols-1">
           {error ? (
             <p className="text-red-500">Error: {error}</p>
           ) : (
             filteredVideos.map((video, index) => (
               <div
                 key={index}
-                className="ml-20 mr-20 bg-white text-white rounded-lg p-5 shadow-md hover:shadow-lg transition duration-300 relative border border-gray-600"
+                className="ml-20 mr-20  bg-black  bg-opacity-40 text-white rounded-lg p-5 shadow-md hover:shadow-lg transition duration-300 relative border border-gray-700"
               >
-                <h3 className="text-xl text-black font-semibold mb-2">{video.unit_name}</h3>
-                <p className="text-gray-600 mb-4">{video.unit_description}</p>
+                <h3 className="text-xl text-white font-semibold mb-2">{video.unit_name}</h3>
+                <p className="text-white mb-4">{video.unit_description}</p>
                 <p className="text-lg font-bold text-black-500">{video.price} LKR</p>
                 <input
                   type="file"
@@ -1129,7 +1129,7 @@ const Video3 = () => {
                 <div className="absolute top-0 right-0 mt-10 mr-4">
                   <Button
                     onClick={() => handleOpenPlaylist(video.unit_id)}
-                    className={`bg-red-500 text-white px-6 mr-5 mt-12 rounded hover:bg-red-700 transition duration-300 ${
+                    className={`bg-red-600 text-white px-6 mr-5 mt-12 rounded hover:bg-red-700 transition duration-300 ${
                       enrollmentStatus[video.unit_id] ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                     disabled={enrollmentStatus[video.unit_id]}

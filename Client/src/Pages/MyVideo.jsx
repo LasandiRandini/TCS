@@ -87,11 +87,11 @@ const MyVideo = () => {
       className="min-h-screen bg-cover bg-center flex justify-center items-center"
       style={{ backgroundImage: `url(${CLASS})` }}
     >
-      <div className="container my-20 px-2 md:px-12 p-4 min-h-screen">
+      <div className="container text-white  my-20 px-2 md:px-12 p-4 min-h-screen">
         <input
           type="text"
           placeholder="Search by Unit Name"
-          className="border border-gray-400 rounded-md mb-4 px-3 py-2 mt-4 w-1/4"
+          className="border border-gray-400 bg-black  bg-opacity-40  rounded-md mb-4 px-3 py-2 mt-4 w-1/4"
           value={searchQuery}
           onChange={handleSearch}
         />
@@ -102,10 +102,11 @@ const MyVideo = () => {
             filteredVideos.map((video, index) => (
               <div
                 key={index}
-                className="ml-20 mr-20 bg-white text-white rounded-lg p-10 shadow-md hover:shadow-lg transition duration-300 relative border border-gray-600"
+              //  className="ml-20 mr-20 bg-white text-white rounded-lg p-10 shadow-md hover:shadow-lg transition duration-300 relative border border-gray-600"
+              className="ml-20 mr-20 bg-black bg-opacity-40 text-white text-1xl font-semibold rounded-lg p-10 shadow-md hover:shadow-lg transition duration-300 relative border border-gray-600"
               >
-                <h3 className="text-xl text-black font-semibold mb-2">{video.unit_name}</h3>
-                <p className="text-black mb-4">{video.unit_description}</p>
+                <h3 className="text-xl text-white font-semibold mb-2">{video.unit_name}</h3>
+                <p className="text-white mb-4">{video.unit_description}</p>
                 <div className="absolute top-0 right-0 mt-4 mr-4">
                   <button
                     onClick={() => handleOpenPlaylist(video.unit_id)}

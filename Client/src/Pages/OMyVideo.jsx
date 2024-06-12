@@ -461,7 +461,7 @@ const MyVideo = () => {
         <input
           type="text"
           placeholder="Search by Unit Name"
-          className="border border-gray-400 rounded-md mb-4 px-3 py-2 mt-5 w-1/4"
+          className="border border-gray-400 rounded-md  bg-black  bg-opacity-40 mb-4 px-3 py-2 mt-5 w-1/4"
           value={searchQuery}
           onChange={handleSearch}
         />
@@ -472,7 +472,7 @@ const MyVideo = () => {
             filteredVideos.map((video, index) => (
               <div
                 key={index}
-                className="ml-20 mr-20 bg-white text-black rounded-lg p-10 shadow-md hover:shadow-lg transition duration-300 relative border border-gray-600"
+                className="ml-20 mr-20  text-white bg-black  bg-opacity-40 rounded-lg p-10 shadow-md hover:shadow-lg transition duration-300 relative border border-gray-600"
               >
                 <h3 className="text-xl font-semibold mb-2">{video.unit_name}</h3>
                 <p className="mb-4">{video.unit_description}</p>

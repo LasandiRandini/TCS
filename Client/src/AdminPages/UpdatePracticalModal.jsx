@@ -47,8 +47,8 @@ const UpdatePracticalModal = ({ practical, onClose, onUpdate }) => {
   if (!practical) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-4 rounded shadow-lg">
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center  items-center">
+      <div className="bg-white p-4 rounded w-1/3 shadow-lg">
         <h2 className="text-xl font-bold mb-4">Update Practical</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
