@@ -1,5 +1,6 @@
 
-
+import PDFDocument from 'pdfkit';
+import fs from 'fs';
 import { db } from '../db.js';
 
 // Create Quiz API
@@ -397,4 +398,408 @@ export const getQuizzes = (req, res) => {
         console.error('Error in getQuizzes:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
+};
+
+// export const getQuizResult = (req, res) => {
+//     try {
+//         const query = `
+//             SELECT 
+//                 WEEK(q.start_date) as week_number,
+//                 AVG(user_total_marks) as average_marks
+//             FROM (
+//                 SELECT 
+//                     q.start_date,
+//                     qr.id,
+//                     q.q_id,
+//                     SUM(qr.mark) as user_total_marks
+//                 FROM 
+//                     quiz q
+//                 JOIN 
+//                     quiz_responses qr ON q.q_id = qr.quiz_id
+//                 WHERE 
+//                     q.quiz_type = 'weekly'
+//                 GROUP BY 
+//                     qr.id, q.q_id
+//             ) as user_quiz_totals
+//             GROUP BY 
+//                 WEEK(start_date)
+//             ORDER BY 
+//                 WEEK(start_date);
+//         `;
+//         db.query(query, (err, results) => {
+//             if (err) {
+//                 console.error('Error fetching quiz results:', err);
+//                 res.status(500).json({ message: 'Internal server error' });
+//             } else {
+//                 const quizResults = results.map(result => ({
+//                     week_number: result.week_number,
+//                     average_marks: result.average_marks
+//                 }));
+//                 res.status(200).json(quizResults);
+//             }
+//         });
+//     } catch (error) {
+//         console.error('Error in getQuizResults:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
+
+// export const getQuizResult = (req, res) => {
+//     try {
+//         const query = `
+//             SELECT 
+//                 WEEK(DATE(user_quiz_totals.start_date)) as week_number,
+//                 AVG(user_quiz_totals.user_total_marks) as average_marks
+//             FROM (
+//                 SELECT 
+//                     DATE(q.start_date) as start_date,
+//                     SUM(qr.mark) as user_total_marks
+//                 FROM 
+//                     quiz q
+//                 JOIN 
+//                     quiz_responses qr ON q.q_id = qr.quiz_id
+//                 WHERE 
+//                     q.quiz_type = 'weekly'
+//                 GROUP BY 
+//                     qr.id, q.q_id, DATE(q.start_date)
+//             ) as user_quiz_totals
+//             GROUP BY 
+//                 WEEK(DATE(user_quiz_totals.start_date))
+//             ORDER BY 
+//                 WEEK(DATE(user_quiz_totals.start_date));
+//         `;
+//         db.query(query, (err, results) => {
+//             if (err) {
+//                 console.error('Error fetching quiz results:', err);
+//                 res.status(500).json({ message: 'Internal server error' });
+//             } else {
+//                 const quizResults = results.map(result => ({
+//                     week_number: result.week_number,
+//                     average_marks: result.average_marks
+//                 }));
+//                 res.status(200).json(quizResults);
+//             }
+//         });
+//     } catch (error) {
+//         console.error('Error in getQuizResults:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
+
+export const getQuizResult = (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                DATE(user_quiz_totals.start_date) as quiz_date,
+                user_quiz_totals.q_unit,
+                WEEK(DATE(user_quiz_totals.start_date)) as week_number,
+                AVG(user_quiz_totals.user_total_marks) as average_marks
+            FROM (
+                SELECT 
+                    q.start_date,
+                    q.q_unit,
+                    SUM(qr.mark) as user_total_marks
+                FROM 
+                    quiz q
+                JOIN 
+                    quiz_responses qr ON q.q_id = qr.quiz_id
+                WHERE 
+                    q.quiz_type = 'weekly'
+                GROUP BY 
+                    q.start_date, q.q_unit, qr.id  -- Adding qr.user_id to the GROUP BY
+            ) as user_quiz_totals
+            GROUP BY 
+                quiz_date, q_unit
+            ORDER BY 
+                quiz_date;
+        `;
+        db.query(query, (err, results) => {
+            if (err) {
+                console.error('Error fetching quiz results:', err);
+                res.status(500).json({ message: 'Internal server error' });
+            } else {
+                const quizResults = results.map(result => ({
+                    quiz_date: result.quiz_date,
+                    quiz_unit: result.q_unit,
+                    week_number: result.week_number,
+                    average_marks: result.average_marks
+                }));
+                res.status(200).json(quizResults);
+            }
+        });
+    } catch (error) {
+        console.error('Error in getQuizResults:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+export const getUserQuizSummaries = async (req, res) => {
+    try {
+        // Query to fetch user quiz results
+        const [responses] = await db.promise().query(
+            `SELECT qr.id as user_id, u.first_name, u.last_name, qr.quiz_id, qr.mark
+             FROM quiz_responses qr
+             JOIN users u ON qr.id = u.id`
+        );
+
+        // Aggregate results by user
+        const userResults = {};
+        responses.forEach((response) => {
+            const { user_id, first_name, last_name, quiz_id, mark } = response;
+            if (!userResults[user_id]) {
+                userResults[user_id] = {
+                    id: user_id,
+                    name: `${first_name} ${last_name}`,
+                    total: 0,
+                };
+            }
+            userResults[user_id].total += mark;
+        });
+
+        // Convert user results object to array
+        const resultsArray = Object.values(userResults);
+
+        // Sort results by total marks to calculate ranks
+        resultsArray.sort((a, b) => b.total - a.total);
+        resultsArray.forEach((result, index) => {
+            result.rank = index + 1;
+        });
+
+        res.status(200).json(resultsArray);
+    } catch (error) {
+        console.error('Error fetching user quiz summaries:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+
+
+
+
+
+
+
+// export const getQuizResultsPDF = (req, res) => {
+//     const quizId = req.params.quizId;
+  
+//     const query = `
+//       SELECT u.first_name, u.last_name, u.institute, SUM(qr.mark) as total_marks
+//       FROM quiz_responses qr
+//       JOIN users u ON qr.id = u.id
+//       WHERE qr.quiz_id = ?
+//       GROUP BY u.id, u.first_name, u.last_name, u.institute
+//       ORDER BY total_marks DESC
+//     `;
+  
+//     db.query(query, [quizId], (err, results) => {
+//       if (err) {
+//         console.error('Error fetching quiz results:', err);
+//         res.status(500).json({ error: 'An error occurred while fetching quiz results' });
+//       } else {
+//         // Calculate rank based on total marks
+//         results.forEach((result, index) => {
+//           result.rank = index + 1; // Rank starts from 1
+//         });
+  
+//         const doc = new PDFDocument();
+//         const filePath = `./quiz_results_${quizId}.pdf`;
+  
+//         // Create a write stream
+//         const writeStream = fs.createWriteStream(filePath);
+  
+//         // Pipe the PDF into the write stream
+//         doc.pipe(writeStream);
+  
+//         // Add content to the PDF
+//         doc.fontSize(12).text(`Quiz Results for Quiz ID: ${quizId}`, { align: 'center' });
+//         doc.moveDown();
+  
+//         doc.fontSize(10).text('Rank', { continued: true });
+//         doc.text('Name', { continued: true });
+//         doc.text('Institute', { continued: true, align: 'center' });
+//         doc.text('Total Marks', { align: 'right' });
+//         doc.moveDown();
+  
+//         results.forEach(result => {
+//           doc.text(result.rank.toString(), { continued: true });
+//           const fullName = `${result.first_name} ${result.last_name}`;
+//           doc.text(fullName, { continued: true });
+//           doc.text(result.institute, { continued: true, align: 'center' });
+//           doc.text(result.total_marks.toString(), { align: 'right' });
+//           doc.moveDown();
+//         });
+  
+//         // Finalize the PDF and end the stream
+//         doc.end();
+  
+//         // When the PDF is finished writing, send it as a response
+//         writeStream.on('finish', () => {
+//           res.download(filePath, `quiz_results_${quizId}.pdf`, (err) => {
+//             if (err) {
+//               console.error('Error downloading the file:', err);
+//               res.status(500).json({ error: 'An error occurred while downloading the PDF' });
+//             } else {
+//               console.log('PDF generated and downloaded successfully.');
+//             }
+//           });
+//         });
+//       }
+//     });
+//   };
+// export const getQuizResultsPDF = (req, res) => {
+//     const quizId = req.params.quizId;
+
+//     const query = `
+//       SELECT u.first_name, u.last_name, u.institute, SUM(qr.mark) as total_marks
+//       FROM quiz_responses qr
+//       JOIN users u ON qr.id = u.id
+//       WHERE qr.quiz_id = ?
+//       GROUP BY u.id, u.first_name, u.last_name, u.institute
+//       ORDER BY total_marks DESC
+//     `;
+
+//     db.query(query, [quizId], (err, results) => {
+//         if (err) {
+//             console.error('Error fetching quiz results:', err);
+//             res.status(500).json({ error: 'An error occurred while fetching quiz results' });
+//         } else {
+//             // Calculate rank based on total marks
+//             results.forEach((result, index) => {
+//                 result.rank = index + 1; // Rank starts from 1
+//             });
+
+//             const doc = new PDFDocument();
+//             const filePath = `./quiz_results_${quizId}.pdf`;
+
+//             // Create a write stream
+//             const writeStream = fs.createWriteStream(filePath);
+
+//             // Pipe the PDF into the write stream
+//             doc.pipe(writeStream);
+
+//             // Add content to the PDF
+//             doc.fontSize(20).text(`Quiz Results for Quiz ID: ${quizId}`, { align: 'center', margin: 20 });
+
+//             // Add table headers
+//             doc.font('Helvetica-Bold');
+//             const tableHeaders = ['Rank', 'Name', 'Institute', 'Total Marks'];
+//             const rowHeight = 30;
+//             const colWidths = [50, 200, 200, 100];
+//             const startX = 50;
+//             let startY = doc.y + 50;
+
+//             doc.table({
+//                 headers: tableHeaders,
+//                 rows: results.map((result) => {
+//                     return [
+//                         result.rank.toString(), // Rank
+//                         `${result.first_name} ${result.last_name}`, // Name
+//                         result.institute, // Institute
+//                         result.total_marks.toString(), // Total Marks
+//                     ];
+//                 }),
+//                 startY: startY,
+//                 startX: startX,
+//                 columnWidths: colWidths,
+//                 bodyStyles: { valign: 'top' },
+//                 headerStyles: { fillColor: '#3498db', textColor: '#ffffff', align: 'center' },
+//                 alternateRowStyles: { fillColor: '#f2f2f2' },
+//                 margin: { top: 30, bottom: 30 },
+//             });
+
+//             // Finalize the PDF and end the stream
+//             doc.end();
+
+//             // When the PDF is finished writing, send it as a response
+//             writeStream.on('finish', () => {
+//                 res.download(filePath, `quiz_results_${quizId}.pdf`, (err) => {
+//                     if (err) {
+//                         console.error('Error downloading the file:', err);
+//                         res.status(500).json({ error: 'An error occurred while downloading the PDF' });
+//                     } else {
+//                         console.log('PDF generated and downloaded successfully.');
+//                     }
+//                 });
+//             });
+//         }
+//     });
+// };
+export const getQuizResultsPDF = (req, res) => {
+    const quizId = req.params.quizId;
+
+    const query = `
+      SELECT u.first_name, u.last_name, u.institute, SUM(qr.mark) as total_marks
+      FROM quiz_responses qr
+      JOIN users u ON qr.id = u.id
+      WHERE qr.quiz_id = ?
+      GROUP BY u.id, u.first_name, u.last_name, u.institute
+      ORDER BY total_marks DESC
+    `;
+
+    db.query(query, [quizId], (err, results) => {
+        if (err) {
+            console.error('Error fetching quiz results:', err);
+            res.status(500).json({ error: 'An error occurred while fetching quiz results' });
+        } else {
+            // Calculate rank based on total marks
+            results.forEach((result, index) => {
+                result.rank = index + 1; // Rank starts from 1
+            });
+
+            const doc = new PDFDocument();
+            const filePath = `./quiz_results_${quizId}.pdf`;
+
+            // Create a write stream
+            const writeStream = fs.createWriteStream(filePath);
+
+            // Pipe the PDF into the write stream
+            doc.pipe(writeStream);
+
+            // Add content to the PDF
+            doc.fontSize(12).text(`Quiz Results for Quiz ID: ${quizId} `, { align: 'center' });
+            doc.moveDown();
+
+            // Add table headers and rows
+            doc.font('Helvetica-Bold');
+            const tableHeaders = ['Rank', 'Name', 'Institute', 'Total Marks'];
+            const columnWidth = 150; // Adjust based on your requirement
+            const startY = 100; // Adjust based on where you want to start drawing the table
+            let currentY = startY;
+
+            tableHeaders.forEach((header, index) => {
+                doc.text(header, index * columnWidth + 3, currentY, { width: columnWidth, align: 'center' });
+            });
+
+            currentY += 20; // Adjust spacing between header and rows
+
+            doc.font('Helvetica');
+            results.forEach((result, rowIndex) => {
+                const rowData = [
+                    result.rank.toString(),
+                    `${result.first_name} ${result.last_name}`,
+                    result.institute,
+                    result.total_marks.toString()
+                ];
+
+                rowData.forEach((data, colIndex) => {
+                    doc.text(data, colIndex * columnWidth + 3, currentY + (rowIndex + 1) * 20, { width: columnWidth, align: 'center' });
+                });
+            });
+
+            // Finalize the PDF and end the stream
+            doc.end();
+
+            // When the PDF is finished writing, send it as a response
+            writeStream.on('finish', () => {
+                res.download(filePath, `quiz_results_${quizId}.pdf`, (err) => {
+                    if (err) {
+                        console.error('Error downloading the file:', err);
+                        res.status(500).json({ error: 'An error occurred while downloading the PDF' });
+                    } else {
+                        console.log('PDF generated and downloaded successfully.');
+                    }
+                });
+            });
+        }
+    });
 };

@@ -439,3 +439,62 @@ export const getVideosByUnitId = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// export const getIncomeData = (req, res) => {
+//   const query = `
+//     SELECT vu.unit_name, vu.price, SUM(vu.price) AS total_income
+//     FROM videounit vu
+//     JOIN video_user vuser ON vu.unit_id = vuser.unit_id
+//     GROUP BY vu.unit_id, vu.unit_name, vu.price
+//     ORDER BY vu.unit_name;
+//   `;
+
+//   connection.query(query, (error, results) => {
+//     if (error) {
+//       return res.status(500).json({ error: 'Database query failed' });
+//     }
+//     res.json(results);
+//   });
+// };
+
+// export const getIncomeData = async (req, res) => {
+//   try {
+//     const query = `
+//       SELECT vu.unit_name, vu.price, SUM(vu.price) AS total_income
+//       FROM videounit vu
+//       JOIN video_user vuser ON vu.unit_id = vuser.unit_id
+//       GROUP BY vu.unit_id, vu.unit_name, vu.price
+//       ORDER BY vu.unit_name;
+//     `;
+//     db.query(query, (err, results) => {
+//       if (err) {
+//         return res.status(500).json({ error: 'Database query failed' });
+//       }
+//       return res.status(200).json(results);
+//     });
+//   } catch (error) {
+//     console.error("Error fetching income data:", error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
+
+export const getIncomeData = async (req, res) => {
+  try {
+    const query = `
+      SELECT vu.unit_name, vu.v_year, vu.price, SUM(vu.price) AS total_income
+      FROM videounit vu
+      JOIN video_user vuser ON vu.unit_id = vuser.unit_id
+      GROUP BY vu.unit_id, vu.unit_name, vu.v_year, vu.price
+      ORDER BY vu.unit_name, vu.v_year;
+    `;
+    db.query(query, (err, results) => {
+      if (err) {
+        return res.status(500).json({ error: 'Database query failed' });
+      }
+      return res.status(200).json(results);
+    });
+  } catch (error) {
+    console.error("Error fetching income data:", error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

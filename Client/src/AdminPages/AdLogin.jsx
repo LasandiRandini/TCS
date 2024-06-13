@@ -114,7 +114,7 @@ const AdLogin = () => {
     setLoading(true);
     try {
       const response = await axios.post("http://localhost:8800/api/Aauth/alogin", inputs);
-      navigate("/EditVideo");
+      navigate("/AHome");
       localStorage.setItem('admin', JSON.stringify(response.data));
     } catch (err) {
       setError(err.response.data);

@@ -4,19 +4,39 @@ import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { FaHome, FaVideo, FaReceipt, FaBell, FaFlask, FaUser, FaQuestionCircle, FaSignOutAlt } from "react-icons/fa";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
+import Swal from 'sweetalert2';
+
 
 const Dashboard = () => {
   const [activeMenu, setActiveMenu] = useState(null);
   const location = useLocation();
+ 
 
   const toggleMenu = (menu) => {
     setActiveMenu(activeMenu === menu ? null : menu);
   };
+  const handleLogout = () => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You will be logged out of the system!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, logout!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            localStorage.removeItem('jwtkey');
+            localStorage.removeItem('admin');
+            window.location.href = "/AdLogin";
+        }
+    });
+};
 
   const isActive = (path) => {
     return location.pathname === path;
   };
-
+ 
   return (
     <div className="bg-white w-full md:w-60 min-h-screen fixed shadow-md p-4 flex flex-col justify-between">
       <div>
@@ -36,10 +56,11 @@ const Dashboard = () => {
           </li>
           <li>
             <button
-              className="hover:bg-blue-200 px-4 py-2 block rounded transition duration-200 text-gray-900 flex justify-between items-center w-full text-left"
+              className="hover:bg-blue-200 px-4 py-2 block rounded transition duration-200 text-gray-900 flex justify-between items-center w-full text-right"
               onClick={() => toggleMenu("video")}
             >
-              <FaVideo className="inline-block mr-2" /> Video {activeMenu === "video" ? <MdExpandLess /> : <MdExpandMore />}
+              <FaVideo className="inline-block mr-5 " /> Video
+               {activeMenu === "video" ? <MdExpandLess /> : <MdExpandMore />} 
             </button>
             {activeMenu === "video" && (
               <ul className="ml-4 space-y-2 mt-2">
@@ -263,12 +284,19 @@ const Dashboard = () => {
         </ul>
       </div>
       <div className="mt-auto">
-        <Link
-          to="/logout"
+      {/* <button 
+                                            onClick={handleLogout}
+                                            className='border border-red-200 text-red-200 hover:bg-red-600 hover:text-white transition duration-300 rounded px-2 py-1'
+                                        >
+                                            Logout
+                                        </button> */}
+        <div
+          
+          onClick={handleLogout}
           className="hover:bg-blue-200 px-4 py-2 block rounded transition duration-200 text-gray-900"
         >
           <FaSignOutAlt className="inline-block mr-2" /> Logout
-        </Link>
+        </div>
       </div>
     </div>
   );
