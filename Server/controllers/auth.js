@@ -5,7 +5,7 @@ import Jwt from "jsonwebtoken";
 export const register = (req, res) => {
   
   const checkExistingUserQuery =
-    "SELECT * FROM users WHERE snic_no=? OR email=?  OR contact_no=? OR parent_contact_no=? OR parent_email=? OR  username=?";
+    "SELECT * FROM users WHERE snic_no=? OR email=?  OR contact_no=?   OR  username=?";
 
   db.query(
     checkExistingUserQuery,
@@ -14,8 +14,7 @@ export const register = (req, res) => {
       req.body.email,
       req.body.contact_no,
       
-      req.body.parent_contact_no,
-      req.body.parent_email,
+    
       req.body.username,
     ],
     (err, userData) => {

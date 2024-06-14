@@ -104,7 +104,7 @@ const ONav = () => {
     { name: "Home", link: "/OHome" },
     { name: "Video Lessons", link: "/Video2" },
     { name: "My Lessons", link: "/OMyVideo" },
-    { name: "Instruction", link: "/OInstruction" },
+
   ];
 
   return (
@@ -136,7 +136,7 @@ const ONav = () => {
             >
               <a
                 href={link.link}
-                className={`text-gray-800 hover:text-red-400 duration-500 ${location.pathname === link.link ? 'text-white' : ''}`}
+                className={`text-gray-800 hover:text-red-200 duration-500 ${location.pathname === link.link ? 'text-white' : ''}`}
               >
                 {link.name}
               </a>
@@ -147,16 +147,16 @@ const ONav = () => {
               className="md:ml-8 text-1xl font-medium my-2 md:my-0 text-blue-600 flex items-center cursor-pointer"
               onClick={() => window.location.href = "/OProfile"}
             >
-              <span className="text-gray-800 hover:text-gray-600 transition duration-300">
+              <span className="text-gray-800 hover:text-red-200 transition duration-300">
                 {`${user.first_name} ${user.last_name}`}
               </span>
-              <UserCircleIcon className="ml-2 w-8 h-8 text-gray-800 hover:text-gray-600 transition duration-300" />
+              <UserCircleIcon className="ml-2 w-8 h-8 text-gray-800 hover:text-red-200 transition duration-300" />
             </li>
           )}
           <li className='md:ml-8 text-1xl font-medium my-2 md:my-0'>
             <button 
               onClick={handleLogout}
-              className='border border-red-400 text-red-400 hover:bg-red-600 hover:text-white transition duration-300 rounded px-2 py-1'
+              className='border border-red-200 text-black hover:bg-black hover:text-white transition duration-300 rounded px-2 py-1'
             >
               Logout
             </button>

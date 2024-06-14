@@ -498,3 +498,78 @@ export const getIncomeData = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+// export const getReceiptData = async (req, res) => {
+//   try {
+//     const [rows] = await db.promise().query(`
+//       SELECT CONCAT(users.first_name, ' ', users.last_name) AS name, 
+//              users.al_year, 
+//              users.contact_no, 
+//              video_unit.price, 
+//              video_unit.unit_name, 
+//              reciept.permission
+//       FROM receipt
+//       JOIN users ON reciept.u_id = users.id
+//       JOIN video_unit ON receipt.r_unit_id = video_unit.unit_id;
+//     `);
+
+//     res.status(200).json(rows);
+//   } catch (error) {
+//     console.error('Error fetching receipt data:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
+
+// export const getReceiptData = async (req, res) => {
+//   try {
+//     const query = `
+//       SELECT CONCAT(users.first_name, ' ', users.last_name) AS name, 
+//              users.al_year, 
+//              users.contact_no, 
+//              video_unit.price, 
+//              video_unit.unit_name, 
+//              receipt.permission
+//       FROM receipt
+//       JOIN users ON receipt.u_id = users.id
+//       JOIN video_unit ON receipt.r_unit_id = video_unit.unit_id;
+//     `;
+//     db.query(query, (err, results) => {
+//       if (err) {
+//         return res.status(500).json({ error: 'Database query failed' });
+//       }
+//       return res.status(200).json(results);
+//     });
+//   } catch (error) {
+//     console.error('Error fetching receipt data:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
+
+export const getReceiptData = async (req, res) => {
+  try {
+    const query = `
+    SELECT 
+    CONCAT(users.first_name, ' ', users.last_name) AS name, 
+    users.al_year, 
+   
+    videounit.price, 
+    videounit.unit_name, 
+    reciept.permission
+FROM 
+    reciept
+JOIN 
+    users ON reciept.u_id = users.id
+JOIN 
+    videounit ON reciept.r_unit_id = videounit.unit_id;
+    `;
+    db.query(query, (err, results) => {
+      if (err) {
+        return res.status(500).json({ error: 'Database query failed' });
+      }
+      return res.status(200).json(results);
+    });
+  } catch (error) {
+    console.error('Error fetching receipt data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

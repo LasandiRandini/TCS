@@ -255,27 +255,7 @@ const PHome = () => {
         </div>
       </div>
 
-      {/* <div className="md:px-14 p-4 max-w-screen-2xl mx-auto my-24">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="md:w-2/3">
-            <img src={magazine1} alt="Magazine" className="lg:h-[400px] object-cover rounded-lg shadow-md" />
-          </div>
-          <div className="md:w-4/5">
-            <h2 className="md:text-5xl text-3xl font-bold text-primary mb-5 leading-normal text-blue-200">
-              Engineering Technology<span className="text-red-300"> MCQ BOOK</span>
-            </h2>
-            <p className="text-white text-2xl mb-7">
-            විභාගයට අනුමාන MCQ ප්‍රශ්න 500 ක් ඇතුලත් ප්‍රශ්නෝත්තර සංග්‍රහය.විවරණ ET LABS අපගේ Youtube චැනලය හරහා නැරඹීමට හැක.
-
-
-            </p>
-            <h className="py-3 px-8 bg-red-600 font-semibold text-white rounded hover:bg-red-400 transition-all duration-300">
-            නිවසට ගෙන්වා ගැනිමට හා වැඩි විස්තර සදහා සම්බන්ධ වන්න.
-            071 299 8333/076 277 2448 (whatsapp)
-            h>
-          </div>
-        </div>
-      </div> */}
+      
       <div className="md:px-14 p-4 max-w-screen-2xl mx-auto my-24">
   <div className="flex flex-col md:flex-row justify-between items-center gap-8">
     <div className="md:w-2/3">

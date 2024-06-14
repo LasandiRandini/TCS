@@ -250,10 +250,12 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+
 import teacher from '../assets/teacher.png';
-import magazine from '../assets/Mag.jpg';
+
 import ONLINE from '../assets/online.png';
+import magazine1 from "../assets/magazine1.jpg";
+import magazine2 from "../assets/magazine2.jpg";
 
 const OHome = () => {
   const [notices, setNotices] = useState([]);
@@ -312,13 +314,8 @@ const OHome = () => {
                   hands-on learning and critical thinking, preparing students for
                   success in engineering technology.
                 </p>
-                <div>
-                  <Link to="/PSignup">
-                    <button className="py-3 px-8 bg-red-600 font-semibold text-white rounded hover:bg-red-400 transition-all duration-300">
-                      Register Here
-                    </button>
-                  </Link>
-                </div>
+                
+                
               </div>
               <div>
                 <img src={teacher} alt="Teacher" className="lg:h-[500px] hover:-translate-y-4 transition-all duration-300 cursor-pointer" />
@@ -346,23 +343,44 @@ const OHome = () => {
         </div>
       </div>
 
-      {/* Magazine */}
+      <div className="md:px-14 p-4 max-w-screen-2xl mx-auto my-24">
+  <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+    <div className="md:w-2/3">
+      <img src={magazine1} alt="Magazine" className="lg:h-[400px] object-cover rounded-lg shadow-md" />
+    </div>
+    <div className="md:w-4/5">
+      <h2 className="md:text-5xl text-3xl font-bold text-primary mb-5 leading-normal text-blue-200">
+        Engineering Technology<span className="text-red-300"> MCQ BOOK</span>
+      </h2>
+      <p className="text-white text-2xl mb-7">
+        විභාගයට අනුමාන MCQ ප්‍රශ්න 500 ක් ඇතුලත් ප්‍රශ්නෝත්තර සංග්‍රහය. විවරණ ET LABS අපගේ Youtube චැනලය හරහා නැරඹීමට හැක.
+      </p>
+      <p className="py-3 px-8 bg-red-600 font-semibold text-white rounded hover:bg-red-500 transition-all duration-300">
+        නිවසට ගෙන්වා ගැනිමට හා වැඩි විස්තර සදහා සම්බන්ධ වන්න.
+        071 299 8333/076 277 2448 (whatsapp)
+      </p>
+    </div>
+  </div>
+</div>
+
       <div className="md:px-14 p-4 max-w-screen-2xl mx-auto my-24">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="md:w-1/3">
-            <img src={magazine} alt="Magazine" className="lg:h-[400px]" />
-          </div>
+          
           <div className="md:w-4/5">
-            <h2 className="md:text-5xl text-3xl font-bold text-primary mb-5 text-white leading-normal">
-              We have been improving our product <span>for many years.</span>
+            <h2 className="md:text-5xl text-3xl font-bold text-primary mb-5 leading-normal text-blue-200">
+             Engineering Technology <span className="text-red-300"> Management</span>
             </h2>
-            <p className="text-black text-lg text-red-200 mb-7">
-              A good example of a paragraph contains a topic conclusion. There
-              are many different kinds of animals that live in China.
+            <p className="text-white text-lg mb-7">
+            මෙම පොත මගින් managment සම්පූර්ණ විෂය මාලාව ආවරණය කර ඇත.
+
             </p>
-            <button className="py-3 px-8 bg-red-600 font-semibold text-white rounded hover:bg-red-400 transition-all duration-300">
-              View Magazine
-            </button>
+            <p className="py-3 px-8 bg-red-600 font-semibold text-white rounded hover:bg-red-500 transition-all duration-300">
+        නිවසට ගෙන්වා ගැනිමට හා වැඩි විස්තර සදහා සම්බන්ධ වන්න.
+        071 299 8333/076 277 2448 (whatsapp)
+      </p>
+          </div>
+          <div className="md:w-1/3">
+            <img src={magazine2} alt="Magazine" className="lg:h-[400px] object-cover rounded-lg shadow-md" />
           </div>
         </div>
       </div>

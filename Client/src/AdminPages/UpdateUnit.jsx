@@ -192,7 +192,7 @@ function UpdateUnit() {
 
   return (
     <div className="bg-gray-200 min-h-screen">
-      <Adminheader pageName="Update Quiz" />
+      <Adminheader pageName="Update Unit" />
       <div className="flex justify-center items-center mt-5 h-full">
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
           <h1 className="text-xl font-medium mb-6 text-center">Update Unit</h1>

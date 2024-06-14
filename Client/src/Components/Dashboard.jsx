@@ -106,6 +106,14 @@ const Dashboard = () => {
                   >
                     Check Receipts
                   </Link>
+                  <Link
+                    to="/ReceiptTable"
+                    className={`hover:bg-blue-200 px-4 py-2 block rounded transition text-gray-500 text-sm duration-200 ${
+                      isActive("/ReceiptTable") ? "bg-white" : ""
+                    }`}
+                  >
+                    Show Receipts
+                  </Link>
                 </li>
                 
               </ul>

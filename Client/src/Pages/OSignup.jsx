@@ -469,7 +469,7 @@ const OSignup = () => {
         Swal.fire("Success", "You have registered successfully!", "success");
         navigate("/SLogin");
       } catch (err) {
-        Swal.fire("Error", err.response.data, "error");
+        Swal.fire("User already exists.", err.response.data, "User already exists.");
       }
     }
   };

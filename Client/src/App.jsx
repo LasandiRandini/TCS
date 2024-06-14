@@ -53,6 +53,7 @@ import AHome from "./AdminPages/AHome";
 import ASetting from "./AdminPages/ASetting";
 import ChangeStatus from "./AdminPages/ChangeStatus";
 import ProtectedRoute  from "./Components/ProtectedRoute";
+import RecieptTable from "./AdminPages/getRecieptData";
 
 const PLayout = () => {
   return (
@@ -250,7 +251,8 @@ const router = createBrowserRouter([
         element: <DeletePractical />,
       },
       {
-        path: "/AddTimeslots/:practical_id",
+        
+        path:"/AddTimeslots/:practicalId",
         element: <AddTimeslots />,
       },
       {
@@ -276,6 +278,10 @@ const router = createBrowserRouter([
       {
         path: "/AddNIcs",
         element: <AddNIcs />,
+      },
+      {
+        path: "/ReceiptTable",
+        element: <RecieptTable />,
       },
        {
          path: "/EditVideo",

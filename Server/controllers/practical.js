@@ -4,6 +4,26 @@ import { db } from '../db.js';
 
 
 
+// export const practical = async (req, res) => {
+//   const { year, title, date, duration, institute, description } = req.body;
+
+//   try {
+//     const [result] = await db.promise().query(
+//       'INSERT INTO practical (year, title, date, duration, institute, description) VALUES (?, ?, ?, ?, ?, ?)',
+//       [year, title, date, duration, institute, description]
+//     );
+
+//     if (result.affectedRows === 1) {
+//       const practicalId = result.insertId;  // Get the ID of the newly inserted practical
+//       res.status(201).json({ message: 'Practical created successfully', practicalId });
+//     } else {
+//       res.status(500).json({ error: 'Failed to create practical' });
+//     }
+//   } catch (error) {
+//     console.error('Error while creating practical:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
 export const practical = async (req, res) => {
   const { year, title, date, duration, institute, description } = req.body;
 
@@ -170,7 +190,7 @@ export const voteForTimeSlot = (req, res) => {
 
     if (votes_count >= max_limit) {
       
-    return res.status(400).json({ error: 'ඔබ මීට පෙර මෙම practical session එක සදහා time slot වෙන් කර ගෙන ඇත' });
+    return res.status(400).json({ error: 'මෙම practical session එක සදහා time slots full වී ඇත' });
     }
 
     const voteSql = 'INSERT INTO practicalvotes (student_id, slot_id) VALUES (?, ?)';
@@ -178,7 +198,7 @@ export const voteForTimeSlot = (req, res) => {
     db.query(voteSql, [student_id, slot_id], (err) => {
       if (err) {
         console.error('Error recording vote:', err);
-        return res.status(500).json({ error: 'An error occurred while recording vote' });
+        return res.status(500).json({ error: 'An error occured' });
       }
 
       const updateVoteCountSql = 'UPDATE practicaltimeslots SET votes_count = votes_count + 1 WHERE slot_id = ?';

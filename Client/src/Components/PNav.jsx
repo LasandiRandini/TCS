@@ -244,7 +244,7 @@ const PNav = () => {
         { name: "My Lessons", link: "/MyVideo" },
         { name: "Practical", link: "/Practical" },
         { name: "Quiz", link: "/Quiz" },
-        { name: "Instruction", link: "/Instruction" },
+        
     ];
 
     return (
@@ -263,7 +263,7 @@ const PNav = () => {
                         <ul className={`md:flex md:items-center absolute md:static md:rounded-full w-full md:w-auto left-0 md:left-auto md:pt-0 pt-4 ease-in ${open ? 'top-16' : 'top-[-400px]'}`}>
                             {Links.map((link, index) => (
                                 <li key={index} className='md:ml-12 text-1xl font-medium my-2 md:my-0'>
-                                    <a href={link.link} className={`text-gray-800 hover:text-blue-600 ${location.pathname === link.link ? 'text-white' : ''}`}>{link.name}</a>
+                                    <a href={link.link} className={`text-gray-800 hover:text-red-200 ${location.pathname === link.link ? 'text-white' : ''}`}>{link.name}</a>
                                 </li>
                             ))}
                             {user && (
@@ -275,7 +275,7 @@ const PNav = () => {
                                     <li className='md:ml-8 text-1xl font-medium my-2 md:my-0'>
                                         <button 
                                             onClick={handleLogout}
-                                            className='border border-red-200 text-red-200 hover:bg-red-600 hover:text-white transition duration-300 rounded px-2 py-1'
+                                            className='border border-red-200 text-black hover:bg-black hover:text-white transition duration-300 rounded px-2 py-1'
                                         >
                                             Logout
                                         </button>
