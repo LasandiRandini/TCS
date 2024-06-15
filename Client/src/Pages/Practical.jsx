@@ -151,7 +151,7 @@ const Practical = () => {
         const response = await axios.get('http://localhost:8800/api/practicals/getpractical');
         console.log(response.data);
 
-       // setPracticals(response.data.filter(practical => practical.year == user.al_year));
+      
        setPracticals(response.data.filter(practical => 
         practical.year == user.al_year && practical.institute == user.institute));
       } catch (err) {
@@ -200,7 +200,7 @@ const Practical = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toISOString().split('T')[0]; // YYYY-MM-DD format
+    return date.toISOString().split('T')[0]; 
   };
 
   return (
