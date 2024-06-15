@@ -351,7 +351,7 @@ const Home = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 3) % images.length);
-    }, 2000); // Change image every 2 seconds
+    }, 2000); 
 
     return () => clearInterval(interval);
   }, []);
@@ -387,7 +387,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* New Content Section */}
+        
         <div className="container mx-auto my-10 px-4 md:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center text-center p-6 bg-gray-900 rounded-lg shadow-lg">
@@ -414,7 +414,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Photo Gallery Section */}
+        
         <div className="container mx-auto my-24 px-4 md:px-12">
           <h2 className="text-3xl md:text-4xl font-bold text-black mb-6 leading-relaxed hover:-translate-y-1 transition-all duration-300 text-center cursor-pointer">
             About Us
@@ -443,7 +443,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Magazine Section */}
+        
         <div className="container mx-auto my-10  md:px-12">
           <div className="grid grid-cols-1  md:grid-cols-4 gap-5">
             <div className="md:w-full">
