@@ -76,7 +76,7 @@ const PSignup = () => {
   const validate = () => {
     let errors = {};
 
-    // General required fields
+   
     if (!inputs.first_name) errors.first_name = "First name is required";
     if (!inputs.last_name) errors.last_name = "Last name is required";
     if (!inputs.district) errors.district = "District is required";
@@ -130,23 +130,7 @@ const PSignup = () => {
     return errors;
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const errors = validate();
-  //   setFormErrors(errors);
-  //   if (Object.keys(errors).length === 0) {
-  //     try {
-  //       await axios.post("http://localhost:8800/api/auth/register", inputs);
-  //       navigate("/SLogin");
-  //     } catch (err) {
-  //       if (err.response && err.response.data) {
-  //         setError(err.response.data.message);
-  //       } else {
-  //         setError("Something went wrong!");
-  //       }
-  //     }
-  //   }
-  // };
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = validate();
