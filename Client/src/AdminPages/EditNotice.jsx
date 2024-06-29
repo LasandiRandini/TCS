@@ -1,7 +1,4 @@
-// import  { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { Link } from 'react-router-dom';
-// import Adminheader from "../Components/Adminheader";
+
 
 // const EditNotice = () => {
 //   const [notices, setNotices] = useState([]);
