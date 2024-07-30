@@ -1,5 +1,4 @@
 import { db } from "../db.js";
-
 import nodemailer from 'nodemailer';
 
 
@@ -30,8 +29,7 @@ const sendEmail = (email, unitName) => {
 
 
 
-
-  export const addReceipt = async (req, res) => {
+export const addReceipt = async (req, res) => {
     const { fileUrl, r_unit_id, u_id } = req.body;
 
     try {

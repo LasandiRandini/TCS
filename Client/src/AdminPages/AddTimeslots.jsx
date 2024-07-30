@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 import Adminheader from "../Components/Adminheader";
 
 const AddTimeslots = () => {
-  const { practicalId } = useParams(); // Ensure this captures the practicalId correctly
+  const { practicalId } = useParams(); 
   const [timeSlots, setTimeSlots] = useState(['']);
   const [maxLimit, setMaxLimit] = useState('');
 
@@ -67,7 +67,7 @@ const AddTimeslots = () => {
               <label className="block text-gray-700">Practical ID</label>
               <input
                 type="text"
-                value={practicalId} // Ensure practicalId is correctly displayed here
+                value={practicalId} 
                 readOnly
                 className="w-full px-3 py-2 border rounded"
               />

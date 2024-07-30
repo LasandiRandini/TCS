@@ -48,13 +48,6 @@ app.use('/public/reciepts', express.static(path.join(__dirname, 'public/reciepts
 app.use('/public/image', express.static(path.join(__dirname, 'public/image')));
 
 
-
-
-  
-
-
-
-
 app.listen(8800, () => {
     console.log("Connected!")
 })

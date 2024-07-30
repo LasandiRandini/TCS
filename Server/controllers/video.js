@@ -1,22 +1,7 @@
 import { db } from '../db.js';
 
 
-// export const addUnit = async (req, res) => {
-//   const { v_year, unit_name, unit_description, price } = req.body;
 
-//   try {
-//     const [result] = await db.promise().query('INSERT INTO videounit (v_year, unit_name, unit_description, price) VALUES (?, ?, ?, ?)', [v_year, unit_name, unit_description, price]);
-
-//     if (result.affectedRows === 1) {
-//       res.status(201).json({ message: 'Unit created successfully' });
-//     } else {
-//       res.status(500).json({ error: 'Failed to create uni' });
-//     }
-//   } catch (error) {
-//     console.error('Error while creating unit:', error);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// };
 export const addUnit = async (req, res) => {
   const { v_year, unit_name, unit_description, price } = req.body;
 
